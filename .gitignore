@@ -3,3 +3,5 @@
 logs/
 celerybeat.pid
 celerybeat-schedule
+migrations/
+nogitsettings.py

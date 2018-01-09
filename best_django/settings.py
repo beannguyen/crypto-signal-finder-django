@@ -79,20 +79,7 @@ WSGI_APPLICATION = 'best_django.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    # }
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'best',
-        'USER': 'best_root',
-        'PASSWORD': '@nhdeptrai123',
-        'HOST': 'localhost',
-        'PORT': '',
-    }
-}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -175,3 +162,20 @@ CELERY_BEAT_SCHEDULE = {
 # BITTREX API KEY
 BITTREX_API_KEY = 'cbcfce018d144dfdbedfcc1f17a7565c'
 BITTREX_SECRET_KEY = '42fdf442ad114d83a3f53c240dfe19fd'
+
+try:
+    from nogitsettings import *
+except:
+    print('nogit settings not found')
+
+if not IS_PRODUCTION:
+    try:
+        from localsettings import *
+    except Exception as e:
+        print(e)
+        print('local settings not found')
+else:
+    try:
+        from livesettings import *
+    except:
+        print('live settings not found')
