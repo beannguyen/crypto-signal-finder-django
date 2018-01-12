@@ -5,3 +5,5 @@ celerybeat.pid
 celerybeat-schedule
 migrations/
 nogitsettings.py
+localsettings.py
+venv/

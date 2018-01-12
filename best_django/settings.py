@@ -104,7 +104,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Asia/Ho_Chi_Minh'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
@@ -142,7 +142,7 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'Asia/Ho_Chi_Minh'
+CELERY_TIMEZONE = 'UTC'
 
 CELERY_BEAT_SCHEDULE = {
     'update-markets': {
@@ -164,18 +164,18 @@ BITTREX_API_KEY = 'cbcfce018d144dfdbedfcc1f17a7565c'
 BITTREX_SECRET_KEY = '42fdf442ad114d83a3f53c240dfe19fd'
 
 try:
-    from nogitsettings import *
+    from best_django.nogitsettings import *
 except:
     print('nogit settings not found')
 
 if not IS_PRODUCTION:
     try:
-        from localsettings import *
+        from best_django.localsettings import *
     except Exception as e:
         print(e)
         print('local settings not found')
 else:
     try:
-        from livesettings import *
+        from best_django.livesettings import *
     except:
         print('live settings not found')
