@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'summary_writer',
+    'rest_framework_swagger'
 ]
 
 MIDDLEWARE = [
