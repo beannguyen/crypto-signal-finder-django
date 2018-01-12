@@ -14,6 +14,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 from datetime import timedelta
+from best_django.nogitsettings import *
 
 from celery.schedules import crontab
 

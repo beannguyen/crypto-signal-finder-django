@@ -20,6 +20,7 @@ https://medium.com/@yehandjoe/celery-4-periodic-task-in-django-9f6b5a8c21c7
 def update_markets():
     print('Updating markets...')
     res = bittrex_api.get_markets()
+    # print(res)
     if res['success']:
         for market in res['result']:
             m = Market.objects.filter(market_name=market['MarketName'])
