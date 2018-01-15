@@ -1,4 +1,4 @@
-DEBUG = False
+DEBUG = True
 
 DATABASES = {
     'default': {
@@ -12,7 +12,11 @@ DATABASES = {
 }
 
 CORS_ORIGIN_WHITELIST = (
-    'localhost:8000',
-    '127.0.0.1:8000',
-    'localhost:3000'
+    '103.68.81.39',
+    'localhost:4200'
 )
+
+ALLOWED_HOSTS = [
+    '103.68.81.39',
+    'localhost:4200'
+]

@@ -29,7 +29,9 @@ SECRET_KEY = 'h6i1_o9&5=psqbdm2rg2$3)3)ko4kacfj0%en^$kg)5gitv-h-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '*'
+]
 
 # Application definition
 
@@ -41,8 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'corsheaders',
-    'summary_writer',
-    'rest_framework_swagger'
+    'summary_writer'
 ]
 
 MIDDLEWARE = [
@@ -121,9 +122,7 @@ STATIC_URL = '/static/'
 
 # CORS SETTINGS
 CORS_ORIGIN_WHITELIST = (
-    'localhost:8000',
-    '127.0.0.1:8000',
-    'localhost:3000'
+    'localhost:4200'
 )
 
 CORS_ALLOW_HEADERS = (
