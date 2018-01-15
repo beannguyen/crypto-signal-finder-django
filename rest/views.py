@@ -1,6 +1,7 @@
 from pprint import pprint
 
 from bittrex import API_V2_0, Bittrex
+from decimal import Decimal
 from django.core.paginator import Paginator
 from django.shortcuts import render
 from rest_framework.decorators import api_view
@@ -41,7 +42,7 @@ def get_markets(request):
             'last_price': m.last,
             '24h_high': m.high,
             '24h_low': m.low,
-            'spread': (m.ask - m.bid) * 100 / m.bid,
+            'spread': (Decimal(m.ask) - m.bid) * 100 / m.bid,
             'predict_30m': 0
         })
 
