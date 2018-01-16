@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'summary_writer',
-    'rest'
+    'rest',
+    'drf_yasg'
 ]
 
 MIDDLEWARE = [
@@ -82,7 +83,6 @@ WSGI_APPLICATION = 'best_django.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-
 
 
 # Password validation
@@ -159,6 +159,31 @@ CELERY_BEAT_SCHEDULE = {
         'task': 'summary_writer.tasks.get_latest_tick',
         'schedule': crontab(minute='*/15')
     }
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+}
+
+JWT_SECRET_KEY = 'CCADD99B16CD3D200C22D6DB45D8B6630EF3D936767127347EC8A76AB992C2EA'
+
+JWT_AUTH = {
+    'JWT_SECRET_KEY': JWT_SECRET_KEY,
+    'JWT_ALGORITHM': 'HS256',
+    'JWT_VERIFY': True,
+    'JWT_VERIFY_EXPIRATION': True,
+    'JWT_LEEWAY': 0,
+    'JWT_EXPIRATION_DELTA': timedelta(seconds=3000),
+    'JWT_AUDIENCE': None,
+    'JWT_ISSUER': None,
+    'JWT_AUTH_HEADER_PREFIX': 'Bearer',
 }
 
 # BITTREX API KEY

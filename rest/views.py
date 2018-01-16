@@ -1,23 +1,30 @@
-from pprint import pprint
-
-from bittrex import API_V2_0, Bittrex
-from django.core.paginator import Paginator
-from django.shortcuts import render
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-import pandas as pd
-import numpy as np
-import talib
-from talib import MA_Type
+import traceback
 from decimal import *
 
+import numpy as np
+import pandas as pd
+import talib
+from bittrex import API_V2_0, Bittrex
+from django.contrib.auth.models import User, Group
+from django.core.paginator import Paginator
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from talib import MA_Type
+import json
+
+import constants
 from best_django.settings import BITTREX_SECRET_KEY, BITTREX_API_KEY
+from rest.models import MemberShipPlan, Profile
+from rest.serializers import BaseResponse
 from summary_writer.models import Market, MarketSummary, Candle
 
 btx_v2 = Bittrex(BITTREX_API_KEY, BITTREX_SECRET_KEY, api_version=API_V2_0)
 
 
 @api_view(['GET'])
+@permission_classes((IsAuthenticated,))
 def getmarkets(request):
     res = []
     try:
@@ -33,7 +40,7 @@ def getmarkets(request):
                 'is_active': m.is_active,
                 'created_on': m.created_on
             })
-        
+
         return Response({
             'success': True,
             'data': res
@@ -47,6 +54,7 @@ def getmarkets(request):
 
 
 @api_view(['GET'])
+@permission_classes((IsAuthenticated,))
 def getmarketsummaries(request):
     """
     get all market with latest summary
@@ -57,7 +65,7 @@ def getmarketsummaries(request):
         page = int(request.GET['p'])
     except:
         page = 1
-    
+
     try:
         item_per_page = MarketSummary.objects.count()
         markets = MarketSummary.objects.all().order_by('market__market_name')
@@ -97,6 +105,7 @@ def getmarketsummaries(request):
 
 
 @api_view(['GET'])
+@permission_classes((IsAuthenticated,))
 def get_tick(request):
     """
     get ticks
@@ -161,6 +170,216 @@ def get_tick(request):
 
 
 @api_view(['GET'])
+@permission_classes((IsAuthenticated,))
 def get_latest_tick(request):
     market_name = request.GET['market']
+    pass
+
+
+@api_view(['POST'])
+@permission_classes((AllowAny,))
+def register(request, format=None):
+    """
+    Register new user
+    ---
+    # Request Json
+    {
+        "username": "bean",
+        "email": "bean@gmail.com",
+        "is_active": false,
+        "password": "123456",
+        "plan": 1,
+        "group": 2
+    }
+
+    # Responses
+    - Username exist:
+    {
+        "result": "ERR",
+        "msg": "user_exist"
+    }
+
+    - Email exist:
+    {
+        "result": "ERR",
+        "msg": "user_exist"
+    }
+
+    - Invalid group:
+    {
+        "result": "ERR",
+        "msg": "group_not_found"
+    }
+
+    - Exception:
+    {
+        "result": "ERR",
+        "msg": "throw Traceback"
+    }
+
+    - Create user successfully:
+    {
+        "result": "OK",
+        "msg": "created"
+    }
+
+    """
+    req = json.loads(request.body.decode('utf-8'))
+    print(req)
+
+    res = BaseResponse()
+
+    try:
+        username_count = User.objects.count(username=req['username'])
+        if username_count > 0:
+            res.result = constants.HTTP_ERR
+            res.msg = 'user_exist'
+            return Response(res)
+
+        email_count = User.objects.count(email=req['email'])
+        if email_count > 0:
+            res.result = constants.HTTP_ERR
+            res.msg = 'email_exist'
+            return Response(res)
+
+        group = Group.objects.get(pk=req['group'])
+        if group is None:
+            res.result = constants.HTTP_ERR
+            res.msg = 'group_not_found'
+            return Response(res)
+
+        plan = None
+        if req['plan'] is not None:
+            plan = MemberShipPlan.objects.get(pk=req['plan'])
+
+        # create user
+        user = User.objects.create_user(username=req['username'],
+                                        email=req['email'],
+                                        password=req['password'])
+        group.user_set.add(user)
+
+        # add profile
+        profile = Profile()
+        profile.user = user
+        profile.plan = plan
+        profile.save()
+
+        res.result = constants.HTTP_OK
+        res.msg = 'created'
+    except:
+        err = traceback.print_exc()
+        res.result = constants.HTTP_ERR
+        res.msg = err
+
+    return Response(res)
+
+
+class CreateUserView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request, format=None):
+        """
+        Register new user
+        ---
+        # Request Json
+        {
+            "username": "bean",
+            "email": "bean@gmail.com",
+            "is_active": false,
+            "password": "123456",
+            "plan": 1,
+            "group": 2
+        }
+
+        # Responses
+        - Username exist:
+        {
+            "result": "ERR",
+            "msg": "user_exist"
+        }
+
+        - Email exist:
+        {
+            "result": "ERR",
+            "msg": "user_exist"
+        }
+
+        - Invalid group:
+        {
+            "result": "ERR",
+            "msg": "group_not_found"
+        }
+
+        - Invalid plan:
+        {
+            "result": "ERR",
+            "msg": "plan_not_found"
+        }
+
+        - Exception:
+        {
+            "result": "ERR",
+            "msg": "throw Traceback"
+        }
+
+        - Create user successfully:
+        {
+            "result": "OK",
+            "msg": "created"
+        }
+
+        """
+        req = json.loads(request.body.decode('utf-8'))
+        print(req)
+
+        res = BaseResponse()
+
+        try:
+            username_count = User.objects.count(username=req['username'])
+            if username_count > 0:
+                res.result = constants.HTTP_ERR
+                res.msg = 'user_exist'
+                return Response(res)
+
+            email_count = User.objects.count(email=req['email'])
+            if email_count > 0:
+                res.result = constants.HTTP_ERR
+                res.msg = 'email_exist'
+                return Response(res)
+
+            group = Group.objects.get(pk=req['group'])
+            if group is None:
+                res.result = constants.HTTP_ERR
+                res.msg = 'group_not_found'
+                return Response(res)
+
+            plan = MemberShipPlan.objects.get(pk=req['plan'])
+            if plan is None:
+                res.result = constants.HTTP_ERR
+                res.msg = 'plan_not_found'
+                return Response(res)
+
+            # create user
+            user = User.objects.create_user(username=req['username'],
+                                            email=req['email'],
+                                            password=req['password'])
+            group.user_set.add(user)
+
+            # add profile
+            profile = Profile()
+            profile.user = user
+            profile.plan = plan
+            profile.save()
+
+            res.result = constants.HTTP_OK
+            res.msg = 'created'
+        except:
+            err = traceback.print_exc()
+            res.result = constants.HTTP_ERR
+            res.msg = err
+
+        return Response(res)
+
+
+def request_plan(request, format=None):
     pass
