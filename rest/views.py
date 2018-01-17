@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 import talib
 from bittrex import API_V2_0, Bittrex
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import User, Group, Permission
 from django.core.paginator import Paginator
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -16,11 +16,15 @@ import json
 
 import constants
 from best_django.settings import BITTREX_SECRET_KEY, BITTREX_API_KEY
-from rest.models import MemberShipPlan, Profile
+from rest.models import MemberShipPlan, Profile, WalletCurrency, MemberShipPlanPricing
 from rest.serializers import BaseResponse
 from summary_writer.models import Market, MarketSummary, Candle
 
 btx_v2 = Bittrex(BITTREX_API_KEY, BITTREX_SECRET_KEY, api_version=API_V2_0)
+
+
+def has_permission(user, permission_name):
+    return user.has_perm('rest.{}'.format(permission_name))
 
 
 @api_view(['GET'])
@@ -186,10 +190,7 @@ def register(request, format=None):
     {
         "username": "bean",
         "email": "bean@gmail.com",
-        "is_active": false,
-        "password": "123456",
-        "plan": 1,
-        "group": 2
+        "password": "123456"
     }
 
     # Responses
@@ -203,12 +204,6 @@ def register(request, format=None):
     {
         "result": "ERR",
         "msg": "user_exist"
-    }
-
-    - Invalid group:
-    {
-        "result": "ERR",
-        "msg": "group_not_found"
     }
 
     - Exception:
@@ -232,20 +227,14 @@ def register(request, format=None):
     try:
         username_count = User.objects.count(username=req['username'])
         if username_count > 0:
-            res.result = constants.HTTP_ERR
-            res.msg = 'user_exist'
+            res['result'] = constants.HTTP_ERR
+            res['msg'] = 'user_exist'
             return Response(res)
 
         email_count = User.objects.count(email=req['email'])
         if email_count > 0:
-            res.result = constants.HTTP_ERR
-            res.msg = 'email_exist'
-            return Response(res)
-
-        group = Group.objects.get(pk=req['group'])
-        if group is None:
-            res.result = constants.HTTP_ERR
-            res.msg = 'group_not_found'
+            res['result'] = constants.HTTP_ERR
+            res['msg'] = 'email_exist'
             return Response(res)
 
         plan = None
@@ -255,7 +244,10 @@ def register(request, format=None):
         # create user
         user = User.objects.create_user(username=req['username'],
                                         email=req['email'],
-                                        password=req['password'])
+                                        password=req['password'],
+                                        is_activated=False)
+
+        group = Group.objects.filter(name='User').first()
         group.user_set.add(user)
 
         # add profile
@@ -264,12 +256,12 @@ def register(request, format=None):
         profile.plan = plan
         profile.save()
 
-        res.result = constants.HTTP_OK
-        res.msg = 'created'
+        res['result'] = constants.HTTP_OK
+        res['msg'] = 'created'
     except:
         err = traceback.print_exc()
-        res.result = constants.HTTP_ERR
-        res.msg = err
+        res['result'] = constants.HTTP_ERR
+        res['msg'] = err
 
     return Response(res)
 
@@ -332,31 +324,34 @@ class CreateUserView(APIView):
         req = json.loads(request.body.decode('utf-8'))
         print(req)
 
-        res = BaseResponse()
+        res = {}
 
         try:
+            if not has_permission(request.user, 'add_user'):
+                return Response(status=550)
+
             username_count = User.objects.count(username=req['username'])
             if username_count > 0:
-                res.result = constants.HTTP_ERR
-                res.msg = 'user_exist'
+                res['result'] = constants.HTTP_ERR
+                res['msg'] = 'user_exist'
                 return Response(res)
 
             email_count = User.objects.count(email=req['email'])
             if email_count > 0:
-                res.result = constants.HTTP_ERR
-                res.msg = 'email_exist'
+                res['result'] = constants.HTTP_ERR
+                res['msg'] = 'email_exist'
                 return Response(res)
 
             group = Group.objects.get(pk=req['group'])
             if group is None:
-                res.result = constants.HTTP_ERR
-                res.msg = 'group_not_found'
+                res['result'] = constants.HTTP_ERR
+                res['msg'] = 'group_not_found'
                 return Response(res)
 
             plan = MemberShipPlan.objects.get(pk=req['plan'])
             if plan is None:
-                res.result = constants.HTTP_ERR
-                res.msg = 'plan_not_found'
+                res['result'] = constants.HTTP_ERR
+                res['msg'] = 'plan_not_found'
                 return Response(res)
 
             # create user
@@ -371,15 +366,172 @@ class CreateUserView(APIView):
             profile.plan = plan
             profile.save()
 
-            res.result = constants.HTTP_OK
-            res.msg = 'created'
+            res['result'] = constants.HTTP_OK
+            res['msg'] = 'created'
         except:
             err = traceback.print_exc()
-            res.result = constants.HTTP_ERR
-            res.msg = err
+            res['result'] = constants.HTTP_ERR
+            res['msg'] = err
 
         return Response(res)
 
 
 def request_plan(request, format=None):
+    pass
+
+
+@api_view(['GET'])
+@permission_classes((AllowAny,))
+def get_pricing_plans(request, format=None):
+    """
+    Get all plan
+    :param request:
+    :param format:
+    :return:
+    """
+    res = {}
+    try:
+        list = []
+        plans = MemberShipPlan.objects.all()
+        for p in plans:
+            plan = {
+                'name': p.name,
+                'duration': p.duration,
+                'market_subscription_limit': p.market_subscription_limit,
+                'prices': []
+            }
+            for price in p.membershipplanpricing_set.all():
+                p = {
+                    'symbol': price.wallet_currency.symbol,
+                    'price': price.price
+                }
+                plan['prices'].append(p)
+            list.append(plan)
+
+        res['result'] = constants.HTTP_OK
+        res['plans'] = list
+    except:
+        err = traceback.print_exc()
+        res['result'] = constants.HTTP_ERR
+        res['msg'] = err
+
+    return Response(res)
+
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
+def create_wallet_type(request, format=None):
+    """
+    Create new wallet type.
+    ---
+    # Request
+    {
+        "name": "BTC Wallet",
+        "symbol": "BTC"
+    }
+    """
+    res = {}
+    try:
+        if not has_permission(request.user, 'add_walletcurrency'):
+            return Response(status=550)
+
+        req = json.loads(request.body.decode('utf-8'))
+        w = WalletCurrency(name=req['name'], symbol=req['symbol'])
+        w.save()
+        res['result'] = constants.HTTP_OK
+        res['msg'] = 'success'
+    except:
+        err = traceback.print_exc()
+        res['result'] = constants.HTTP_ERR
+        res['msg'] = err
+
+    return Response(res)
+
+
+@api_view(['GET'])
+@permission_classes((AllowAny,))
+def get_wallet_type_list(request, format=None):
+    res = {}
+    try:
+        types = []
+        objs = WalletCurrency.objects.all()
+        for obj in objs:
+            types.append({
+                'name': obj.name,
+                'symbol': obj.symbol
+            })
+        res['result'] = constants.HTTP_OK
+        res['data'] = types
+
+    except:
+        err = traceback.print_exc()
+        res['result'] = constants.HTTP_ERR
+        res['msg'] = err
+
+    return Response(res)
+
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
+def create_plan(request, format=None):
+    """
+    Create new plan
+    ---
+    # Request example:
+    { "name": "Sliver", "duration": 6 }
+    """
+    res = {}
+    try:
+        if not has_permission(request.user, 'add_membershipplan'):
+            return Response(status=550)
+
+        req = json.loads(request.body.decode('utf-8'))
+        plan = MemberShipPlan(name=req['name'], duration=req['duration'])
+        plan.save()
+
+        res['result'] = constants.HTTP_OK
+        res['msg'] = 'success'
+    except:
+        err = traceback.print_exc()
+        res['result'] = constants.HTTP_ERR
+        res['msg'] = err
+
+    return Response(res)
+
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
+def add_pricing_to_plan(request, format=None):
+    """
+    Add plan's pricing with specified currency
+
+    ---
+    #Request format:
+    {
+        "plan_id": 1,
+        "wallet_type": 1,
+        "price": 0.01
+    }
+    """
+    res = {}
+    try:
+        req = json.loads(request.body.decode('utf-8'))
+        if not has_permission(request.user, 'add_membershipplanpricing'):
+            return Response(status=550)
+
+        plan = MemberShipPlan.objects.get(pk=req['plan_id'])
+        wallet_type = WalletCurrency.objects.get(pk=req['wallet_type'])
+        pricing = MemberShipPlanPricing(plan=plan, wallet_currency=wallet_type, price=req['price'])
+        pricing.save()
+    except:
+        err = traceback.print_exc()
+        res['result'] = constants.HTTP_ERR
+        res['msg'] = err
+
+    return Response(res)
+
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
+def update_user_wallet(request, format=None):
     pass

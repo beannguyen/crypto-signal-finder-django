@@ -42,4 +42,15 @@ urlpatterns = [
     url(r'^create-user/', view=views.CreateUserView.as_view(), name='create_user'),
     url(r'^request-plan', view=views.request_plan, name='request_plan'),
 
+    # Pricing plan
+    url(r'^get-plan-list', view=views.get_pricing_plans, name='get_pricing_plans'),
+    url(r'^create-plan', view=views.create_plan, name='create_plan'),
+    url(r'^add-pricing-to-plan', view=views.add_pricing_to_plan, name='add_pricing_to_plan'),
+
+    # Wallet Type
+    url(r'^create-wallet-type', view=views.create_wallet_type, name='create_wallet_type'),
+    url(r'^list-wallet-type', view=views.create_wallet_type, name='create_wallet_type'),
+
+    # Person wallet
+url(r'^update-user-wallet', view=views.update_user_wallet, name='update_user_wallet'),
 ]

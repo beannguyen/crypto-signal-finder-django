@@ -16,19 +16,22 @@ class MemberShipPlan(models.Model):
     """
     name = models.CharField(max_length=200)
     duration = models.IntegerField()
+    market_subscription_limit = models.IntegerField(default=20)
 
 
 class MemberShipPlanPricing(models.Model):
     """
     Each plan can include many price in a list of diff currencies.
     """
-    wallet_currency = models.ForeignKey(WalletCurrency, on_delete=models.CASCADE)
+    plan = models.ForeignKey(MemberShipPlan, on_delete=models.CASCADE, default=1)
+    wallet_currency = models.ForeignKey(WalletCurrency, on_delete=models.CASCADE, default=1)
     price = models.DecimalField(max_digits=50, decimal_places=8)
 
 
 class Profile(models.Model):
     user = models.OneToOneField(User, related_name='primary', on_delete=models.CASCADE, primary_key=True)
-    plan = models.ForeignKey(MemberShipPlan, on_delete=models.CASCADE)
+    plan = models.ForeignKey(MemberShipPlan, on_delete=models.CASCADE, null=True)
+    activated_date = models.DateTimeField(auto_now_add=True, null=True)
 
 
 class Wallet(models.Model):
