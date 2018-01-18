@@ -1,4 +1,5 @@
 from bittrex import Bittrex, API_V2_0
+from bs4 import BeautifulSoup
 from celery import shared_task, task
 import dateutil.parser
 import requests
@@ -107,16 +108,3 @@ def get_latest_tick():
                     candle.timestamp = dateutil.parser.parse(latest_candle['T'])
                     if not Candle.objects.filter(timestamp=candle.timestamp).exists():
                         candle.save()
-
-
-@task()
-def crawl_cnn_news():
-    url = "https://www.ccn.com/wp-admin/admin-ajax.php"
-
-    payload = "action=loadmore&query=a%3A5%3A%7Bs%3A13%3A%22category_name%22%3Bs%3A23%3A%22cryptocurrency-analysis%22%3Bs%3A3%3A%22cat%22%3Bi%3A3%3Bs%3A5%3A%22paged%22%3Bi%3A1%3Bs%3A14%3A%22posts_per_page%22%3Bi%3A16%3Bs%3A5%3A%22order%22%3Bs%3A4%3A%22DESC%22%3B%7D&page=1"
-    headers = {
-        'Content-Type': "application/x-www-form-urlencoded"
-    }
-    response = requests.request("POST", url, data=payload, headers=headers)
-
-    print(response.text)
