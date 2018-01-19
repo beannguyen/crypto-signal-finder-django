@@ -5,17 +5,21 @@ import numpy as np
 import pandas as pd
 import talib
 from bittrex import API_V2_0, Bittrex
+from datetime import datetime
 from django.contrib.auth.models import User, Group, Permission
 from django.core.paginator import Paginator
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework_jwt.serializers import JSONWebTokenSerializer
+from rest_framework_jwt.settings import api_settings
+from rest_framework_jwt.utils import jwt_response_payload_handler
 from talib import MA_Type
 import json
 
 from best_django.settings import BITTREX_SECRET_KEY, BITTREX_API_KEY, HTTP_ERR, HTTP_OK, GROUP_LEADER
-from rest.models import MemberShipPlan, Profile, WalletCurrency, MemberShipPlanPricing, AccountVerificationCode
+from rest.models import MemberShipPlan, Profile, WalletCurrency, MemberShipPlanPricing, AccountVerificationCode, Wallet
 from summary_writer.models import Market, MarketSummary, Candle
 from utils import generate_ref, send_mail, generate_email_verification_link
 
@@ -313,12 +317,36 @@ def verify_email(request, format=None):
             profile.is_email_verified = True
             profile.save()
             c.delete()
-        res['result'] = HTTP_OK
-        res['msg'] = 'verified'
+            res['result'] = HTTP_OK
+            res['msg'] = 'verified'
+        else:
+            res['result'] = HTTP_ERR
+            res['msg'] = 'invalid_verify_code'
     except:
         err = traceback.print_exc()
         res['result'] = HTTP_ERR
         res['msg'] = err
+
+    return Response(res)
+
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
+def get_leader_wallet(request, format=None):
+    res = {}
+    try:
+        user = request.user
+        req = json.loads(request.body.decode('utf-8'))
+
+        wallet = Wallet.objects.filter(user=user, wallet_currency__symbol=req['type']).first()
+        res['result'] = HTTP_OK
+        res['wallet'] = {
+            'address': wallet.address
+        }
+    except:
+        traceback.print_exc()
+        res['result'] = HTTP_ERR
+        res['msg'] = 'exception'
 
     return Response(res)
 

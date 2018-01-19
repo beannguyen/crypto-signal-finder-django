@@ -2,7 +2,7 @@ from django.conf.urls import url
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
-from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
+from rest_framework_jwt.views import refresh_jwt_token, verify_jwt_token, obtain_jwt_token
 
 from rest import views
 
@@ -27,7 +27,7 @@ urlpatterns = [
     url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=None), name='schema-redoc'),
 
     # Authentication
-    url(r'^auth/', obtain_jwt_token),
+    url(r'^auth/login', obtain_jwt_token),
     url(r'^auth-jwt-refresh/', refresh_jwt_token),
     url(r'^auth-jwt-verify/', verify_jwt_token),
     url(r'^register', view=views.register, name='register'),
@@ -54,5 +54,5 @@ urlpatterns = [
 
     # Person wallet
     url(r'^update-user-wallet', view=views.update_user_wallet, name='update_user_wallet'),
-    url(r'^get-user-wallet', view=views.update_user_wallet, name='update_user_wallet'),
+    url(r'^get-leader-wallet', view=views.get_leader_wallet, name='get_leader_wallet'),
 ]
