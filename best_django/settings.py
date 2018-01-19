@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'summary_writer',
     'rest',
-    'drf_yasg'
+    'drf_yasg',
+    'seed'
 ]
 
 MIDDLEWARE = [

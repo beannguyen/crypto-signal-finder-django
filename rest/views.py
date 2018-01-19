@@ -17,7 +17,6 @@ import json
 import constants
 from best_django.settings import BITTREX_SECRET_KEY, BITTREX_API_KEY
 from rest.models import MemberShipPlan, Profile, WalletCurrency, MemberShipPlanPricing
-from rest.serializers import BaseResponse
 from summary_writer.models import Market, MarketSummary, Candle
 
 btx_v2 = Bittrex(BITTREX_API_KEY, BITTREX_SECRET_KEY, api_version=API_V2_0)
@@ -222,7 +221,7 @@ def register(request, format=None):
     req = json.loads(request.body.decode('utf-8'))
     print(req)
 
-    res = BaseResponse()
+    res = {}
 
     try:
         username_count = User.objects.count(username=req['username'])

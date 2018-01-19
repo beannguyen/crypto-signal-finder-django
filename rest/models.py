@@ -32,6 +32,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, related_name='primary', on_delete=models.CASCADE, primary_key=True)
     plan = models.ForeignKey(MemberShipPlan, on_delete=models.CASCADE, null=True)
     activated_date = models.DateTimeField(auto_now_add=True, null=True)
+    ref = models.CharField(max_length=4, unique=True, null=True)
 
 
 class Wallet(models.Model):

@@ -52,5 +52,5 @@ urlpatterns = [
     url(r'^list-wallet-type', view=views.create_wallet_type, name='create_wallet_type'),
 
     # Person wallet
-url(r'^update-user-wallet', view=views.update_user_wallet, name='update_user_wallet'),
+    url(r'^update-user-wallet', view=views.update_user_wallet, name='update_user_wallet'),
 ]
