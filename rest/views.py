@@ -274,6 +274,7 @@ def register(request, format=None):
                                    'Click following link to verify your email: '
                                    '{}'.format(user.username,
                                                generate_email_verification_link(
+                                                   user.username,
                                                    v.verify_code)))
         except:
             traceback.print_exc()
@@ -283,6 +284,29 @@ def register(request, format=None):
 
         res['result'] = HTTP_OK
         res['msg'] = 'created'
+    except:
+        err = traceback.print_exc()
+        res['result'] = HTTP_ERR
+        res['msg'] = err
+
+    return Response(res)
+
+
+@api_view(['POST'])
+@permission_classes((AllowAny,))
+def verify_email(request, format=None):
+    """"""
+    req = json.loads(request.body.decode('utf-8'))
+    res = {}
+    try:
+        c = AccountVerificationCode.objects.filter(verify_code=req['verify_code'], user__user__username=req['username'])
+        if c.exists():
+            profile = Profile.objects.filter(user__username=req['username']).first()
+            profile.is_email_verified = True
+            profile.save()
+            c.delete()
+        res['result'] = HTTP_OK
+        res['msg'] = 'verified'
     except:
         err = traceback.print_exc()
         res['result'] = HTTP_ERR

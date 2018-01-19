@@ -15,5 +15,5 @@ def send_mail(subject, to, html_content):
     msg.send()
 
 
-def generate_email_verification_link(code):
-    return HOME_URL + '/#/verification/' + code
+def generate_email_verification_link(username, code):
+    return '{}/#/verification/{}/{}'.format(HOME_URL, username, code)

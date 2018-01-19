@@ -31,6 +31,7 @@ urlpatterns = [
     url(r'^auth-jwt-refresh/', refresh_jwt_token),
     url(r'^auth-jwt-verify/', verify_jwt_token),
     url(r'^register', view=views.register, name='register'),
+    url(r'^email-verification', view=views.verify_email, name='email-verification'),
 
     # Markets
     url(r'^getmarkets/$', view=views.getmarkets, name='getmarkets'),

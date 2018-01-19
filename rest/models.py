@@ -38,6 +38,7 @@ class Profile(models.Model):
     activated_date = models.DateTimeField(auto_now_add=True, null=True)
     ref = models.CharField(max_length=4, unique=True, null=True)
     refer = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
+    is_email_verified = models.BooleanField(default=False)
 
 
 class Wallet(models.Model):
