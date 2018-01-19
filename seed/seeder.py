@@ -1,6 +1,18 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group, Permission
 
+from best_django.settings import GROUP_ADMIN, GROUP_LEADER, GROUP_USER
 from rest.models import *
+
+
+def create_groups():
+    Group.objects.create(name=GROUP_ADMIN)
+    Group.objects.create(name=GROUP_LEADER)
+    Group.objects.create(name=GROUP_USER)
+
+
+def create_extend_permissions():
+    permission = Permission.objects.create(codename='can_add_project',
+                                           name='Can add project')
 
 
 def create_superadmin():

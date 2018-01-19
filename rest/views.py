@@ -14,10 +14,10 @@ from rest_framework.views import APIView
 from talib import MA_Type
 import json
 
-import constants
-from best_django.settings import BITTREX_SECRET_KEY, BITTREX_API_KEY
-from rest.models import MemberShipPlan, Profile, WalletCurrency, MemberShipPlanPricing
+from best_django.settings import BITTREX_SECRET_KEY, BITTREX_API_KEY, HTTP_ERR, HTTP_OK, GROUP_LEADER
+from rest.models import MemberShipPlan, Profile, WalletCurrency, MemberShipPlanPricing, AccountVerificationCode
 from summary_writer.models import Market, MarketSummary, Candle
+from utils import generate_ref, send_mail, generate_email_verification_link
 
 btx_v2 = Bittrex(BITTREX_API_KEY, BITTREX_SECRET_KEY, api_version=API_V2_0)
 
@@ -189,7 +189,8 @@ def register(request, format=None):
     {
         "username": "bean",
         "email": "bean@gmail.com",
-        "password": "123456"
+        "password": "123456",
+        "ref": "Ma 6 ky tu, co the de null"
     }
 
     # Responses
@@ -226,19 +227,28 @@ def register(request, format=None):
     try:
         username_count = User.objects.count(username=req['username'])
         if username_count > 0:
-            res['result'] = constants.HTTP_ERR
+            res['result'] = HTTP_ERR
             res['msg'] = 'user_exist'
             return Response(res)
 
         email_count = User.objects.count(email=req['email'])
         if email_count > 0:
-            res['result'] = constants.HTTP_ERR
+            res['result'] = HTTP_ERR
             res['msg'] = 'email_exist'
             return Response(res)
 
-        plan = None
-        if req['plan'] is not None:
-            plan = MemberShipPlan.objects.get(pk=req['plan'])
+        # dang ky chua chon plan
+        # plan = None
+        # if req['plan'] is not None:
+        #     plan = MemberShipPlan.objects.get(pk=req['plan'])
+
+        ref_id = ''
+        if req['ref'] is None:
+            ref_id = '1111'  # Admin ref
+        else:
+            ref_id = req['ref']
+
+        refer = Profile.objects.filter(ref=ref_id).first()
 
         # create user
         user = User.objects.create_user(username=req['username'],
@@ -252,14 +262,28 @@ def register(request, format=None):
         # add profile
         profile = Profile()
         profile.user = user
-        profile.plan = plan
+        profile.ref = refer
+        # profile.plan = plan
         profile.save()
 
-        res['result'] = constants.HTTP_OK
+        try:
+            v = AccountVerificationCode.objects.create(user=user, verify_code=generate_ref(16))
+            send_mail(subject='Account Activation',
+                      to=user.email,
+                      html_content='<p>Hi {}</p>' +
+                                   'Click following link to verify your email:' +
+                                   '{}'.format(user.username,
+                                               generate_email_verification_link(v.verify_code)))
+        except:
+            traceback.print_exc()
+            res['result'] = HTTP_ERR
+            res['msg'] = 'cannot_send_mail'
+
+        res['result'] = HTTP_OK
         res['msg'] = 'created'
     except:
         err = traceback.print_exc()
-        res['result'] = constants.HTTP_ERR
+        res['result'] = HTTP_ERR
         res['msg'] = err
 
     return Response(res)
@@ -307,6 +331,12 @@ class CreateUserView(APIView):
             "msg": "plan_not_found"
         }
 
+        - Cannot send email:
+        {
+            "result": "ERR",
+            "msg": "cannot_send_mail"
+        }
+
         - Exception:
         {
             "result": "ERR",
@@ -331,25 +361,25 @@ class CreateUserView(APIView):
 
             username_count = User.objects.count(username=req['username'])
             if username_count > 0:
-                res['result'] = constants.HTTP_ERR
+                res['result'] = HTTP_ERR
                 res['msg'] = 'user_exist'
                 return Response(res)
 
             email_count = User.objects.count(email=req['email'])
             if email_count > 0:
-                res['result'] = constants.HTTP_ERR
+                res['result'] = HTTP_ERR
                 res['msg'] = 'email_exist'
                 return Response(res)
 
             group = Group.objects.get(pk=req['group'])
             if group is None:
-                res['result'] = constants.HTTP_ERR
+                res['result'] = HTTP_ERR
                 res['msg'] = 'group_not_found'
                 return Response(res)
 
             plan = MemberShipPlan.objects.get(pk=req['plan'])
             if plan is None:
-                res['result'] = constants.HTTP_ERR
+                res['result'] = HTTP_ERR
                 res['msg'] = 'plan_not_found'
                 return Response(res)
 
@@ -363,13 +393,23 @@ class CreateUserView(APIView):
             profile = Profile()
             profile.user = user
             profile.plan = plan
+
+            # if user is added to Leader group
+            if group.name == GROUP_LEADER:
+                while True:
+                    ref = generate_ref(16)
+                    if ref is not None:
+                        if not Profile.objects.filter(ref=ref).exists():
+                            profile.ref = ref
+                            break
+
             profile.save()
 
-            res['result'] = constants.HTTP_OK
+            res['result'] = HTTP_OK
             res['msg'] = 'created'
         except:
             err = traceback.print_exc()
-            res['result'] = constants.HTTP_ERR
+            res['result'] = HTTP_ERR
             res['msg'] = err
 
         return Response(res)
@@ -407,11 +447,11 @@ def get_pricing_plans(request, format=None):
                 plan['prices'].append(p)
             list.append(plan)
 
-        res['result'] = constants.HTTP_OK
+        res['result'] = HTTP_OK
         res['plans'] = list
     except:
         err = traceback.print_exc()
-        res['result'] = constants.HTTP_ERR
+        res['result'] = HTTP_ERR
         res['msg'] = err
 
     return Response(res)
@@ -437,11 +477,11 @@ def create_wallet_type(request, format=None):
         req = json.loads(request.body.decode('utf-8'))
         w = WalletCurrency(name=req['name'], symbol=req['symbol'])
         w.save()
-        res['result'] = constants.HTTP_OK
+        res['result'] = HTTP_OK
         res['msg'] = 'success'
     except:
         err = traceback.print_exc()
-        res['result'] = constants.HTTP_ERR
+        res['result'] = HTTP_ERR
         res['msg'] = err
 
     return Response(res)
@@ -459,12 +499,12 @@ def get_wallet_type_list(request, format=None):
                 'name': obj.name,
                 'symbol': obj.symbol
             })
-        res['result'] = constants.HTTP_OK
+        res['result'] = HTTP_OK
         res['data'] = types
 
     except:
         err = traceback.print_exc()
-        res['result'] = constants.HTTP_ERR
+        res['result'] = HTTP_ERR
         res['msg'] = err
 
     return Response(res)
@@ -488,11 +528,11 @@ def create_plan(request, format=None):
         plan = MemberShipPlan(name=req['name'], duration=req['duration'])
         plan.save()
 
-        res['result'] = constants.HTTP_OK
+        res['result'] = HTTP_OK
         res['msg'] = 'success'
     except:
         err = traceback.print_exc()
-        res['result'] = constants.HTTP_ERR
+        res['result'] = HTTP_ERR
         res['msg'] = err
 
     return Response(res)
@@ -524,7 +564,7 @@ def add_pricing_to_plan(request, format=None):
         pricing.save()
     except:
         err = traceback.print_exc()
-        res['result'] = constants.HTTP_ERR
+        res['result'] = HTTP_ERR
         res['msg'] = err
 
     return Response(res)

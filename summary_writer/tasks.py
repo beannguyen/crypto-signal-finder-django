@@ -7,6 +7,7 @@ import requests
 from best_django.celery import app
 from summary_writer.models import Market, MarketSummary, Candle
 from best_django import settings
+from utils import send_mail
 
 bittrex_api = Bittrex(settings.BITTREX_API_KEY, settings.BITTREX_SECRET_KEY)
 bittrex_api_v2 = Bittrex(settings.BITTREX_API_KEY, settings.BITTREX_SECRET_KEY, api_version=API_V2_0)
@@ -108,3 +109,7 @@ def get_latest_tick():
                     candle.timestamp = dateutil.parser.parse(latest_candle['T'])
                     if not Candle.objects.filter(timestamp=candle.timestamp).exists():
                         candle.save()
+
+@task()
+def sendmail():
+    send_mail('hell', 'bao.nlq94@gmail.com', '<p>Hello</p>')

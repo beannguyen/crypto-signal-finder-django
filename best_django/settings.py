@@ -191,6 +191,21 @@ JWT_AUTH = {
 BITTREX_API_KEY = 'cbcfce018d144dfdbedfcc1f17a7565c'
 BITTREX_SECRET_KEY = '42fdf442ad114d83a3f53c240dfe19fd'
 
+HTTP_OK = 'OK'
+HTTP_ERR = 'ERR'
+
+GROUP_ADMIN = 'Admin'
+GROUP_LEADER = 'Leader'
+GROUP_USER = 'User'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'vmod.game@gmail.com'
+EMAIL_HOST_PASSWORD = 'glrotflbbtgaaiqb'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+HOME_URL = 'http://localhost:4200'
+
 try:
     from best_django.nogitsettings import *
 except:

@@ -1,3 +1,5 @@
+from datetime import timedelta, datetime
+
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -43,3 +45,9 @@ class Wallet(models.Model):
     wallet_currency = models.ForeignKey(WalletCurrency, on_delete=models.CASCADE)
     address = models.CharField(max_length=500)
     updated_at = models.DateTimeField(auto_now_add=True)
+
+
+class AccountVerificationCode(models.Model):
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    verify_code = models.CharField(max_length=16)
+    expire_on = models.DateTimeField(default=datetime.now() + timedelta(days=1))

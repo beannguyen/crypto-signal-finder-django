@@ -20,3 +20,8 @@ ALLOWED_HOSTS = [
     '103.68.81.39',
     'localhost:4200'
 ]
+
+EMAIL_HOST_USER = 'vmod.game@gmail.com'
+EMAIL_HOST_PASSWORD = 'glrotflbbtgaaiqb'
+
+HOME_URL = 'http://103.68.81.39'
