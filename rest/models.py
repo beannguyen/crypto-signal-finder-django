@@ -3,6 +3,8 @@ from datetime import timedelta, datetime
 from django.contrib.auth.models import User
 from django.db import models
 
+from best_django.settings import ADMIN_REF_UID
+
 
 class WalletCurrency(models.Model):
     """
@@ -35,6 +37,7 @@ class Profile(models.Model):
     plan = models.ForeignKey(MemberShipPlan, on_delete=models.CASCADE, null=True)
     activated_date = models.DateTimeField(auto_now_add=True, null=True)
     ref = models.CharField(max_length=4, unique=True, null=True)
+    refer = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
 
 
 class Wallet(models.Model):

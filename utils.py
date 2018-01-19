@@ -16,4 +16,4 @@ def send_mail(subject, to, html_content):
 
 
 def generate_email_verification_link(code):
-    return HOME_URL + '/verification/' + code
+    return HOME_URL + '/#/verification/' + code

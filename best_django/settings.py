@@ -197,9 +197,10 @@ HTTP_ERR = 'ERR'
 GROUP_ADMIN = 'Admin'
 GROUP_LEADER = 'Leader'
 GROUP_USER = 'User'
+ADMIN_REF_UID = '1111'
 
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'vmod.game@gmail.com'
+EMAIL_HOST_USER = 'SignalFinder <admin@example.com>'
 EMAIL_HOST_PASSWORD = 'glrotflbbtgaaiqb'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True

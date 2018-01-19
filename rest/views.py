@@ -225,13 +225,13 @@ def register(request, format=None):
     res = {}
 
     try:
-        username_count = User.objects.count(username=req['username'])
+        username_count = User.objects.filter(username=req['username']).count()
         if username_count > 0:
             res['result'] = HTTP_ERR
             res['msg'] = 'user_exist'
             return Response(res)
 
-        email_count = User.objects.count(email=req['email'])
+        email_count = User.objects.filter(email=req['email']).count()
         if email_count > 0:
             res['result'] = HTTP_ERR
             res['msg'] = 'email_exist'
@@ -243,7 +243,7 @@ def register(request, format=None):
         #     plan = MemberShipPlan.objects.get(pk=req['plan'])
 
         ref_id = ''
-        if req['ref'] is None:
+        if 'ref' not in req or req['ref'] is None:
             ref_id = '1111'  # Admin ref
         else:
             ref_id = req['ref']
@@ -254,7 +254,7 @@ def register(request, format=None):
         user = User.objects.create_user(username=req['username'],
                                         email=req['email'],
                                         password=req['password'],
-                                        is_activated=False)
+                                        is_active=False)
 
         group = Group.objects.filter(name='User').first()
         group.user_set.add(user)
@@ -262,22 +262,24 @@ def register(request, format=None):
         # add profile
         profile = Profile()
         profile.user = user
-        profile.ref = refer
+        profile.refer = refer
         # profile.plan = plan
         profile.save()
 
         try:
-            v = AccountVerificationCode.objects.create(user=user, verify_code=generate_ref(16))
+            v = AccountVerificationCode.objects.create(user=profile, verify_code=generate_ref(16))
             send_mail(subject='Account Activation',
                       to=user.email,
-                      html_content='<p>Hi {}</p>' +
-                                   'Click following link to verify your email:' +
+                      html_content='<p>Hi {}</p> '
+                                   'Click following link to verify your email: '
                                    '{}'.format(user.username,
-                                               generate_email_verification_link(v.verify_code)))
+                                               generate_email_verification_link(
+                                                   v.verify_code)))
         except:
             traceback.print_exc()
             res['result'] = HTTP_ERR
             res['msg'] = 'cannot_send_mail'
+            return Response(res)
 
         res['result'] = HTTP_OK
         res['msg'] = 'created'
