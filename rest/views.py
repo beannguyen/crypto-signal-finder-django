@@ -333,6 +333,12 @@ def verify_email(request, format=None):
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
 def get_leader_wallet(request, format=None):
+    """
+    Get Leader Wallet address
+    ---
+    #Request
+    {"type": "BTC"}
+    """
     res = {}
     try:
         user = request.user
@@ -496,6 +502,7 @@ def get_pricing_plans(request, format=None):
         plans = MemberShipPlan.objects.all()
         for p in plans:
             plan = {
+                'id': p.pk,
                 'name': p.name,
                 'duration': p.duration,
                 'market_subscription_limit': p.market_subscription_limit,
@@ -635,4 +642,33 @@ def add_pricing_to_plan(request, format=None):
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
 def update_user_wallet(request, format=None):
-    pass
+    """
+    #request
+    {
+        "wallet_type": "ETH",
+        "address": "LTdsVS8VDw6syvfQADdhf2PHAm3rMGJvPX"
+    }
+    """
+    res = {}
+    try:
+        req = json.loads(request.body.decode('utf-8'))
+        if not has_permission(request.user, 'change_wallet'):
+            return Response(status=550)
+
+        profile = Profile.objects.filter(user=request.user).first()
+        wallet = Wallet.objects.filter(user=profile, wallet_currency__symbol=req['wallet_type'])
+        if wallet.exists():
+            wallet = wallet.first()
+            wallet.address = req['address']
+            wallet.save()
+        else:
+            type = WalletCurrency.objects.filter(symbol=req['wallet_type']).first()
+            Wallet.objects.create(user=profile, wallet_currency=type, address=req['address'])
+
+        res['result'] = HTTP_OK
+    except:
+        err = traceback.print_exc()
+        res['result'] = HTTP_ERR
+        res['msg'] = err
+
+    return Response(res)
