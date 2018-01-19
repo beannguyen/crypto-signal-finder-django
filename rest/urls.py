@@ -54,4 +54,5 @@ urlpatterns = [
 
     # Person wallet
     url(r'^update-user-wallet', view=views.update_user_wallet, name='update_user_wallet'),
+    url(r'^get-user-wallet', view=views.update_user_wallet, name='update_user_wallet'),
 ]

@@ -295,7 +295,15 @@ def register(request, format=None):
 @api_view(['POST'])
 @permission_classes((AllowAny,))
 def verify_email(request, format=None):
-    """"""
+    """
+    Verify email
+    ---
+    # Request
+    {
+        "verify_code": "6517CE352F4F4688",
+        "username": "thienbao0212"
+    }
+    """
     req = json.loads(request.body.decode('utf-8'))
     res = {}
     try:
