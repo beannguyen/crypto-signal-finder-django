@@ -1,6 +1,8 @@
 from bittrex import Bittrex, API_V2_0
+from bs4 import BeautifulSoup
 from celery import shared_task, task
 import dateutil.parser
+import requests
 
 from best_django.celery import app
 from summary_writer.models import Market, MarketSummary, Candle
