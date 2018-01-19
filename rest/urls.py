@@ -27,7 +27,7 @@ urlpatterns = [
     url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=None), name='schema-redoc'),
 
     # Authentication
-    url(r'^auth/login', obtain_jwt_token),
+    url(r'^auth/login', views.obtain_jwt_token, name='auth'),
     url(r'^auth-jwt-refresh/', refresh_jwt_token),
     url(r'^auth-jwt-verify/', verify_jwt_token),
     url(r'^register', view=views.register, name='register'),
@@ -42,6 +42,7 @@ urlpatterns = [
     # Membership
     url(r'^create-user/', view=views.CreateUserView.as_view(), name='create_user'),
     url(r'^request-plan', view=views.request_plan, name='request_plan'),
+    url(r'^submit-payment-detail', view=views.submit_payment, name='submit_payment'),
 
     # Pricing plan
     url(r'^get-plan-list', view=views.get_pricing_plans, name='get_pricing_plans'),

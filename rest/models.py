@@ -3,7 +3,7 @@ from datetime import timedelta, datetime
 from django.contrib.auth.models import User
 from django.db import models
 
-from best_django.settings import ADMIN_REF_UID
+from best_django.settings import ADMIN_REF_UID, STT_ACCOUNT_UNPAID, STT_PAYMENT_PENDING
 
 
 class WalletCurrency(models.Model):
@@ -11,7 +11,7 @@ class WalletCurrency(models.Model):
     Currencies used in payment system.
     """
     name = models.CharField(max_length=50)
-    symbol = models.CharField(max_length=50)
+    symbol = models.CharField(max_length=50, unique=True)
 
 
 class MemberShipPlan(models.Model):
@@ -39,6 +39,7 @@ class Profile(models.Model):
     ref = models.CharField(max_length=4, unique=True, null=True)
     refer = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
     is_email_verified = models.BooleanField(default=False)
+    status = models.IntegerField(default=STT_ACCOUNT_UNPAID)
 
 
 class Wallet(models.Model):
@@ -55,3 +56,11 @@ class AccountVerificationCode(models.Model):
     user = models.ForeignKey(Profile, on_delete=models.CASCADE)
     verify_code = models.CharField(max_length=16)
     expire_on = models.DateTimeField(default=datetime.now() + timedelta(days=1))
+
+
+class Payment(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    hash = models.CharField(max_length=500)
+    updated_on = models.DateTimeField(auto_now_add=True)
+    status = models.IntegerField(default=STT_PAYMENT_PENDING)
+    wallet_type = models.ForeignKey(WalletCurrency, on_delete=models.CASCADE, default=1)

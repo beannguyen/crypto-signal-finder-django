@@ -8,6 +8,7 @@ from bittrex import API_V2_0, Bittrex
 from datetime import datetime
 from django.contrib.auth.models import User, Group, Permission
 from django.core.paginator import Paginator
+from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
@@ -18,12 +19,104 @@ from rest_framework_jwt.utils import jwt_response_payload_handler
 from talib import MA_Type
 import json
 
-from best_django.settings import BITTREX_SECRET_KEY, BITTREX_API_KEY, HTTP_ERR, HTTP_OK, GROUP_LEADER
-from rest.models import MemberShipPlan, Profile, WalletCurrency, MemberShipPlanPricing, AccountVerificationCode, Wallet
+from best_django.settings import BITTREX_SECRET_KEY, BITTREX_API_KEY, HTTP_ERR, HTTP_OK, GROUP_LEADER, \
+    STT_PAYMENT_PENDING, STT_ACCOUNT_PENDING
+from rest.models import MemberShipPlan, Profile, WalletCurrency, MemberShipPlanPricing, AccountVerificationCode, Wallet, \
+    Payment
 from summary_writer.models import Market, MarketSummary, Candle
 from utils import generate_ref, send_mail, generate_email_verification_link
 
 btx_v2 = Bittrex(BITTREX_API_KEY, BITTREX_SECRET_KEY, api_version=API_V2_0)
+
+
+class JSONWebTokenAPIView(APIView):
+    """
+    Base API View that various JWT interactions inherit from.
+    """
+    permission_classes = ()
+    authentication_classes = ()
+
+    def get_serializer_context(self):
+        """
+        Extra context provided to the serializer class.
+        """
+        return {
+            'request': self.request,
+            'view': self,
+        }
+
+    def get_serializer_class(self):
+        """
+        Return the class to use for the serializer.
+        Defaults to using `self.serializer_class`.
+        You may want to override this if you need to provide different
+        serializations depending on the incoming request.
+        (Eg. admins get full serialization, others get basic serialization)
+        """
+        assert self.serializer_class is not None, (
+                "'%s' should either include a `serializer_class` attribute, "
+                "or override the `get_serializer_class()` method."
+                % self.__class__.__name__)
+        return self.serializer_class
+
+    def get_serializer(self, *args, **kwargs):
+        """
+        Return the serializer instance that should be used for validating and
+        deserializing input, and for serializing output.
+        """
+        serializer_class = self.get_serializer_class()
+        kwargs['context'] = self.get_serializer_context()
+        return serializer_class(*args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+
+        if serializer.is_valid():
+            user = serializer.object.get('user') or request.user
+            token = serializer.object.get('token')
+            response_data = jwt_response_payload_handler(token, user, request)
+            profile = Profile.objects.get(user=user)
+            groups = user.groups.all()
+            response_data['profile'] = {
+                'plan': {
+                    'id': profile.plan.pk,
+                    'name': profile.plan.name
+                } if profile.plan is not None else None,
+                'ref': profile.ref if profile.ref is not None else '',
+                'refer': profile.refer.user_id,
+                'is_email_verified': profile.is_email_verified,
+                'status': profile.status,
+                'email': profile.user.email
+            }
+
+            for group in groups:
+                response_data['profile']['group'] = {
+                    'id': group.pk,
+                    'name': group.name
+                }
+            response = Response(response_data)
+            if api_settings.JWT_AUTH_COOKIE:
+                expiration = (datetime.utcnow() +
+                              api_settings.JWT_EXPIRATION_DELTA)
+                response.set_cookie(api_settings.JWT_AUTH_COOKIE,
+                                    token,
+                                    expires=expiration,
+                                    httponly=True)
+            return response
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ObtainJSONWebToken(JSONWebTokenAPIView):
+    """
+    API View that receives a POST with a user's username and password.
+
+    Returns a JSON Web Token that can be used for authenticated requests.
+    """
+    serializer_class = JSONWebTokenSerializer
+
+
+obtain_jwt_token = ObtainJSONWebToken.as_view()
 
 
 def has_permission(user, permission_name):
@@ -258,7 +351,7 @@ def register(request, format=None):
         user = User.objects.create_user(username=req['username'],
                                         email=req['email'],
                                         password=req['password'],
-                                        is_active=False)
+                                        is_active=True)
 
         group = Group.objects.filter(name='User').first()
         group.user_set.add(user)
@@ -454,7 +547,8 @@ class CreateUserView(APIView):
             # create user
             user = User.objects.create_user(username=req['username'],
                                             email=req['email'],
-                                            password=req['password'])
+                                            password=req['password'],
+                                            is_active=True)
             group.user_set.add(user)
 
             # add profile
@@ -665,6 +759,35 @@ def update_user_wallet(request, format=None):
             type = WalletCurrency.objects.filter(symbol=req['wallet_type']).first()
             Wallet.objects.create(user=profile, wallet_currency=type, address=req['address'])
 
+        res['result'] = HTTP_OK
+    except:
+        err = traceback.print_exc()
+        res['result'] = HTTP_ERR
+        res['msg'] = err
+
+    return Response(res)
+
+
+def confirm_payment(request, format=None):
+    pass
+
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
+def submit_payment(request, format=None):
+    res = {}
+    try:
+        req = json.loads(request.body.decode('utf-8'))
+        profile = Profile.objects.get(user=request.user)
+        # create bill
+        Payment.objects.create(profile=profile,
+                               hash=req['hash'],
+                               status=STT_PAYMENT_PENDING,
+                               wallet_type=WalletCurrency.objects.get(symbol=req['wallet_type']))
+        # update profile info
+        profile.plan = MemberShipPlan.objects.get(pk=req['plan'])
+        profile.status = STT_ACCOUNT_PENDING
+        profile.save()
         res['result'] = HTTP_OK
     except:
         err = traceback.print_exc()
