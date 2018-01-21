@@ -43,6 +43,9 @@ urlpatterns = [
     url(r'^create-user/', view=views.CreateUserView.as_view(), name='create_user'),
     url(r'^request-plan', view=views.request_plan, name='request_plan'),
     url(r'^submit-payment-detail', view=views.submit_payment, name='submit_payment'),
+    url(r'^get-list-user', view=views.get_user_list, name='get_user_list'),
+    url(r'^get-groups', view=views.get_groups, name='get_groups'),
+    url(r'^assign-sale-package', view=views.assign_sale_package, name='assign_sale_package'),
 
     # Pricing plan
     url(r'^get-plan-list', view=views.get_pricing_plans, name='get_pricing_plans'),
@@ -56,4 +59,7 @@ urlpatterns = [
     # Person wallet
     url(r'^update-user-wallet', view=views.update_user_wallet, name='update_user_wallet'),
     url(r'^get-leader-wallet', view=views.get_leader_wallet, name='get_leader_wallet'),
+
+    # Payment
+    url(r'^get-user-payment-history', view=views.get_user_payment_history, name='get_user_payment_history'),
 ]

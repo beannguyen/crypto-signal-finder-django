@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User, Group, Permission
+from django.contrib.contenttypes.models import ContentType
 
 from best_django.settings import GROUP_ADMIN, GROUP_LEADER, GROUP_USER
 from rest.models import *
@@ -11,8 +12,22 @@ def create_groups():
 
 
 def create_extend_permissions():
-    permission = Permission.objects.create(codename='can_add_project',
-                                           name='Can add project')
+    permissions = [
+        {
+            'codename': 'can_view_payment_history',
+            'name': 'Can view payment history',
+            'content_type': ContentType.objects.filter(app_label='rest', model='payment').first()
+        },
+        {
+            'codename': 'can_assign_sale_package',
+            'name': 'Can assign sale package',
+            'content_type': ContentType.objects.filter(app_label='rest', model='payment').first()
+        }
+    ]
+
+    for perm in permissions:
+        if not Permission.objects.filter(codename=perm['codename']).exists():
+            permission = Permission.objects.create(codename=perm['codename'], name=perm['name'], content_type=perm['content_type'])
 
 
 def create_superadmin():

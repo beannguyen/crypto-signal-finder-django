@@ -42,6 +42,12 @@ class Profile(models.Model):
     status = models.IntegerField(default=STT_ACCOUNT_UNPAID)
 
 
+class SalePackageAssignment(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    plan = models.ForeignKey(MemberShipPlan, on_delete=models.CASCADE, null=True)
+    package_count = models.IntegerField(default=0)
+
+
 class Wallet(models.Model):
     """
     User's wallet
@@ -55,7 +61,7 @@ class Wallet(models.Model):
 class AccountVerificationCode(models.Model):
     user = models.ForeignKey(Profile, on_delete=models.CASCADE)
     verify_code = models.CharField(max_length=16)
-    expire_on = models.DateTimeField(default=datetime.now() + timedelta(days=1))
+    expire_on = models.DateTimeField(auto_now_add=True)
 
 
 class Payment(models.Model):

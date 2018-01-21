@@ -20,9 +20,9 @@ from talib import MA_Type
 import json
 
 from best_django.settings import BITTREX_SECRET_KEY, BITTREX_API_KEY, HTTP_ERR, HTTP_OK, GROUP_LEADER, \
-    STT_PAYMENT_PENDING, STT_ACCOUNT_PENDING
+    STT_PAYMENT_PENDING, STT_ACCOUNT_PENDING, GROUP_ADMIN
 from rest.models import MemberShipPlan, Profile, WalletCurrency, MemberShipPlanPricing, AccountVerificationCode, Wallet, \
-    Payment
+    Payment, SalePackageAssignment
 from summary_writer.models import Market, MarketSummary, Candle
 from utils import generate_ref, send_mail, generate_email_verification_link
 
@@ -83,7 +83,7 @@ class JSONWebTokenAPIView(APIView):
                     'name': profile.plan.name
                 } if profile.plan is not None else None,
                 'ref': profile.ref if profile.ref is not None else '',
-                'refer': profile.refer.user_id,
+                'refer': profile.refer.user_id if profile.refer is not None else None,
                 'is_email_verified': profile.is_email_verified,
                 'status': profile.status,
                 'email': profile.user.email
@@ -364,7 +364,7 @@ def register(request, format=None):
         profile.save()
 
         try:
-            v = AccountVerificationCode.objects.create(user=profile, verify_code=generate_ref(16))
+            v = AccountVerificationCode.objects.create(user=profile, verify_code=generate_ref(16), expire_on=datetime.now() + timedelta(days=1))
             send_mail(subject='Account Activation',
                       to=user.email,
                       html_content='<p>Hi {}</p> '
@@ -382,9 +382,9 @@ def register(request, format=None):
         res['result'] = HTTP_OK
         res['msg'] = 'created'
     except:
-        err = traceback.print_exc()
+        traceback.print_exc()
         res['result'] = HTTP_ERR
-        res['msg'] = err
+        res['msg'] = 'exception'
 
     return Response(res)
 
@@ -520,13 +520,13 @@ class CreateUserView(APIView):
             if not has_permission(request.user, 'add_user'):
                 return Response(status=550)
 
-            username_count = User.objects.count(username=req['username'])
+            username_count = User.objects.filter(username=req['username']).count()
             if username_count > 0:
                 res['result'] = HTTP_ERR
                 res['msg'] = 'user_exist'
                 return Response(res)
 
-            email_count = User.objects.count(email=req['email'])
+            email_count = User.objects.filter(email=req['email']).count()
             if email_count > 0:
                 res['result'] = HTTP_ERR
                 res['msg'] = 'email_exist'
@@ -559,7 +559,7 @@ class CreateUserView(APIView):
             # if user is added to Leader group
             if group.name == GROUP_LEADER:
                 while True:
-                    ref = generate_ref(16)
+                    ref = generate_ref(4)
                     if ref is not None:
                         if not Profile.objects.filter(ref=ref).exists():
                             profile.ref = ref
@@ -569,10 +569,10 @@ class CreateUserView(APIView):
 
             res['result'] = HTTP_OK
             res['msg'] = 'created'
-        except:
-            err = traceback.print_exc()
+        except Exception as e:
+            traceback.print_exc()
             res['result'] = HTTP_ERR
-            res['msg'] = err
+            res['msg'] = e
 
         return Response(res)
 
@@ -793,5 +793,195 @@ def submit_payment(request, format=None):
         err = traceback.print_exc()
         res['result'] = HTTP_ERR
         res['msg'] = err
+
+    return Response(res)
+
+
+@api_view(['GET'])
+@permission_classes((IsAuthenticated,))
+def get_user_list(request, format=None):
+    res = {}
+    try:
+        # req = json.loads(request.body.decode('utf-8'))
+        users = []
+        group = None
+        for g in request.user.groups.all():
+            group = g
+            break
+        if group.name == GROUP_ADMIN:
+            users = Profile.objects.all()
+        elif group.name == GROUP_LEADER:
+            refer_profile = Profile.objects.get(user=request.user)
+            users = Profile.objects.filter(refer=refer_profile)
+
+        res['users'] = []
+        for user in users:
+            group = {}
+            groups = user.user.groups.all()
+            for g in groups:
+                group = {
+                    'id': g.pk,
+                    'name': g.name
+                }
+                break
+
+            res['users'].append({
+                'id': user.user.pk,
+                'username': user.user.username,
+                'email': user.user.email,
+                'group': group,
+                'plan': {
+                    'id': user.plan.pk,
+                    'name': user.plan.name
+                } if user.plan is not None else None,
+                'refer_by': {
+                    'id': user.refer.user.pk,
+                    'name': user.refer.user.username
+                } if user.refer is not None else None,
+                'is_email_verified': user.is_email_verified,
+                'status': user.status
+            })
+
+        res['result'] = HTTP_OK
+        
+    except Exception as e:
+        traceback.print_exc()
+        res['result'] = HTTP_ERR
+        res['msg'] = e
+
+    return Response(res)
+
+
+@api_view(['GET'])
+@permission_classes((AllowAny,))
+def get_groups(request, format=None):
+    """
+    Get groups list.
+    ---
+    # Request: 
+    - khong gui gi :D
+    """
+    res = {}
+    try:
+        # req = json.loads(request.body.decode('utf-8'))
+        groups = Group.objects.all()
+        res['groups'] = []
+        for g in groups:
+            res['groups'].append({
+                'id': g.pk,
+                'name': g.name
+            })
+        res['result'] = HTTP_OK
+    except Exception as e:
+        traceback.print_exc()
+        res['result'] = HTTP_ERR
+        res['msg'] = e
+
+    return Response(res)
+
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
+def get_user_payment_history(request, format=None):
+    """
+    Get list payment history
+    ---
+    # Request
+    - {
+        "user_id": 18
+    }
+    """
+    res = {}
+    try:
+        if not has_permission(request.user, 'can_view_payment_history'):
+            return Response(status=550)
+
+        req = json.loads(request.body.decode('utf-8'))
+        profile = Profile.objects.get(user_id=req['user_id'])
+        payments = Payment.objects.filter(profile=profile).order_by('-updated_on')
+        res['list'] = []
+        for p in payments:
+            res['list'].append({
+                'id': p.pk,
+                'hash': p.hash,
+                'updated_on': p.updated_on,
+                'status': p.status,
+                'wallet_type': {
+                    'id': p.wallet_type.pk,
+                    'name': p.wallet_type.symbol
+                } if p.wallet_type is not None else None
+            })
+        res['result'] = HTTP_OK
+    except Exception as e:
+        traceback.print_exc()
+        res['result'] = HTTP_ERR
+        res['msg'] = e
+
+    return Response(res)
+
+
+def is_leader_user(user):
+    groups = user.groups.all()
+    for g in groups:
+        if g.name == GROUP_LEADER:
+            return True
+    return False
+
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
+def assign_sale_package(request, format=None):
+    """
+    Assign package for leader
+    ---
+    # Request
+    {
+        "assigned_to": 9,
+        "packages": [
+            {
+                "plan_id": 1,
+                "count": 3
+            }
+        ]
+    }
+    # Response
+    - User is not in Leader group
+    {"msg":"user_not_leader","result":"ERR"}
+    - User not exists
+    {"msg":"user_not_exists","result":"ERR"}
+    """
+    res = {}
+    try:
+        if not has_permission(request.user, 'change_salepackageassignment'):
+            return Response(status=550)
+
+        req = json.loads(request.body.decode('utf-8'))
+        user = User.objects.filter(pk=req['assigned_to'])
+        if not user.exists():
+            res['result'] = HTTP_ERR
+            res['msg'] = 'user_not_exists'
+            return Response(res)
+        else:
+            user = user.first()
+        
+        profile = Profile.objects.get(user=user)
+        
+        if not is_leader_user(user):
+            res['result'] = HTTP_ERR
+            res['msg'] = 'user_not_leader'
+            return Response(res)
+
+        for p in req['packages']:
+            pkg = SalePackageAssignment.objects.filter(profile__user_id=profile.user.pk, plan=MemberShipPlan.objects.get(pk=p['plan_id'])).first()
+            if pkg is None:
+                SalePackageAssignment.objects.create(profile=profile, plan=MemberShipPlan.objects.get(pk=p['plan_id']), package_count=p['count'])
+            else:
+                pkg.package_count = p['count']
+                pkg.save()
+        res['result'] = HTTP_OK
+    except Exception as e:
+        traceback.print_exc()
+        res['result'] = HTTP_ERR
+        res['msg'] = e
 
     return Response(res)
