@@ -1,7 +1,67 @@
 import scrapy
 from scrapy import Request, FormRequest
+import traceback
 
 from items.ccn_items import PostItem
+import psycopg2
+
+
+class Postgres:
+    def __init__(self):
+        try:
+            self.conn = psycopg2.connect("dbname='bsf_test1' user='bsfuser' host='localhost' password='Th3NeWorld@@@1893'")
+        except:
+            print("Unable to connect to the database")
+
+    def is_article_exist(self, url):
+        cur = self.conn.cursor()
+        sql = "SELECT COUNT(*) FROM rest_newsitem WHERE url = '{}'".format(url)
+        # print(sql)
+        cur.execute(sql)
+        row = cur.fetchone()
+        count = 0
+        if row is not None:
+            count = row[0]
+        return count
+    
+    def insert_article(self, article):
+        try:
+            cur = self.conn.cursor()
+            if self.is_article_exist(article['url']) == 0:
+                sql = "INSERT INTO rest_newsitem(title, url, img, short_desc, category_title, date, category_url) VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}');".format(article['title'],
+                                                                                                                                                                article['url'],
+                                                                                                                                                                article['img'],
+                                                                                                                                                                '',
+                                                                                                                                                                article['category']['title'],
+                                                                                                                                                                article['date'],
+                                                                                                                                                                article['category']['url'])
+                # print(sql)
+                cur.execute(sql)
+                self.conn.commit()
+        except:
+            traceback.print_exc()
+
+    def is_category_exist(self, url):
+        cur = self.conn.cursor()
+        sql = "SELECT COUNT(*) FROM rest_newscategory WHERE url = '{}'".format(url)
+        # print(sql)
+        cur.execute(sql)
+        row = cur.fetchone()
+        count = 0
+        if row is not None:
+            count = row[0]
+        return count
+
+    def insert_category(self, category):
+        try:
+            cur = self.conn.cursor()
+            if self.is_category_exist(category['url']) == 0:
+                sql = "INSERT INTO rest_newscategory(title, url) VALUES ('{}', '{}');".format(category['title'], category['url'])
+                # print(sql)
+                cur.execute(sql)
+                self.conn.commit()
+        except:
+            traceback.print_exc()
 
 
 class SpidyQuotesSpider(scrapy.Spider):
@@ -15,6 +75,7 @@ class SpidyQuotesSpider(scrapy.Spider):
     }
 
     def start_requests(self):
+        self.db = Postgres()
         yield FormRequest(self.start_urls[0], callback=self.parse, formdata=self.payload)
 
     def parse(self, response):
@@ -30,8 +91,10 @@ class SpidyQuotesSpider(scrapy.Spider):
                 'title': article.xpath('header/div/span/a/@title').extract_first().strip(),
                 'url': article.xpath('header/div/span/a/@href').extract_first().strip()
             }
+            self.db.insert_category(item['category'])
             item['date'] = article.xpath('header/div/time/text()').extract_first().strip()
-            yield item
+            self.db.insert_article(item)
+            # break
 
         self.page += 1
         if self.page <= 20:

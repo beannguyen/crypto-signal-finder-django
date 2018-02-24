@@ -7,7 +7,7 @@ from celery import Celery
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'best_django.settings')
 app = Celery('best_django',
-             include=['summary_writer.tasks'])
+             include=['summary_writer.tasks', 'summary_writer.signal_finder'])
 
 # Using a string here means the worker will not have to
 # pickle the object when using Windows.

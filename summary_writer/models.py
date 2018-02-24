@@ -40,3 +40,10 @@ class Candle(models.Model):
     volume = models.DecimalField(max_digits=50, decimal_places=8)
     timestamp = models.DateTimeField()
     created_on = models.DateTimeField(auto_now_add=True)
+
+
+class Ticker(models.Model):
+    market = models.ForeignKey(to=Market, on_delete=models.CASCADE)
+    bid = models.DecimalField(max_digits=50, decimal_places=8)
+    ask = models.DecimalField(max_digits=50, decimal_places=8)
+    timestamp = models.DateTimeField(auto_now_add=True)

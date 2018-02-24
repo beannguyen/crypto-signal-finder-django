@@ -115,12 +115,21 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "static", "media")
+MEDIA_BASE = os.path.join(BASE_DIR, "static")
+FILEBROWSER_MEDIA_ROOT = MEDIA_ROOT
+FILEBROWSER_DIRECTORY = ''
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "static", "root")
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static", "static"),
+)
 
 # CORS SETTINGS
 CORS_ORIGIN_WHITELIST = (
@@ -159,6 +168,18 @@ CELERY_BEAT_SCHEDULE = {
     'get-latest-tick': {
         'task': 'summary_writer.tasks.get_latest_tick',
         'schedule': crontab(minute='*/15')
+    },
+    'get-ticker': {
+        'task': 'summary_writer.tasks.get_ticker',
+        'schedule': crontab(minute='*/5')
+    },
+    'find_signal': {
+        'task': 'summary_writer.signal_finder.rsi',
+        'schedule': crontab(minute='*/15')
+    },
+    'plan_pricing_calculate': {
+        'task': 'summary_writer.exchange_rate_cal.plan_pricing_calculate',
+        'schedule': crontab(minute='*/15')
     }
 }
 
@@ -181,7 +202,7 @@ JWT_AUTH = {
     'JWT_VERIFY': True,
     'JWT_VERIFY_EXPIRATION': True,
     'JWT_LEEWAY': 0,
-    'JWT_EXPIRATION_DELTA': timedelta(seconds=3000),
+    'JWT_EXPIRATION_DELTA': timedelta(days=300000),
     'JWT_AUDIENCE': None,
     'JWT_ISSUER': None,
     'JWT_AUTH_HEADER_PREFIX': 'Bearer',
@@ -207,6 +228,11 @@ STT_ACCOUNT_OVERDUE = 5
 
 STT_PAYMENT_APPROVED = 1
 STT_PAYMENT_PENDING = 2
+
+ACCOUNT_VERIFICATION_EMAIL = 1
+ACCOUNT_VERIFICATION_FORGOTPWD = 2
+
+UNLIMITED = -1
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'vmod.game@gmail.com'
