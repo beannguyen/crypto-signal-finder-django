@@ -11,6 +11,8 @@ import threading
 import time
 from queue import Queue
 from datetime import datetime, date
+
+from django import db
 from django.db import connection
 
 from best_django.celery import app
