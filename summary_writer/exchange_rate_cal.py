@@ -19,6 +19,7 @@ from best_django import settings
 from utils import send_mail
 from talib import MA_Type
 from decimal import *
+from django import db
 
 bittrex_api = Bittrex(settings.BITTREX_API_KEY, settings.BITTREX_SECRET_KEY)
 bittrex_api_v2 = Bittrex(settings.BITTREX_API_KEY, settings.BITTREX_SECRET_KEY, api_version=API_V2_0)
@@ -29,6 +30,8 @@ def plan_pricing_calculate():
     print('Plan pricing calculating....')
 
     start_time = time.time()
+    db.connections.close_all()
+    
     plans = MemberShipPlan.objects.all()
     base_currency = WalletCurrency.objects.filter(is_base=True).first()
 

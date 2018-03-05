@@ -117,6 +117,9 @@ USE_L10N = True
 
 USE_TZ = False
 
+# SET CONNECTION AGE TO 0
+CONN_MAX_AGE = 0
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
@@ -228,6 +231,7 @@ STT_ACCOUNT_OVERDUE = 5
 
 STT_PAYMENT_APPROVED = 1
 STT_PAYMENT_PENDING = 2
+STT_PAYMENT_PREPARING = 0
 
 ACCOUNT_VERIFICATION_EMAIL = 1
 ACCOUNT_VERIFICATION_FORGOTPWD = 2

@@ -44,8 +44,10 @@ urlpatterns = [
     # Membership
     url(r'^create-user/', view=views.CreateUserView.as_view(), name='create_user'),
     url(r'^request-plan', view=views.request_plan, name='request_plan'),
-    url(r'^submit-payment-detail', view=views.submit_payment, name='submit_payment'),
+    url(r'^payment/prepare', view=views.prepare_payment, name='prepare_payment'),
+    url(r'^payment/submit', view=views.submit_payment, name='submit_payment'),
     url(r'^get-list-user', view=views.get_user_list, name='get_user_list'),
+    url(r'^user/search-by-invoice', view=views.search_user_by_invoice, name='search_user_by_invoice'),
     url(r'^get-groups', view=views.get_groups, name='get_groups'),
     url(r'^assign-sale-package', view=views.assign_sale_package, name='assign_sale_package'),
     url(r'^get-sale-package', view=views.get_sale_package, name='get_sale_package'),
@@ -70,6 +72,8 @@ urlpatterns = [
     # Wallet Type
     url(r'^create-wallet-type', view=views.create_wallet_type, name='create_wallet_type'),
     url(r'^list-wallet-type', view=views.get_wallet_type_list, name='get_wallet_type_list'),
+    url(r'^bank-account/get', view=views.get_bank_account, name='get_bank_account'),
+    url(r'^bank-account/update', view=views.update_bank_account, name='update_bank_account'),
 
     # Person wallet
     url(r'^update-user-wallet', view=views.update_user_wallet, name='update_user_wallet'),

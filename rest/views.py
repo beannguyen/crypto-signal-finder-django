@@ -22,9 +22,9 @@ import json
 from best_django.settings import BITTREX_SECRET_KEY, BITTREX_API_KEY, HTTP_ERR, HTTP_OK, GROUP_LEADER, \
     STT_PAYMENT_PENDING, STT_ACCOUNT_PENDING, GROUP_ADMIN, STT_PAYMENT_APPROVED, STT_ACCOUNT_ACTIVATED, \
     GROUP_USER, STT_ACCOUNT_OVERDUE, STT_ACCOUNT_BANNED, ADMIN_REF_UID, ACCOUNT_VERIFICATION_EMAIL, \
-    ACCOUNT_VERIFICATION_FORGOTPWD, UNLIMITED
+    ACCOUNT_VERIFICATION_FORGOTPWD, UNLIMITED, STT_PAYMENT_PREPARING
 from rest.models import MemberShipPlan, Profile, WalletCurrency, MemberShipPlanPricing, AccountVerificationCode, Wallet, \
-    Payment, SalePackageAssignment, UserSubscription, NewsItem, Strategy, NewsCategory
+    Payment, SalePackageAssignment, UserSubscription, NewsItem, Strategy, NewsCategory, BankAccount
 from summary_writer.models import Market, MarketSummary, Candle, Ticker
 from utils import generate_ref, send_mail, generate_email_verification_link, get_user_status_name, \
     generate_reset_pwd_link
@@ -755,7 +755,7 @@ def get_pricing_plans(request, format=None):
                 'id': p.pk,
                 'name': p.name,
                 'duration': p.duration,
-                'market_subscription_limit': p.market_subscription_limit if p.market_subscription_limit != -1 else '∞',
+                'market_subscription_limit': p.market_subscription_limit,
                 'price': Decimal(pricing.price) if pricing is not None else 0
             }
             list.append(plan)
@@ -1121,6 +1121,35 @@ def confirm_payment(request, format=None):
 
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
+def prepare_payment(request, format=None):
+    res = {}
+    try:
+        profile = Profile.objects.get(user=request.user)
+
+        # create bill
+        bill = Payment.objects.filter(profile=profile, status=STT_PAYMENT_PREPARING)
+        if bill.exists():
+            bill = bill.first()
+            bill.hash = generate_ref(4)
+            bill.save()
+        else:
+            bill = Payment.objects.create(profile=profile,
+                               hash=generate_ref(4),
+                               status=STT_PAYMENT_PREPARING)
+        res = {
+            'result': HTTP_OK,
+            'hash': bill.hash
+        }
+    except Exception as e:
+        traceback.print_exc()
+        res['result'] = HTTP_ERR
+        res['msg'] = 'exception'
+
+    return Response(res)
+
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
 def submit_payment(request, format=None):
     """
     Submit payment
@@ -1136,23 +1165,26 @@ def submit_payment(request, format=None):
     try:
         req = json.loads(request.body.decode('utf-8'))
         profile = Profile.objects.get(user=request.user)
-        # create bill
-        Payment.objects.create(profile=profile,
-                               hash=req['hash'],
-                               status=STT_PAYMENT_PENDING,
-                               wallet_type=WalletCurrency.objects.get(symbol=req['wallet_type']))
 
-        try:
-            send_mail(subject='New Subscription',
-                    to=profile.refer.user.email,
-                    html_content='<p>Hi {}</p><br /> New account register. Go to Dashboard to review.'.format(profile.refer.user.username))
-        except:
-            traceback.print_exc()
-        # update profile info
-        profile.plan = MemberShipPlan.objects.get(pk=req['plan'])
-        profile.status = STT_ACCOUNT_PENDING
-        profile.save()
-        res['result'] = HTTP_OK
+        bill = Payment.objects.filter(hash=req['hash']).first()
+        if bill is not None:
+            bill.status = STT_PAYMENT_PENDING
+            bill.save()
+            try:
+                send_mail(subject='New Subscription',
+                        to=profile.refer.user.email,
+                        html_content='<p>Hi {}</p><br /> New account register. Go to Dashboard to review.'.format(profile.refer.user.username))
+            except:
+                traceback.print_exc()
+            
+            # update profile info
+            profile.plan = MemberShipPlan.objects.get(pk=req['plan'])
+            profile.status = STT_ACCOUNT_PENDING
+            profile.save()
+            res['result'] = HTTP_OK
+        else:
+            res['result'] = HTTP_ERR
+            res['msg'] = 'exception'    
     except Exception as e:
         traceback.print_exc()
         res['result'] = HTTP_ERR
@@ -1180,6 +1212,8 @@ def get_user_list(request, format=None):
 
         res['users'] = []
         for user in users:
+            if user.user.username == 'bean':
+                continue
             group = {}
             groups = user.user.groups.all()
             for g in groups:
@@ -1208,6 +1242,56 @@ def get_user_list(request, format=None):
 
         res['result'] = HTTP_OK
         
+    except Exception as e:
+        traceback.print_exc()
+        res['result'] = HTTP_ERR
+        res['msg'] = 'exception'
+
+    return Response(res)
+
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
+def search_user_by_invoice(request, format=None):
+    res = {}
+    try:
+        req = json.loads(request.body.decode('utf-8'))
+        profile=Profile.objects.get(user=request.user)
+
+        users = []
+        inv = Payment.objects.filter(hash=req['hash'])
+        if inv.exists():
+            inv = inv.first()
+            if inv.profile.refer.pk == profile.user.pk:
+                user = inv.profile
+
+                group = {}
+                groups = user.user.groups.all()
+                for g in groups:
+                    group = {
+                        'id': g.pk,
+                        'name': g.name
+                    }
+                    break
+
+                users.append({
+                    'id': user.user.pk,
+                    'username': user.user.username,
+                    'email': user.user.email,
+                    'group': group,
+                    'plan': {
+                        'id': user.plan.pk,
+                        'name': user.plan.name
+                    } if user.plan is not None else None,
+                    'refer_by': {
+                        'id': user.refer.user.pk,
+                        'name': user.refer.user.username
+                    } if user.refer is not None else None,
+                    'is_email_verified': user.is_email_verified,
+                    'status': get_user_status_name(user.status)
+                })
+        res['result'] = HTTP_OK
+        res['users'] = users
     except Exception as e:
         traceback.print_exc()
         res['result'] = HTTP_ERR
@@ -1567,6 +1651,12 @@ def activate_user(request, format=None):
         user_profile.activated_date = datetime.now()
         user_profile.save()
 
+        inv = Payment.objects.filter(profile=user_profile, status=STT_PAYMENT_PENDING)
+        if inv.exists():
+            inv = inv.first()
+            inv.status = STT_PAYMENT_APPROVED
+            inv.save()
+
         res['result'] = HTTP_OK
     except Exception as e:
         traceback.print_exc()
@@ -1816,15 +1906,83 @@ def get_leader_info(request, format=None):
     try:
         profile = Profile.objects.get(user=request.user)
         refer = profile.refer
-
+        bank_account = BankAccount.objects.filter(user=refer).first()
         info = {
             'email': refer.user.email,
             'phone_number': refer.phone_number,
             'avatar': refer.avatar,
-            'fullname': '{} {}'.format(refer.user.last_name, refer.user.first_name)
+            'fullname': '{} {}'.format(refer.user.last_name, refer.user.first_name),
+            'bank_account': {
+                'name': bank_account.bank_name if bank_account is not None else '',
+                'account': bank_account.bank_account if bank_account is not None else '',
+                'branch': bank_account.bank_branch if bank_account is not None else ''
+            }
         }
         res['result'] = HTTP_OK
         res['info'] = info
+    except Exception as e:
+        traceback.print_exc()
+        res['result'] = HTTP_ERR
+        res['msg'] = 'exception'
+
+    return Response(res)
+
+
+@api_view(['GET'])
+@permission_classes((IsAuthenticated,))
+def get_bank_account(request, format=None):
+    res = {}
+    try:
+        profile = Profile.objects.filter(user=request.user).first()
+        account = BankAccount.objects.filter(user=profile).first()
+        res['result'] = HTTP_OK
+        if account is not None:
+            res['account'] = {
+                'bank_name': account.bank_name,
+                'bank_branch': account.bank_branch,
+                'account': account.bank_account
+            }
+        else:
+            res['account'] = {
+                'bank_name': '',
+                'bank_branch': '',
+                'account': ''
+            }
+    except Exception as e:
+        traceback.print_exc()
+        res['result'] = HTTP_ERR
+        res['msg'] = 'exception'
+
+    return Response(res)
+
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
+def update_bank_account(request, format=None):
+    if not has_permission(request.user, 'change_bankaccount', label='rest'):
+            return Response(status=550)
+
+    res = {}
+    try:
+        req = json.loads(request.body.decode('utf-8'))
+
+        profile = Profile.objects.filter(user=request.user).first()
+        if profile is not None:
+            account = BankAccount.objects.filter(user=profile).first()
+            if account is not None:
+                account.bank_name = req['bank_name']
+                account.bank_account = req['account']
+                account.bank_branch = req['branch_name']
+                account.save()
+            else:
+                BankAccount.objects.create(user=profile,
+                                           bank_name=req['bank_name'],
+                                           bank_account=req['account'],
+                                           bank_branch=req['branch_name'])
+            res['result'] = HTTP_OK
+        else:
+            res['result'] = HTTP_ERR
+            res['msg'] = 'user_not_found'
     except Exception as e:
         traceback.print_exc()
         res['result'] = HTTP_ERR
