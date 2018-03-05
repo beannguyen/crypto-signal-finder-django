@@ -180,6 +180,10 @@ CELERY_BEAT_SCHEDULE = {
     'plan_pricing_calculate': {
         'task': 'summary_writer.exchange_rate_cal.plan_pricing_calculate',
         'schedule': crontab(minute='*/15')
+    },
+    'kill_idle_session': {
+        'task': 'summary_writer.tasks.kill_all_idle_session',
+        'schedule': crontab(minute='*/15')
     }
 }
 

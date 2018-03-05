@@ -9,7 +9,8 @@ import psycopg2
 class Postgres:
     def __init__(self):
         try:
-            self.conn = psycopg2.connect("dbname='bsf_test1' user='bsfuser' host='localhost' password='Th3NeWorld@@@1893'")
+            self.conn = psycopg2.connect(
+                "dbname='bsf_test1' user='bsfuser' host='localhost' password='Th3NeWorld@@@1893'")
         except:
             print("Unable to connect to the database")
 
@@ -23,18 +24,19 @@ class Postgres:
         if row is not None:
             count = row[0]
         return count
-    
+
     def insert_article(self, article):
         try:
             cur = self.conn.cursor()
             if self.is_article_exist(article['url']) == 0:
-                sql = "INSERT INTO rest_newsitem(title, url, img, short_desc, category_title, date, category_url) VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}');".format(article['title'],
-                                                                                                                                                                article['url'],
-                                                                                                                                                                article['img'],
-                                                                                                                                                                '',
-                                                                                                                                                                article['category']['title'],
-                                                                                                                                                                article['date'],
-                                                                                                                                                                article['category']['url'])
+                sql = "INSERT INTO rest_newsitem(title, url, img, short_desc, category_title, date, category_url) VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}');".format(
+                    article['title'],
+                    article['url'],
+                    article['img'],
+                    '',
+                    article['category']['title'],
+                    article['date'],
+                    article['category']['url'])
                 # print(sql)
                 cur.execute(sql)
                 self.conn.commit()
@@ -56,7 +58,8 @@ class Postgres:
         try:
             cur = self.conn.cursor()
             if self.is_category_exist(category['url']) == 0:
-                sql = "INSERT INTO rest_newscategory(title, url) VALUES ('{}', '{}');".format(category['title'], category['url'])
+                sql = "INSERT INTO rest_newscategory(title, url) VALUES ('{}', '{}');".format(category['title'],
+                                                                                              category['url'])
                 # print(sql)
                 cur.execute(sql)
                 self.conn.commit()
