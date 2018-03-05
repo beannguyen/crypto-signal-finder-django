@@ -204,6 +204,21 @@ def add_leader_permissions():
             'model': 'user',
             'app_label': 'auth',
             'codename': 'can_activate_user'
+        },
+        {
+            'model': 'bankaccount',
+            'app_label': 'rest',
+            'codename': 'add_bankaccount'
+        },
+        {
+            'model': 'bankaccount',
+            'app_label': 'rest',
+            'codename': 'change_bankaccount'
+        },
+        {
+            'model': 'bankaccount',
+            'app_label': 'rest',
+            'codename': 'delete_bankaccount'
         }
     ]
     for perm in permissions:

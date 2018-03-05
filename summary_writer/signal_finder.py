@@ -10,6 +10,7 @@ import talib
 import threading
 import time
 from queue import Queue
+from django import db
 
 from best_django.celery import app
 from summary_writer.models import Market, MarketSummary, Candle, Ticker
@@ -110,6 +111,8 @@ def rsi_process_queue():
 def rsi():
     print('System analysing....')
     start_time = time.time()
+    db.connections.close_all()
+    
     markets = Market.objects.all()
 
     for i in range(3):
@@ -172,6 +175,7 @@ def cp_process_queue():
 @task()
 def close_price_strategy():
     print('System analysing....')
+    db.connections.close_all()
     start_time = time.time()
     markets = Market.objects.all()
 

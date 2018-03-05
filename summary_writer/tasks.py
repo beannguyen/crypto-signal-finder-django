@@ -33,9 +33,11 @@ https://medium.com/@yehandjoe/celery-4-periodic-task-in-django-9f6b5a8c21c7
 @task()
 def update_markets():
     print('Updating markets...')
+    db.connections.close_all()
     res = bittrex_api.get_markets()
     # print(res)
     if res['success']:
+        print('got {} markets'.format(len(res['result'])))
         for market in res['result']:
             m = Market.objects.filter(market_name=market['MarketName'])
             if not m.exists():
@@ -57,6 +59,8 @@ def update_markets():
 
 @task()
 def update_market_summary():
+    db.connections.close_all()
+    update_markets()
     print('Updating market summary...')
     res = bittrex_api.get_market_summaries()
     if res['success']:
@@ -65,26 +69,38 @@ def update_market_summary():
             if summary.exists():
                 # print('existed')
                 summary = summary.first()
+                # update model
+                summary.high = summ['High']
+                summary.low = summ['Low']
+                summary.volume = summ['Volume']
+                summary.last = summ['Last']
+                summary.base_volume = summ['BaseVolume']
+                summary.updated_on = dateutil.parser.parse(summ['TimeStamp'])
+                summary.bid = summ['Bid']
+                summary.ask = summ['Ask']
+                summary.prev_day = summ['PrevDay']
+                summary.save()
             else:
-                summary = MarketSummary()
-                summary.market = Market.objects.filter(market_name=summ['MarketName']).first()
+                # print('not existed')
+                market = Market.objects.filter(market_name=summ['MarketName']).first()
+                # print('market: ', summ['MarketName'])
+                summary = MarketSummary.objects.create(market=market,
+                                                        high=summ['High'],
+                                                        low=summ['Low'],
+                                                        volume=summ['Volume'],
+                                                        last=summ['Last'],
+                                                        base_volume=summ['BaseVolume'],
+                                                        updated_on=dateutil.parser.parse(summ['TimeStamp']),
+                                                        bid=summ['Bid'],
+                                                        ask=summ['Ask'],
+                                                        prev_day=summ['PrevDay'])
 
-            # update model
-            summary.high = summ['High']
-            summary.low = summ['Low']
-            summary.volume = summ['Volume']
-            summary.last = summ['Last']
-            summary.base_volume = summ['BaseVolume']
-            summary.updated_on = dateutil.parser.parse(summ['TimeStamp'])
-            summary.bid = summ['Bid']
-            summary.ask = summ['Ask']
-            summary.prev_day = summ['PrevDay']
-            summary.save()
 
 
 @task()
 def get_latest_tick():
     print('Get latest tick...')
+    db.connections.close_all()
     markets = Market.objects.all()
     for market in markets:
         candle_count = Candle.objects.filter(market__market_name=market.market_name).count()
@@ -153,6 +169,8 @@ def get_ticker():
     print('Get ticker....')
 
     start_time = time.time()
+    
+    db.connections.close_all()
     markets = Market.objects.all()
 
     for i in range(3):
@@ -171,6 +189,8 @@ def get_ticker():
 @task()
 def check_overdue_action():
     start_time = time.time()
+    
+    db.connections.close_all()
     markets = Market.objects.all()
 
     accounts = Profile.objects.all()

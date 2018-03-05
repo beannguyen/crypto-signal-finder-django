@@ -63,6 +63,13 @@ class Wallet(models.Model):
     updated_at = models.DateTimeField(auto_now_add=True)
 
 
+class BankAccount(models.Model):
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    bank_name = models.CharField(max_length=500)
+    bank_account = models.CharField(max_length=500)
+    bank_branch = models.CharField(max_length=500)
+
+
 class AccountVerificationCode(models.Model):
     user = models.ForeignKey(Profile, on_delete=models.CASCADE)
     verify_code = models.CharField(max_length=16)
@@ -75,7 +82,7 @@ class Payment(models.Model):
     hash = models.CharField(max_length=500)
     updated_on = models.DateTimeField(auto_now_add=True)
     status = models.IntegerField(default=STT_PAYMENT_PENDING)
-    wallet_type = models.ForeignKey(WalletCurrency, on_delete=models.CASCADE, default=1)
+    wallet_type = models.ForeignKey(WalletCurrency, on_delete=models.CASCADE, default=1, null=True)
 
 
 class UserSubscription(models.Model):
