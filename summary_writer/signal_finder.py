@@ -58,8 +58,8 @@ def send_trading_alert_rsi(market_name, action, open_price=0, high_price=0, low_
         content = content.replace('#Price#', '{}'.format(price))
     print('sending with content ', content)
     for us in UserSubscription.objects.filter(market=Market.objects.filter(market_name=market_name).first()):
-        if SignalSendLog.objects.filter(profile=us.profile, market=market).exists():
-            log = SignalSendLog.objects.filter(profile=us.profile, market=market).order_by('-timestamp').first()
+        if SignalSendLog.objects.filter(profile=us.profile, market__market_name=market_name).exists():
+            log = SignalSendLog.objects.filter(profile=us.profile, market=market_name).order_by('-timestamp').first()
             if action == 'sell' and log.action == 'buy' or action == 'buy' and log.action == 'sell':
                 send_mail(title, us.profile.user.email, content)
         else:
