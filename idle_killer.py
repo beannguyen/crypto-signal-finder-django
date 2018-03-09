@@ -9,7 +9,8 @@ try:
           "FROM pg_stat_activity " \
           "WHERE datname = 'bsf_test1' " \
           "AND state in ('idle', 'idle in transaction', 'idle in transaction (aborted)', 'disabled')" \
-          "AND pid <> pg_backend_pid()"
+          "AND pid <> pg_backend_pid()" \
+          "AND state_change < current_timestamp - INTERVAL '5' MINUTE;"
 
     while True:
         cur.execute(sql)
