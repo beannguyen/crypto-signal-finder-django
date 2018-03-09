@@ -183,6 +183,10 @@ CELERY_BEAT_SCHEDULE = {
     'plan_pricing_calculate': {
         'task': 'summary_writer.exchange_rate_cal.plan_pricing_calculate',
         'schedule': crontab(minute='*/15')
+    },
+    'kill_idle_session': {
+        'task': 'summary_writer.tasks.kill_all_idle_session',
+        'schedule': crontab(minute='*/15')
     }
 }
 
@@ -239,8 +243,10 @@ ACCOUNT_VERIFICATION_FORGOTPWD = 2
 UNLIMITED = -1
 
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'vmod.game@gmail.com'
-EMAIL_HOST_PASSWORD = 'glrotflbbtgaaiqb'
+# EMAIL_HOST_USER = 'vmod.game@gmail.com'
+# EMAIL_HOST_PASSWORD = 'glrotflbbtgaaiqb'
+EMAIL_HOST_USER = 'ccbot.signal@gmail.com'
+EMAIL_HOST_PASSWORD = 'tinhieuphanphoidaily'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 

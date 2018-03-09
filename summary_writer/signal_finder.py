@@ -41,24 +41,30 @@ rsi_queue = Queue()
 
 def send_trading_alert_rsi(market_name, action, open_price=0, high_price=0, low_price=0, close_price=0, price=0):
     title = 'Signal Alert ' + market_name
-    strategy = Strategy.objects.filter(name='RSI').first()
+    strategy = Strategy.objects.filter(name='BB&RSI').first()
     # replace variable in content
     content = strategy.message
     if '#MarketName#' in content:
-        content = content.replace('#MarketName#', market_name)
+        content = content.replace('#MarketName#', '{}'.format(market_name))
     if '#OpenPrice#' in content:
-        content = content.replace('#OpenPrice#', open_price)
+        content = content.replace('#OpenPrice#', '{}'.format(open_price))
     if '#HighPrice#' in content:
-        content = content.replace('#HighPrice#', high_price)
+        content = content.replace('#HighPrice#', '{}'.format(high_price))
     if '#LowPrice#' in content:
-        content = content.replace('#LowPrice#', low_price)
+        content = content.replace('#LowPrice#', '{}'.format(low_price))
     if '#ClosePrice#' in content:
-        content = content.replace('#ClosePrice#', close_price)
+        content = content.replace('#ClosePrice#', '{}'.format(close_price))
     if '#Price#' in content:
-        content = content.replace('#Price#', price)
+        content = content.replace('#Price#', '{}'.format(price))
     print('sending with content ', content)
     for us in UserSubscription.objects.filter(market=Market.objects.filter(market_name=market_name).first()):
-        send_mail(title, us.profile.user.email, content)
+        if SignalSendLog.objects.filter(profile=us.profile, market=market).exists():
+            log = SignalSendLog.objects.filter(profile=us.profile, market=market).order_by('-timestamp').first()
+            if action == 'sell' and log.action == 'buy' or action == 'buy' and log.action == 'sell':
+                send_mail(title, us.profile.user.email, content)
+        else:
+            if action == 'buy':
+                send_mail(title, us.profile.user.email, content)
 
 
 
@@ -177,7 +183,7 @@ def close_price_strategy():
     print('System analysing....')
     db.connections.close_all()
     start_time = time.time()
-    markets = Market.objects.all()
+    markets = Market.objects.filter(market_name="USDT-BTC")
 
     for i in range(3):
         t = threading.Thread(target=cp_process_queue)

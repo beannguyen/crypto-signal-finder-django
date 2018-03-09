@@ -1,0 +1,2359 @@
+nohup: ignoring input
+bin/start_worker.sh: 1: bin/start_worker.sh: source: not found
+bin/start_worker.sh: 2: cd: can't cd to /root/be_signal_finder/be-signal-finder-django
+/root/miniconda2/envs/py35/lib/python3.5/site-packages/celery/platforms.py:793: RuntimeWarning: You're running the worker with superuser privileges: this is
+absolutely not recommended!
+
+Please specify a different user using the -u option.
+
+User information: uid=0 euid=0 gid=0 egid=0
+
+  uid=uid, euid=euid, gid=gid, egid=egid,
+[2018-03-05 15:14:39,043: INFO/MainProcess] Connected to redis://localhost:6379//
+[2018-03-05 15:14:39,056: INFO/MainProcess] mingle: searching for neighbors
+[2018-03-05 15:14:40,079: INFO/MainProcess] mingle: all alone
+[2018-03-05 15:14:40,090: WARNING/MainProcess] /root/miniconda2/envs/py35/lib/python3.5/site-packages/celery/fixups/django.py:202: UserWarning: Using settings.DEBUG leads to a memory leak, never use this setting in production environments!
+  warnings.warn('Using settings.DEBUG leads to a memory leak, never '
+[2018-03-05 15:14:40,090: INFO/MainProcess] celery@ftech ready.
+[2018-03-05 15:14:41,064: INFO/MainProcess] Received task: summary_writer.tasks.get_ticker[eee3aee3-945d-445d-af4a-074c101042d0]  
+[2018-03-05 15:14:41,065: INFO/MainProcess] Received task: summary_writer.tasks.get_ticker[e4f0fdf2-874b-4e76-964b-f470c6384292]  
+/root/miniconda2/envs/py35/lib/python3.5/site-packages/celery/platforms.py:793: RuntimeWarning: You're running the worker with superuser privileges: this is
+absolutely not recommended!
+
+Please specify a different user using the -u option.
+
+User information: uid=0 euid=0 gid=0 egid=0
+
+  uid=uid, euid=euid, gid=gid, egid=egid,
+[2018-03-05 15:14:41,066: WARNING/ForkPoolWorker-1] Get ticker....
+/root/miniconda2/envs/py35/lib/python3.5/site-packages/celery/platforms.py:793: RuntimeWarning: You're running the worker with superuser privileges: this is
+absolutely not recommended!
+
+Please specify a different user using the -u option.
+
+User information: uid=0 euid=0 gid=0 egid=0
+
+  uid=uid, euid=euid, gid=gid, egid=egid,
+[2018-03-05 15:14:41,068: WARNING/ForkPoolWorker-2] Get ticker....
+[2018-03-05 15:14:41,072: INFO/MainProcess] Received task: summary_writer.tasks.get_latest_tick[5ed4d0e7-b3f1-4a51-858b-6d6c481d6e83]  
+[2018-03-05 15:14:41,075: INFO/MainProcess] Received task: summary_writer.tasks.get_ticker[660146b0-f384-4c8c-9273-71362ba8a869]  
+/root/miniconda2/envs/py35/lib/python3.5/site-packages/celery/platforms.py:793: RuntimeWarning: You're running the worker with superuser privileges: this is
+absolutely not recommended!
+
+Please specify a different user using the -u option.
+
+User information: uid=0 euid=0 gid=0 egid=0
+
+  uid=uid, euid=euid, gid=gid, egid=egid,
+[2018-03-05 15:14:41,080: WARNING/ForkPoolWorker-3] Get latest tick...
+[2018-03-05 15:14:41,088: ERROR/MainProcess] Received unregistered task of type 'summary_writer.exchange_rate_cal.plan_pricing_calculate'.
+The message has been ignored and discarded.
+
+Did you remember to import the module containing this task?
+Or maybe you're using relative imports?
+
+Please see
+http://docs.celeryq.org/en/latest/internals/protocol.html
+for more information.
+
+The full contents of the message body was:
+b'[[], {}, {"chain": null, "callbacks": null, "errbacks": null, "chord": null}]' (77b)
+Traceback (most recent call last):
+  File "/root/miniconda2/envs/py35/lib/python3.5/site-packages/celery/worker/consumer/consumer.py", line 559, in on_task_received
+    strategy = strategies[type_]
+KeyError: 'summary_writer.exchange_rate_cal.plan_pricing_calculate'
+[2018-03-05 15:14:41,095: INFO/MainProcess] Received task: summary_writer.signal_finder.rsi[ffe84227-b0e1-45b4-ae2a-f220d8b3d5b3]  
+[2018-03-05 15:14:41,096: INFO/MainProcess] Received task: summary_writer.tasks.get_ticker[def61b08-2bae-4808-904a-72cb0038fe5d]  
+[2018-03-05 15:14:41,097: INFO/MainProcess] Received task: summary_writer.tasks.get_ticker[f90e4a05-32e2-422b-a189-4e453473ce3e]  
+[2018-03-05 15:14:41,100: INFO/MainProcess] Received task: summary_writer.signal_finder.rsi[c5d2dc93-ef8e-4f85-87ae-308da7452e2a]  
+[2018-03-05 15:14:41,101: ERROR/MainProcess] Received unregistered task of type 'summary_writer.exchange_rate_cal.plan_pricing_calculate'.
+The message has been ignored and discarded.
+
+Did you remember to import the module containing this task?
+Or maybe you're using relative imports?
+
+Please see
+http://docs.celeryq.org/en/latest/internals/protocol.html
+for more information.
+
+The full contents of the message body was:
+b'[[], {}, {"chain": null, "callbacks": null, "errbacks": null, "chord": null}]' (77b)
+Traceback (most recent call last):
+  File "/root/miniconda2/envs/py35/lib/python3.5/site-packages/celery/worker/consumer/consumer.py", line 559, in on_task_received
+    strategy = strategies[type_]
+KeyError: 'summary_writer.exchange_rate_cal.plan_pricing_calculate'
+[2018-03-05 15:14:41,103: INFO/MainProcess] Received task: summary_writer.tasks.get_latest_tick[8d47aa64-6143-4791-8c9e-8ae66fefbe98]  
+[2018-03-05 15:14:41,104: INFO/MainProcess] Received task: summary_writer.tasks.get_ticker[97542685-1f84-43dd-97f1-e435c6410b9c]  
+[2018-03-05 15:14:41,111: INFO/MainProcess] Received task: summary_writer.tasks.get_ticker[5ef4fa3a-96d8-4e0a-b438-4937eb2b60ef]  
+[2018-03-05 15:14:41,113: INFO/MainProcess] Received task: summary_writer.tasks.get_ticker[95d6175d-f38c-4c1c-b8cc-c27e860a14cd]  
+[2018-03-05 15:14:41,114: INFO/MainProcess] Received task: summary_writer.tasks.get_ticker[9b5fc7ca-25d8-429a-89ad-0ec02f10118b]  
+[2018-03-05 15:14:41,115: INFO/MainProcess] Received task: summary_writer.tasks.get_latest_tick[cc1eb0d6-f268-403b-9f48-edf792f97570]  
+[2018-03-05 15:14:41,117: ERROR/MainProcess] Received unregistered task of type 'summary_writer.exchange_rate_cal.plan_pricing_calculate'.
+The message has been ignored and discarded.
+
+Did you remember to import the module containing this task?
+Or maybe you're using relative imports?
+
+Please see
+http://docs.celeryq.org/en/latest/internals/protocol.html
+for more information.
+
+The full contents of the message body was:
+b'[[], {}, {"chain": null, "callbacks": null, "errbacks": null, "chord": null}]' (77b)
+Traceback (most recent call last):
+  File "/root/miniconda2/envs/py35/lib/python3.5/site-packages/celery/worker/consumer/consumer.py", line 559, in on_task_received
+    strategy = strategies[type_]
+KeyError: 'summary_writer.exchange_rate_cal.plan_pricing_calculate'
+[2018-03-05 15:14:41,121: INFO/MainProcess] Received task: summary_writer.signal_finder.rsi[599bd9ff-d7f5-4954-ae19-ceb5eab156aa]  
+[2018-03-05 15:16:48,356: WARNING/ForkPoolWorker-2] Execution time = 127.28789
+[2018-03-05 15:16:48,359: INFO/ForkPoolWorker-2] Task summary_writer.tasks.get_ticker[e4f0fdf2-874b-4e76-964b-f470c6384292] succeeded in 127.29111789446324s: None
+[2018-03-05 15:16:48,361: WARNING/ForkPoolWorker-2] Get ticker....
+[2018-03-05 15:16:49,080: INFO/MainProcess] Received task: summary_writer.tasks.get_ticker[c3d544b5-ceaa-4c2f-9d73-43c40ef3b90d]  
+[2018-03-05 15:16:52,883: WARNING/ForkPoolWorker-1] Execution time = 131.81628
+[2018-03-05 15:16:52,887: INFO/ForkPoolWorker-1] Task summary_writer.tasks.get_ticker[eee3aee3-945d-445d-af4a-074c101042d0] succeeded in 131.8208121228963s: None
+[2018-03-05 15:16:52,891: WARNING/ForkPoolWorker-1] System analysing....
+[2018-03-05 15:16:52,936: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:52,936: WARNING/ForkPoolWorker-1] BTC-VEE
+[2018-03-05 15:16:52,936: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:52,940: WARNING/ForkPoolWorker-1] ETH-VEE
+[2018-03-05 15:16:52,944: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:52,944: WARNING/ForkPoolWorker-1] BTC-TRX
+[2018-03-05 15:16:53,026: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,026: WARNING/ForkPoolWorker-1] ETH-TRX
+[2018-03-05 15:16:53,030: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,031: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,031: WARNING/ForkPoolWorker-1] BTC-PTC
+[2018-03-05 15:16:53,039: WARNING/ForkPoolWorker-1] BTC-GRS
+[2018-03-05 15:16:53,047: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,048: WARNING/ForkPoolWorker-1] BTC-XEM
+[2018-03-05 15:16:53,090: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,090: WARNING/ForkPoolWorker-1] BTC-DOGE
+[2018-03-05 15:16:53,097: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,097: WARNING/ForkPoolWorker-1] BTC-BAY
+[2018-03-05 15:16:53,113: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,115: WARNING/ForkPoolWorker-1] BTC-FAIR
+[2018-03-05 15:16:53,137: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,140: WARNING/ForkPoolWorker-1] BTC-SPR
+[2018-03-05 15:16:53,151: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,152: WARNING/ForkPoolWorker-1] BTC-VTR
+[2018-03-05 15:16:53,160: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,160: WARNING/ForkPoolWorker-1] BTC-CLAM
+[2018-03-05 15:16:53,210: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,211: WARNING/ForkPoolWorker-1] BTC-DMD
+[2018-03-05 15:16:53,214: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,214: WARNING/ForkPoolWorker-1] BTC-GAM
+[2018-03-05 15:16:53,255: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:16:53,256: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:16:53,256: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:16:53,256: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:16:53,256: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,257: WARNING/ForkPoolWorker-1] BTC-XRP
+[2018-03-05 15:16:53,270: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,270: WARNING/ForkPoolWorker-1] BTC-GAME
+[2018-03-05 15:16:53,277: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,277: WARNING/ForkPoolWorker-1] BTC-COVAL
+[2018-03-05 15:16:53,279: INFO/MainProcess] Received task: summary_writer.tasks.get_ticker[0dff65a0-3599-41f6-b810-681671f4d447]  
+[2018-03-05 15:16:53,300: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,300: WARNING/ForkPoolWorker-1] BTC-SPHR
+[2018-03-05 15:16:53,306: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,306: WARNING/ForkPoolWorker-1] BTC-OK
+[2018-03-05 15:16:53,317: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,318: WARNING/ForkPoolWorker-1] BTC-NXS
+[2018-03-05 15:16:53,319: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,319: WARNING/ForkPoolWorker-1] BTC-XCP
+[2018-03-05 15:16:53,336: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,336: WARNING/ForkPoolWorker-1] BTC-BITB
+[2018-03-05 15:16:53,340: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,340: WARNING/ForkPoolWorker-1] BTC-GEO
+[2018-03-05 15:16:53,347: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,347: WARNING/ForkPoolWorker-1] BTC-FLO
+[2018-03-05 15:16:53,355: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:16:53,355: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 98, in find_signal
+    send_trading_alert_rsi(market_name, 'buy', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:16:53,355: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:16:53,355: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:16:53,355: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,355: WARNING/ForkPoolWorker-1] BTC-NBT
+[2018-03-05 15:16:53,372: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,373: WARNING/ForkPoolWorker-1] BTC-SNRG
+[2018-03-05 15:16:53,377: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,377: WARNING/ForkPoolWorker-1] BTC-PKB
+[2018-03-05 15:16:53,378: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,383: WARNING/ForkPoolWorker-1] BTC-CPC
+[2018-03-05 15:16:53,396: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,397: WARNING/ForkPoolWorker-1] BTC-DTB
+[2018-03-05 15:16:53,407: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,407: WARNING/ForkPoolWorker-1] BTC-OMG
+[2018-03-05 15:16:53,413: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,413: WARNING/ForkPoolWorker-1] ETH-OMG
+[2018-03-05 15:16:53,424: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,425: WARNING/ForkPoolWorker-1] BTC-CVC
+[2018-03-05 15:16:53,429: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,429: WARNING/ForkPoolWorker-1] ETH-CVC
+[2018-03-05 15:16:53,430: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,430: WARNING/ForkPoolWorker-1] BTC-PART
+[2018-03-05 15:16:53,447: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,447: WARNING/ForkPoolWorker-1] BTC-QTUM
+[2018-03-05 15:16:53,448: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:16:53,448: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:16:53,448: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:16:53,448: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:16:53,449: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,449: WARNING/ForkPoolWorker-1] ETH-QTUM
+[2018-03-05 15:16:53,451: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,451: WARNING/ForkPoolWorker-1] ETH-XMR
+[2018-03-05 15:16:53,467: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,468: WARNING/ForkPoolWorker-1] ETH-XEM
+[2018-03-05 15:16:53,469: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,469: WARNING/ForkPoolWorker-1] ETH-XLM
+[2018-03-05 15:16:53,475: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,480: WARNING/ForkPoolWorker-1] ETH-NEO
+[2018-03-05 15:16:53,490: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,490: WARNING/ForkPoolWorker-1] USDT-XMR
+[2018-03-05 15:16:53,491: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,491: WARNING/ForkPoolWorker-1] BTC-WAX
+[2018-03-05 15:16:53,501: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,501: WARNING/ForkPoolWorker-1] BTC-VTC
+[2018-03-05 15:16:53,514: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:16:53,514: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:16:53,514: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:16:53,514: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:16:53,514: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,514: WARNING/ForkPoolWorker-1] BTC-PPC
+[2018-03-05 15:16:53,521: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,521: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,522: WARNING/ForkPoolWorker-1] BTC-NXT
+[2018-03-05 15:16:53,531: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,531: WARNING/ForkPoolWorker-1] BTC-DASH
+[2018-03-05 15:16:53,522: WARNING/ForkPoolWorker-1] BTC-FTC
+[2018-03-05 15:16:53,543: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:16:53,543: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:16:53,543: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:16:53,544: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:16:53,544: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,544: WARNING/ForkPoolWorker-1] BTC-POT
+[2018-03-05 15:16:53,551: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,556: WARNING/ForkPoolWorker-1] BTC-BLK
+[2018-03-05 15:16:53,558: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,559: WARNING/ForkPoolWorker-1] BTC-EMC2
+[2018-03-05 15:16:53,566: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,566: WARNING/ForkPoolWorker-1] BTC-MUE
+[2018-03-05 15:16:53,572: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,573: WARNING/ForkPoolWorker-1] BTC-XMY
+[2018-03-05 15:16:53,584: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,584: WARNING/ForkPoolWorker-1] BTC-AUR
+[2018-03-05 15:16:53,588: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,588: WARNING/ForkPoolWorker-1] BTC-EFL
+[2018-03-05 15:16:53,601: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,601: WARNING/ForkPoolWorker-1] BTC-GLD
+[2018-03-05 15:16:53,605: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,605: WARNING/ForkPoolWorker-1] BTC-SLR
+[2018-03-05 15:16:53,611: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,611: WARNING/ForkPoolWorker-1] BTC-AEON
+[2018-03-05 15:16:53,627: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,627: WARNING/ForkPoolWorker-1] BTC-ETH
+[2018-03-05 15:16:53,629: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,629: WARNING/ForkPoolWorker-1] BTC-STRAT
+[2018-03-05 15:16:53,636: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,636: WARNING/ForkPoolWorker-1] BTC-UNB
+[2018-03-05 15:16:53,645: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,645: WARNING/ForkPoolWorker-1] BTC-SYNX
+[2018-03-05 15:16:53,655: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,655: WARNING/ForkPoolWorker-1] BTC-EBST
+[2018-03-05 15:16:53,678: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,679: WARNING/ForkPoolWorker-1] BTC-VRM
+[2018-03-05 15:16:53,682: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,683: WARNING/ForkPoolWorker-1] ETH-WAX
+[2018-03-05 15:16:53,686: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,686: WARNING/ForkPoolWorker-1] ETH-ZRX
+[2018-03-05 15:16:53,709: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,709: WARNING/ForkPoolWorker-1] BTC-AGRS
+[2018-03-05 15:16:53,711: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,711: WARNING/ForkPoolWorker-1] BTC-XLM
+[2018-03-05 15:16:53,721: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,728: WARNING/ForkPoolWorker-1] USDT-BTC
+[2018-03-05 15:16:53,730: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,730: WARNING/ForkPoolWorker-1] BTC-SBD
+[2018-03-05 15:16:53,746: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,746: WARNING/ForkPoolWorker-1] BTC-BRX
+[2018-03-05 15:16:53,751: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,751: WARNING/ForkPoolWorker-1] BTC-CLUB
+[2018-03-05 15:16:53,778: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,778: WARNING/ForkPoolWorker-1] BTC-ETC
+[2018-03-05 15:16:53,780: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:16:53,781: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,781: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:16:53,781: WARNING/ForkPoolWorker-1] ETH-ETC
+[2018-03-05 15:16:53,781: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:16:53,783: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:16:53,783: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,784: WARNING/ForkPoolWorker-1] BTC-NEO
+[2018-03-05 15:16:53,815: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,815: WARNING/ForkPoolWorker-1] ETH-1ST
+[2018-03-05 15:16:53,817: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,818: WARNING/ForkPoolWorker-1] ETH-QRL
+[2018-03-05 15:16:53,827: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,827: WARNING/ForkPoolWorker-1] BTC-CRB
+[2018-03-05 15:16:53,849: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,849: WARNING/ForkPoolWorker-1] ETH-CRB
+[2018-03-05 15:16:53,851: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,851: WARNING/ForkPoolWorker-1] BTC-VOX
+[2018-03-05 15:16:53,868: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,868: WARNING/ForkPoolWorker-1] BTC-EMC
+[2018-03-05 15:16:53,870: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,870: WARNING/ForkPoolWorker-1] BTC-FCT
+[2018-03-05 15:16:53,884: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,885: WARNING/ForkPoolWorker-1] BTC-MAID
+[2018-03-05 15:16:53,908: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,909: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,909: WARNING/ForkPoolWorker-1] BTC-EGC
+[2018-03-05 15:16:53,910: WARNING/ForkPoolWorker-1] BTC-ZEC
+[2018-03-05 15:16:53,937: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,937: WARNING/ForkPoolWorker-1] BTC-ZCL
+[2018-03-05 15:16:53,940: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,940: WARNING/ForkPoolWorker-1] BTC-GOLOS
+[2018-03-05 15:16:53,969: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,970: WARNING/ForkPoolWorker-1] ETH-LUN
+[2018-03-05 15:16:53,972: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,972: WARNING/ForkPoolWorker-1] ETH-GNO
+[2018-03-05 15:16:53,995: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,995: WARNING/ForkPoolWorker-1] BTC-HMQ
+[2018-03-05 15:16:53,998: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:53,999: WARNING/ForkPoolWorker-1] ETH-HMQ
+[2018-03-05 15:16:54,006: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,006: WARNING/ForkPoolWorker-1] BTC-ANT
+[2018-03-05 15:16:54,046: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:16:54,046: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:16:54,046: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:16:54,046: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:16:54,047: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,047: WARNING/ForkPoolWorker-1] ETH-TRST
+[2018-03-05 15:16:54,049: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:16:54,050: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:16:54,050: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:16:54,050: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:16:54,051: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,051: WARNING/ForkPoolWorker-1] ETH-ANT
+[2018-03-05 15:16:54,053: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,054: WARNING/ForkPoolWorker-1] BTC-SC
+[2018-03-05 15:16:54,085: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,085: WARNING/ForkPoolWorker-1] ETH-BAT
+[2018-03-05 15:16:54,088: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,088: WARNING/ForkPoolWorker-1] BTC-BAT
+[2018-03-05 15:16:54,096: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,096: WARNING/ForkPoolWorker-1] BTC-ZEN
+[2018-03-05 15:16:54,135: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,136: WARNING/ForkPoolWorker-1] BTC-1ST
+[2018-03-05 15:16:54,141: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,141: WARNING/ForkPoolWorker-1] BTC-QRL
+[2018-03-05 15:16:54,150: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,150: WARNING/ForkPoolWorker-1] ETH-LGD
+[2018-03-05 15:16:54,197: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,197: WARNING/ForkPoolWorker-1] BTC-PTOY
+[2018-03-05 15:16:54,201: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:16:54,201: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:16:54,201: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:16:54,201: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:16:54,202: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,202: WARNING/ForkPoolWorker-1] ETH-PTOY
+[2018-03-05 15:16:54,205: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,205: WARNING/ForkPoolWorker-1] BTC-CFI
+[2018-03-05 15:16:54,239: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,240: WARNING/ForkPoolWorker-1] ETH-CFI
+[2018-03-05 15:16:54,243: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,243: WARNING/ForkPoolWorker-1] BTC-BNT
+[2018-03-05 15:16:54,274: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,274: WARNING/ForkPoolWorker-1] ETH-BNT
+[2018-03-05 15:16:54,277: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:16:54,277: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:16:54,277: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:16:54,278: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:16:54,278: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,279: WARNING/ForkPoolWorker-1] BTC-NMR
+[2018-03-05 15:16:54,293: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,293: WARNING/ForkPoolWorker-1] ETH-NMR
+[2018-03-05 15:16:54,318: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,319: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:16:54,319: WARNING/ForkPoolWorker-1] BTC-GCR
+[2018-03-05 15:16:54,319: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:16:54,321: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:16:54,322: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:16:54,322: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,322: WARNING/ForkPoolWorker-1] BTC-TX
+[2018-03-05 15:16:54,325: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,326: WARNING/ForkPoolWorker-1] BTC-OMNI
+[2018-03-05 15:16:54,359: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,360: WARNING/ForkPoolWorker-1] BTC-AMP
+[2018-03-05 15:16:54,360: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,362: WARNING/ForkPoolWorker-1] BTC-SLS
+[2018-03-05 15:16:54,371: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,372: WARNING/ForkPoolWorker-1] BTC-RADS
+[2018-03-05 15:16:54,404: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,404: WARNING/ForkPoolWorker-1] BTC-BSD
+[2018-03-05 15:16:54,407: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,407: WARNING/ForkPoolWorker-1] BTC-XVG
+[2018-03-05 15:16:54,430: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,430: WARNING/ForkPoolWorker-1] BTC-PIVX
+[2018-03-05 15:16:54,434: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,434: WARNING/ForkPoolWorker-1] BTC-XVC
+[2018-03-05 15:16:54,448: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,448: WARNING/ForkPoolWorker-1] BTC-MEME
+[2018-03-05 15:16:54,465: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,476: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,476: WARNING/ForkPoolWorker-1] BTC-STEEM
+[2018-03-05 15:16:54,476: WARNING/ForkPoolWorker-1] BTC-2GIVE
+[2018-03-05 15:16:54,487: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,487: WARNING/ForkPoolWorker-1] BTC-LSK
+[2018-03-05 15:16:54,517: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,528: WARNING/ForkPoolWorker-1] BTC-BRK
+[2018-03-05 15:16:54,540: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,540: WARNING/ForkPoolWorker-1] BTC-WAVES
+[2018-03-05 15:16:54,560: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,560: WARNING/ForkPoolWorker-1] BTC-LBC
+[2018-03-05 15:16:54,584: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,585: WARNING/ForkPoolWorker-1] BTC-VRC
+[2018-03-05 15:16:54,591: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,591: WARNING/ForkPoolWorker-1] BTC-CURE
+[2018-03-05 15:16:54,612: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,613: WARNING/ForkPoolWorker-1] ETH-SRN
+[2018-03-05 15:16:54,615: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,616: WARNING/ForkPoolWorker-1] ETH-DGB
+[2018-03-05 15:16:54,627: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,636: WARNING/ForkPoolWorker-1] ETH-FCT
+[2018-03-05 15:16:54,639: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,639: WARNING/ForkPoolWorker-1] BTC-ZRX
+[2018-03-05 15:16:54,665: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,666: WARNING/ForkPoolWorker-1] BTC-XMR
+[2018-03-05 15:16:54,668: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,669: WARNING/ForkPoolWorker-1] BTC-CLOAK
+[2018-03-05 15:16:54,694: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,694: WARNING/ForkPoolWorker-1] BTC-START
+[2018-03-05 15:16:54,701: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,701: WARNING/ForkPoolWorker-1] BTC-KORE
+[2018-03-05 15:16:54,727: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,728: WARNING/ForkPoolWorker-1] BTC-XDN
+[2018-03-05 15:16:54,730: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:16:54,731: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:16:54,731: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:16:54,731: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:16:54,732: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,732: WARNING/ForkPoolWorker-1] BTC-TRUST
+[2018-03-05 15:16:54,735: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,736: WARNING/ForkPoolWorker-1] BTC-NAV
+[2018-03-05 15:16:54,771: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,772: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,780: WARNING/ForkPoolWorker-1] BTC-SEQ
+[2018-03-05 15:16:54,780: WARNING/ForkPoolWorker-1] USDT-OMG
+[2018-03-05 15:16:54,788: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,788: WARNING/ForkPoolWorker-1] BTC-ADA
+[2018-03-05 15:16:54,834: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,834: WARNING/ForkPoolWorker-1] BTC-MANA
+[2018-03-05 15:16:54,849: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,849: WARNING/ForkPoolWorker-1] ETH-MANA
+[2018-03-05 15:16:54,857: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,857: WARNING/ForkPoolWorker-1] BTC-SALT
+[2018-03-05 15:16:54,899: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:16:54,899: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:16:54,900: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:16:54,900: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:16:54,900: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,901: WARNING/ForkPoolWorker-1] ETH-SALT
+[2018-03-05 15:16:54,908: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,909: WARNING/ForkPoolWorker-1] BTC-TIX
+[2018-03-05 15:16:54,912: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,922: WARNING/ForkPoolWorker-1] BTC-REP
+[2018-03-05 15:16:54,940: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,945: WARNING/ForkPoolWorker-1] BTC-SHIFT
+[2018-03-05 15:16:54,973: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,973: WARNING/ForkPoolWorker-1] BTC-ARDR
+[2018-03-05 15:16:54,976: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,977: WARNING/ForkPoolWorker-1] BTC-XZC
+[2018-03-05 15:16:54,987: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:54,998: WARNING/ForkPoolWorker-1] BTC-LTC
+[2018-03-05 15:16:55,016: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,016: WARNING/ForkPoolWorker-1] BTC-RDD
+[2018-03-05 15:16:55,019: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,019: WARNING/ForkPoolWorker-1] BTC-NLG
+[2018-03-05 15:16:55,033: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,033: WARNING/ForkPoolWorker-1] BTC-RBY
+[2018-03-05 15:16:55,045: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,055: WARNING/ForkPoolWorker-1] BTC-XWC
+[2018-03-05 15:16:55,058: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,059: WARNING/ForkPoolWorker-1] BTC-MONA
+[2018-03-05 15:16:55,082: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,083: WARNING/ForkPoolWorker-1] BTC-THC
+[2018-03-05 15:16:55,086: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,086: WARNING/ForkPoolWorker-1] BTC-ENRG
+[2018-03-05 15:16:55,111: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,111: WARNING/ForkPoolWorker-1] BTC-ERC
+[2018-03-05 15:16:55,113: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,114: WARNING/ForkPoolWorker-1] BTC-UBQ
+[2018-03-05 15:16:55,127: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,127: WARNING/ForkPoolWorker-1] BTC-GNO
+[2018-03-05 15:16:55,146: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,147: WARNING/ForkPoolWorker-1] BTC-PAY
+[2018-03-05 15:16:55,157: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,157: WARNING/ForkPoolWorker-1] USDT-BCC
+[2018-03-05 15:16:55,170: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,170: WARNING/ForkPoolWorker-1] BTC-BCC
+[2018-03-05 15:16:55,193: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,194: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,194: WARNING/ForkPoolWorker-1] BTC-DNT
+[2018-03-05 15:16:55,195: WARNING/ForkPoolWorker-1] ETH-DNT
+[2018-03-05 15:16:55,205: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,205: WARNING/ForkPoolWorker-1] USDT-NEO
+[2018-03-05 15:16:55,237: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,237: WARNING/ForkPoolWorker-1] ETH-TIX
+[2018-03-05 15:16:55,253: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,253: WARNING/ForkPoolWorker-1] BTC-RCN
+[2018-03-05 15:16:55,279: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,281: WARNING/ForkPoolWorker-1] ETH-RCN
+[2018-03-05 15:16:55,280: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,284: WARNING/ForkPoolWorker-1] BTC-VIB
+[2018-03-05 15:16:55,291: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,291: WARNING/ForkPoolWorker-1] ETH-VIB
+[2018-03-05 15:16:55,323: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,323: WARNING/ForkPoolWorker-1] ETH-WAVES
+[2018-03-05 15:16:55,350: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:16:55,351: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:16:55,351: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:16:55,351: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:16:55,351: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,352: WARNING/ForkPoolWorker-1] BTC-MER
+[2018-03-05 15:16:55,355: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,355: WARNING/ForkPoolWorker-1] BTC-POWR
+[2018-03-05 15:16:55,373: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,374: WARNING/ForkPoolWorker-1] ETH-POWR
+[2018-03-05 15:16:55,387: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,388: WARNING/ForkPoolWorker-1] BTC-BTG
+[2018-03-05 15:16:55,412: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,412: WARNING/ForkPoolWorker-1] ETH-BTG
+[2018-03-05 15:16:55,415: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,415: WARNING/ForkPoolWorker-1] USDT-BTG
+[2018-03-05 15:16:55,438: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,443: WARNING/ForkPoolWorker-1] USDT-XVG
+[2018-03-05 15:16:55,465: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,465: WARNING/ForkPoolWorker-1] BTC-IGNIS
+[2018-03-05 15:16:55,468: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,468: WARNING/ForkPoolWorker-1] BTC-SRN
+[2018-03-05 15:16:55,495: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,496: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,496: WARNING/ForkPoolWorker-1] ETH-STRAT
+[2018-03-05 15:16:55,496: WARNING/ForkPoolWorker-1] BTC-LGD
+[2018-03-05 15:16:55,514: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,524: WARNING/ForkPoolWorker-1] BTC-ADX
+[2018-03-05 15:16:55,526: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,527: WARNING/ForkPoolWorker-1] ETH-ADX
+[2018-03-05 15:16:55,551: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,552: WARNING/ForkPoolWorker-1] BTC-IOP
+[2018-03-05 15:16:55,555: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,555: WARNING/ForkPoolWorker-1] BTC-KMD
+[2018-03-05 15:16:55,581: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,582: WARNING/ForkPoolWorker-1] BTC-TRST
+[2018-03-05 15:16:55,584: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:16:55,585: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:16:55,585: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:16:55,585: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:16:55,586: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,586: WARNING/ForkPoolWorker-1] ETH-GNT
+[2018-03-05 15:16:55,591: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,591: WARNING/ForkPoolWorker-1] BTC-XST
+[2018-03-05 15:16:55,635: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,635: WARNING/ForkPoolWorker-1] BTC-GBG
+[2018-03-05 15:16:55,642: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,642: WARNING/ForkPoolWorker-1] BTC-SIB
+[2018-03-05 15:16:55,654: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,654: WARNING/ForkPoolWorker-1] BTC-ION
+[2018-03-05 15:16:55,686: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,686: WARNING/ForkPoolWorker-1] BTC-LMC
+[2018-03-05 15:16:55,694: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,694: WARNING/ForkPoolWorker-1] ETH-REP
+[2018-03-05 15:16:55,707: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,717: WARNING/ForkPoolWorker-1] USDT-ETH
+[2018-03-05 15:16:55,720: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,720: WARNING/ForkPoolWorker-1] ETH-WINGS
+[2018-03-05 15:16:55,754: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:16:55,755: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:16:55,755: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:16:55,756: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:16:55,756: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:16:55,756: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:16:55,757: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:16:55,757: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:16:55,758: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,758: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,759: WARNING/ForkPoolWorker-1] ETH-DASH
+[2018-03-05 15:16:55,759: WARNING/ForkPoolWorker-1] ETH-SC
+[2018-03-05 15:16:55,765: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,765: WARNING/ForkPoolWorker-1] ETH-ZEC
+[2018-03-05 15:16:55,808: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:16:55,808: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:16:55,809: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:16:55,809: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:16:55,809: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,809: WARNING/ForkPoolWorker-1] USDT-ZEC
+[2018-03-05 15:16:55,816: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,816: WARNING/ForkPoolWorker-1] USDT-LTC
+[2018-03-05 15:16:55,821: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,821: WARNING/ForkPoolWorker-1] USDT-ETC
+[2018-03-05 15:16:55,864: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,864: WARNING/ForkPoolWorker-1] ETH-LTC
+[2018-03-05 15:16:55,869: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,869: WARNING/ForkPoolWorker-1] USDT-XRP
+[2018-03-05 15:16:55,885: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,886: WARNING/ForkPoolWorker-1] BTC-BCPT
+[2018-03-05 15:16:55,909: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,910: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,910: WARNING/ForkPoolWorker-1] BTC-VIA
+[2018-03-05 15:16:55,910: WARNING/ForkPoolWorker-1] BTC-PINK
+[2018-03-05 15:16:55,918: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,918: WARNING/ForkPoolWorker-1] BTC-IOC
+[2018-03-05 15:16:55,936: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,937: WARNING/ForkPoolWorker-1] BTC-QWARK
+[2018-03-05 15:16:55,938: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,938: WARNING/ForkPoolWorker-1] BTC-CRW
+[2018-03-05 15:16:55,949: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,949: WARNING/ForkPoolWorker-1] BTC-SWT
+[2018-03-05 15:16:55,951: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,951: WARNING/ForkPoolWorker-1] ETH-XRP
+[2018-03-05 15:16:55,964: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,964: WARNING/ForkPoolWorker-1] BTC-SNT
+[2018-03-05 15:16:55,967: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,967: WARNING/ForkPoolWorker-1] ETH-SNT
+[2018-03-05 15:16:55,976: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,984: WARNING/ForkPoolWorker-1] BTC-DCT
+[2018-03-05 15:16:55,986: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,986: WARNING/ForkPoolWorker-1] BTC-XEL
+[2018-03-05 15:16:55,996: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,996: WARNING/ForkPoolWorker-1] BTC-MCO
+[2018-03-05 15:16:55,998: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:55,998: WARNING/ForkPoolWorker-1] ETH-BCPT
+[2018-03-05 15:16:56,008: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,008: WARNING/ForkPoolWorker-1] BTC-CANN
+[2018-03-05 15:16:56,010: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,010: WARNING/ForkPoolWorker-1] BTC-SYS
+[2018-03-05 15:16:56,018: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,019: WARNING/ForkPoolWorker-1] BTC-NEOS
+[2018-03-05 15:16:56,032: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,032: WARNING/ForkPoolWorker-1] BTC-FLDC
+[2018-03-05 15:16:56,034: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,034: WARNING/ForkPoolWorker-1] ETH-MCO
+[2018-03-05 15:16:56,044: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,050: WARNING/ForkPoolWorker-1] BTC-ADT
+[2018-03-05 15:16:56,052: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,052: WARNING/ForkPoolWorker-1] ETH-ADT
+[2018-03-05 15:16:56,062: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,068: WARNING/ForkPoolWorker-1] BTC-GRC
+[2018-03-05 15:16:56,070: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,070: WARNING/ForkPoolWorker-1] BTC-BCY
+[2018-03-05 15:16:56,076: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,076: WARNING/ForkPoolWorker-1] BTC-MLN
+[2018-03-05 15:16:56,095: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,095: WARNING/ForkPoolWorker-1] BTC-ARK
+[2018-03-05 15:16:56,100: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,100: WARNING/ForkPoolWorker-1] BTC-DYN
+[2018-03-05 15:16:56,102: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,102: WARNING/ForkPoolWorker-1] BTC-TKS
+[2018-03-05 15:16:56,122: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,122: WARNING/ForkPoolWorker-1] BTC-MUSIC
+[2018-03-05 15:16:56,124: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,124: WARNING/ForkPoolWorker-1] BTC-INCNT
+[2018-03-05 15:16:56,129: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,129: WARNING/ForkPoolWorker-1] BTC-GBYTE
+[2018-03-05 15:16:56,150: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,150: WARNING/ForkPoolWorker-1] ETH-PAY
+[2018-03-05 15:16:56,154: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:16:56,155: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:16:56,155: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:16:56,155: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:16:56,155: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,155: WARNING/ForkPoolWorker-1] BTC-STORJ
+[2018-03-05 15:16:56,164: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,172: WARNING/ForkPoolWorker-1] BTC-EXP
+[2018-03-05 15:16:56,172: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,174: WARNING/ForkPoolWorker-1] BTC-INFX
+[2018-03-05 15:16:56,180: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,180: WARNING/ForkPoolWorker-1] BTC-DCR
+[2018-03-05 15:16:56,203: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,204: WARNING/ForkPoolWorker-1] BTC-PDC
+[2018-03-05 15:16:56,209: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,210: WARNING/ForkPoolWorker-1] BTC-GNT
+[2018-03-05 15:16:56,218: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,218: WARNING/ForkPoolWorker-1] BTC-NXC
+[2018-03-05 15:16:56,226: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,226: WARNING/ForkPoolWorker-1] BTC-EDG
+[2018-03-05 15:16:56,234: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,234: WARNING/ForkPoolWorker-1] ETH-STORJ
+[2018-03-05 15:16:56,248: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,249: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,249: WARNING/ForkPoolWorker-1] BTC-EXCL
+[2018-03-05 15:16:56,249: WARNING/ForkPoolWorker-1] BTC-SWIFT
+[2018-03-05 15:16:56,261: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,267: WARNING/ForkPoolWorker-1] BTC-DOPE
+[2018-03-05 15:16:56,269: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,269: WARNING/ForkPoolWorker-1] BTC-BLOCK
+[2018-03-05 15:16:56,287: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,288: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,288: WARNING/ForkPoolWorker-1] BTC-ABY
+[2018-03-05 15:16:56,288: WARNING/ForkPoolWorker-1] BTC-BYC
+[2018-03-05 15:16:56,295: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,295: WARNING/ForkPoolWorker-1] BTC-XMG
+[2018-03-05 15:16:56,323: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,323: WARNING/ForkPoolWorker-1] BTC-BLITZ
+[2018-03-05 15:16:56,329: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,329: WARNING/ForkPoolWorker-1] BTC-WINGS
+[2018-03-05 15:16:56,339: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,345: WARNING/ForkPoolWorker-1] BTC-RLC
+[2018-03-05 15:16:56,347: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,347: WARNING/ForkPoolWorker-1] BTC-GUP
+[2018-03-05 15:16:56,353: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,353: WARNING/ForkPoolWorker-1] BTC-LUN
+[2018-03-05 15:16:56,370: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,371: WARNING/ForkPoolWorker-1] ETH-GUP
+[2018-03-05 15:16:56,384: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,392: WARNING/ForkPoolWorker-1] ETH-RLC
+[2018-03-05 15:16:56,394: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,394: WARNING/ForkPoolWorker-1] USDT-DASH
+[2018-03-05 15:16:56,422: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:16:56,422: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:16:56,422: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:16:56,422: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:16:56,423: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,423: WARNING/ForkPoolWorker-1] ETH-BCC
+[2018-03-05 15:16:56,425: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:16:56,426: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:16:56,426: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:16:56,426: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:16:56,426: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,427: WARNING/ForkPoolWorker-1] ETH-ADA
+[2018-03-05 15:16:56,429: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,430: WARNING/ForkPoolWorker-1] BTC-ENG
+[2018-03-05 15:16:56,459: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,459: WARNING/ForkPoolWorker-1] ETH-ENG
+[2018-03-05 15:16:56,463: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,463: WARNING/ForkPoolWorker-1] USDT-ADA
+[2018-03-05 15:16:56,480: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,480: WARNING/ForkPoolWorker-1] USDT-NXT
+[2018-03-05 15:16:56,493: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,501: WARNING/ForkPoolWorker-1] BTC-UKG
+[2018-03-05 15:16:56,512: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,512: WARNING/ForkPoolWorker-1] ETH-UKG
+[2018-03-05 15:16:56,516: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,516: WARNING/ForkPoolWorker-1] BTC-DGB
+[2018-03-05 15:16:56,553: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:16:56,553: WARNING/ForkPoolWorker-1] BTC-BURST
+[2018-03-05 15:16:56,583: WARNING/ForkPoolWorker-1] Execution time = 3.69253
+[2018-03-05 15:16:56,585: INFO/ForkPoolWorker-1] Task summary_writer.signal_finder.rsi[ffe84227-b0e1-45b4-ae2a-f220d8b3d5b3] succeeded in 3.6948302006348968s: None
+[2018-03-05 15:16:56,588: WARNING/ForkPoolWorker-1] Get ticker....
+[2018-03-05 15:16:57,286: INFO/MainProcess] Received task: summary_writer.tasks.update_market_summary[42f07bf9-15ed-45a5-9c93-45df85ff8c4a]  
+[2018-03-05 15:17:59,593: WARNING/ForkPoolWorker-2] Execution time = 71.23167
+[2018-03-05 15:17:59,595: INFO/ForkPoolWorker-2] Task summary_writer.tasks.get_ticker[660146b0-f384-4c8c-9273-71362ba8a869] succeeded in 71.23363402951509s: None
+[2018-03-05 15:17:59,598: WARNING/ForkPoolWorker-2] Get ticker....
+[2018-03-05 15:18:00,172: INFO/MainProcess] Received task: summary_writer.tasks.get_ticker[d6485ffd-a83b-414f-8255-c816b35ad88a]  
+[2018-03-05 15:18:01,840: WARNING/ForkPoolWorker-1] Execution time = 65.25074
+[2018-03-05 15:18:01,849: INFO/ForkPoolWorker-1] Task summary_writer.tasks.get_ticker[def61b08-2bae-4808-904a-72cb0038fe5d] succeeded in 65.26083641778678s: None
+[2018-03-05 15:18:01,866: WARNING/ForkPoolWorker-1] System analysing....
+[2018-03-05 15:18:01,925: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:01,926: WARNING/ForkPoolWorker-1] BTC-VEE
+[2018-03-05 15:18:01,928: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:01,929: WARNING/ForkPoolWorker-1] ETH-VEE
+[2018-03-05 15:18:01,935: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:01,935: WARNING/ForkPoolWorker-1] BTC-TRX
+[2018-03-05 15:18:01,940: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:01,940: WARNING/ForkPoolWorker-1] ETH-TRX
+[2018-03-05 15:18:01,944: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:01,944: WARNING/ForkPoolWorker-1] BTC-PTC
+[2018-03-05 15:18:01,960: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:01,960: WARNING/ForkPoolWorker-1] BTC-GRS
+[2018-03-05 15:18:01,987: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,004: WARNING/ForkPoolWorker-1] BTC-XEM
+[2018-03-05 15:18:02,038: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,038: WARNING/ForkPoolWorker-1] BTC-DOGE
+[2018-03-05 15:18:02,039: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,047: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,047: WARNING/ForkPoolWorker-1] BTC-BAY
+[2018-03-05 15:18:02,060: WARNING/ForkPoolWorker-1] BTC-FAIR
+[2018-03-05 15:18:02,077: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,077: WARNING/ForkPoolWorker-1] BTC-SPR
+[2018-03-05 15:18:02,081: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,082: WARNING/ForkPoolWorker-1] BTC-VTR
+[2018-03-05 15:18:02,104: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,144: WARNING/ForkPoolWorker-1] BTC-CLAM
+[2018-03-05 15:18:02,147: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,147: WARNING/ForkPoolWorker-1] BTC-XRP
+[2018-03-05 15:18:02,144: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,149: WARNING/ForkPoolWorker-1] BTC-GAM
+[2018-03-05 15:18:02,115: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,152: WARNING/ForkPoolWorker-1] BTC-DMD
+[2018-03-05 15:18:02,161: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,161: WARNING/ForkPoolWorker-1] BTC-GAME
+[2018-03-05 15:18:02,184: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:18:02,185: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:18:02,194: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:18:02,194: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:18:02,194: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,195: WARNING/ForkPoolWorker-1] BTC-COVAL
+[2018-03-05 15:18:02,211: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,215: WARNING/ForkPoolWorker-1] BTC-SPHR
+[2018-03-05 15:18:02,261: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,272: WARNING/ForkPoolWorker-1] BTC-OK
+[2018-03-05 15:18:02,285: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,285: WARNING/ForkPoolWorker-1] BTC-NXS
+[2018-03-05 15:18:02,289: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,289: WARNING/ForkPoolWorker-1] BTC-XCP
+[2018-03-05 15:18:02,293: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,302: WARNING/ForkPoolWorker-1] BTC-BITB
+[2018-03-05 15:18:02,301: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,317: WARNING/ForkPoolWorker-1] BTC-GEO
+[2018-03-05 15:18:02,357: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,365: WARNING/ForkPoolWorker-1] BTC-FLO
+[2018-03-05 15:18:02,377: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,377: WARNING/ForkPoolWorker-1] BTC-NBT
+[2018-03-05 15:18:02,385: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,385: WARNING/ForkPoolWorker-1] BTC-SNRG
+[2018-03-05 15:18:02,401: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,401: WARNING/ForkPoolWorker-1] BTC-PKB
+[2018-03-05 15:18:02,405: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,405: WARNING/ForkPoolWorker-1] BTC-CPC
+[2018-03-05 15:18:02,427: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,430: WARNING/ForkPoolWorker-1] BTC-DTB
+[2018-03-05 15:18:02,428: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:18:02,428: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,433: WARNING/ForkPoolWorker-1] BTC-OMG
+[2018-03-05 15:18:02,432: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,434: WARNING/ForkPoolWorker-1] ETH-OMG
+[2018-03-05 15:18:02,433: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,435: WARNING/ForkPoolWorker-1] BTC-CVC
+[2018-03-05 15:18:02,432: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 98, in find_signal
+    send_trading_alert_rsi(market_name, 'buy', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:18:02,439: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:18:02,439: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:18:02,440: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,440: WARNING/ForkPoolWorker-1] ETH-CVC
+[2018-03-05 15:18:02,452: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,452: WARNING/ForkPoolWorker-1] BTC-PART
+[2018-03-05 15:18:02,462: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,462: WARNING/ForkPoolWorker-1] BTC-QTUM
+[2018-03-05 15:18:02,478: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,478: WARNING/ForkPoolWorker-1] ETH-QTUM
+[2018-03-05 15:18:02,479: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,479: WARNING/ForkPoolWorker-1] ETH-XMR
+[2018-03-05 15:18:02,493: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,493: WARNING/ForkPoolWorker-1] ETH-XEM
+[2018-03-05 15:18:02,494: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:18:02,494: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:18:02,494: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:18:02,494: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:18:02,495: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,495: WARNING/ForkPoolWorker-1] ETH-XLM
+[2018-03-05 15:18:02,506: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,506: WARNING/ForkPoolWorker-1] ETH-NEO
+[2018-03-05 15:18:02,518: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,518: WARNING/ForkPoolWorker-1] USDT-XMR
+[2018-03-05 15:18:02,520: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,520: WARNING/ForkPoolWorker-1] BTC-WAX
+[2018-03-05 15:18:02,524: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,524: WARNING/ForkPoolWorker-1] BTC-VTC
+[2018-03-05 15:18:02,530: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,530: WARNING/ForkPoolWorker-1] BTC-PPC
+[2018-03-05 15:18:02,546: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,546: WARNING/ForkPoolWorker-1] BTC-FTC
+[2018-03-05 15:18:02,561: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,561: WARNING/ForkPoolWorker-1] BTC-NXT
+[2018-03-05 15:18:02,567: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,567: WARNING/ForkPoolWorker-1] BTC-DASH
+[2018-03-05 15:18:02,576: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:18:02,576: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:18:02,576: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:18:02,576: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:18:02,576: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,576: WARNING/ForkPoolWorker-1] BTC-POT
+[2018-03-05 15:18:02,580: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,580: WARNING/ForkPoolWorker-1] BTC-BLK
+[2018-03-05 15:18:02,581: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,581: WARNING/ForkPoolWorker-1] BTC-EMC2
+[2018-03-05 15:18:02,593: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,601: WARNING/ForkPoolWorker-1] BTC-MUE
+[2018-03-05 15:18:02,604: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,604: WARNING/ForkPoolWorker-1] BTC-XMY
+[2018-03-05 15:18:02,605: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:18:02,605: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:18:02,605: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:18:02,605: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:18:02,606: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,606: WARNING/ForkPoolWorker-1] BTC-AUR
+[2018-03-05 15:18:02,607: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,607: WARNING/ForkPoolWorker-1] BTC-EFL
+[2018-03-05 15:18:02,609: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,609: WARNING/ForkPoolWorker-1] BTC-GLD
+[2018-03-05 15:18:02,624: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,624: WARNING/ForkPoolWorker-1] BTC-SLR
+[2018-03-05 15:18:02,636: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,637: WARNING/ForkPoolWorker-1] BTC-AEON
+[2018-03-05 15:18:02,638: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,638: WARNING/ForkPoolWorker-1] BTC-ETH
+[2018-03-05 15:18:02,646: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,646: WARNING/ForkPoolWorker-1] BTC-STRAT
+[2018-03-05 15:18:02,657: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,657: WARNING/ForkPoolWorker-1] BTC-UNB
+[2018-03-05 15:18:02,672: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,672: WARNING/ForkPoolWorker-1] BTC-SYNX
+[2018-03-05 15:18:02,675: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,675: WARNING/ForkPoolWorker-1] BTC-EBST
+[2018-03-05 15:18:02,692: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,692: WARNING/ForkPoolWorker-1] BTC-VRM
+[2018-03-05 15:18:02,704: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,704: WARNING/ForkPoolWorker-1] ETH-WAX
+[2018-03-05 15:18:02,706: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,706: WARNING/ForkPoolWorker-1] ETH-ZRX
+[2018-03-05 15:18:02,707: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,707: WARNING/ForkPoolWorker-1] BTC-AGRS
+[2018-03-05 15:18:02,729: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,729: WARNING/ForkPoolWorker-1] BTC-XLM
+[2018-03-05 15:18:02,735: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,739: WARNING/ForkPoolWorker-1] USDT-BTC
+[2018-03-05 15:18:02,739: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,753: WARNING/ForkPoolWorker-1] BTC-SBD
+[2018-03-05 15:18:02,755: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,755: WARNING/ForkPoolWorker-1] BTC-ETC
+[2018-03-05 15:18:02,742: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,758: WARNING/ForkPoolWorker-1] BTC-BRX
+[2018-03-05 15:18:02,742: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,759: WARNING/ForkPoolWorker-1] BTC-CLUB
+[2018-03-05 15:18:02,785: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,785: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,788: WARNING/ForkPoolWorker-1] BTC-NEO
+[2018-03-05 15:18:02,786: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,810: WARNING/ForkPoolWorker-1] ETH-1ST
+[2018-03-05 15:18:02,798: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,799: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:18:02,805: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,808: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,785: WARNING/ForkPoolWorker-1] ETH-ETC
+[2018-03-05 15:18:02,811: WARNING/ForkPoolWorker-1] ETH-QRL
+[2018-03-05 15:18:02,814: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:18:02,829: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:18:02,814: WARNING/ForkPoolWorker-1] BTC-CRB
+[2018-03-05 15:18:02,820: WARNING/ForkPoolWorker-1] ETH-CRB
+[2018-03-05 15:18:02,829: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:18:02,858: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,858: WARNING/ForkPoolWorker-1] BTC-EMC
+[2018-03-05 15:18:02,853: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,859: WARNING/ForkPoolWorker-1] BTC-VOX
+[2018-03-05 15:18:02,875: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,876: WARNING/ForkPoolWorker-1] BTC-FCT
+[2018-03-05 15:18:02,882: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,885: WARNING/ForkPoolWorker-1] BTC-MAID
+[2018-03-05 15:18:02,891: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,891: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,894: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,899: WARNING/ForkPoolWorker-1] BTC-ZCL
+[2018-03-05 15:18:02,898: WARNING/ForkPoolWorker-1] BTC-EGC
+[2018-03-05 15:18:02,899: WARNING/ForkPoolWorker-1] BTC-ZEC
+[2018-03-05 15:18:02,924: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,903: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,924: WARNING/ForkPoolWorker-1] ETH-GNO
+[2018-03-05 15:18:02,924: WARNING/ForkPoolWorker-1] ETH-LUN
+[2018-03-05 15:18:02,898: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,937: WARNING/ForkPoolWorker-1] BTC-GOLOS
+[2018-03-05 15:18:02,947: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,963: WARNING/ForkPoolWorker-1] BTC-HMQ
+[2018-03-05 15:18:02,947: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,964: WARNING/ForkPoolWorker-1] ETH-HMQ
+[2018-03-05 15:18:02,957: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,965: WARNING/ForkPoolWorker-1] BTC-ANT
+[2018-03-05 15:18:02,967: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,967: WARNING/ForkPoolWorker-1] ETH-TRST
+[2018-03-05 15:18:02,969: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:02,969: WARNING/ForkPoolWorker-1] ETH-ANT
+[2018-03-05 15:18:03,001: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,001: WARNING/ForkPoolWorker-1] BTC-SC
+[2018-03-05 15:18:03,004: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:18:03,005: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:18:03,005: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:18:03,005: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:18:03,005: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,005: WARNING/ForkPoolWorker-1] ETH-BAT
+[2018-03-05 15:18:03,008: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,009: WARNING/ForkPoolWorker-1] BTC-BAT
+[2018-03-05 15:18:03,032: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,035: WARNING/ForkPoolWorker-1] BTC-ZEN
+[2018-03-05 15:18:03,035: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,040: WARNING/ForkPoolWorker-1] BTC-1ST
+[2018-03-05 15:18:03,042: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,042: WARNING/ForkPoolWorker-1] BTC-QRL
+[2018-03-05 15:18:03,044: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:18:03,044: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:18:03,044: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:18:03,044: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:18:03,045: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,045: WARNING/ForkPoolWorker-1] ETH-LGD
+[2018-03-05 15:18:03,052: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,053: WARNING/ForkPoolWorker-1] BTC-PTOY
+[2018-03-05 15:18:03,079: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,079: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,092: WARNING/ForkPoolWorker-1] BTC-CFI
+[2018-03-05 15:18:03,080: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,094: WARNING/ForkPoolWorker-1] ETH-CFI
+[2018-03-05 15:18:03,087: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,096: WARNING/ForkPoolWorker-1] BTC-BNT
+[2018-03-05 15:18:03,080: WARNING/ForkPoolWorker-1] ETH-PTOY
+[2018-03-05 15:18:03,119: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,120: WARNING/ForkPoolWorker-1] ETH-BNT
+[2018-03-05 15:18:03,144: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,145: WARNING/ForkPoolWorker-1] BTC-NMR
+[2018-03-05 15:18:03,146: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:18:03,146: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:18:03,147: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:18:03,147: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:18:03,147: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,147: WARNING/ForkPoolWorker-1] ETH-NMR
+[2018-03-05 15:18:03,156: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,157: WARNING/ForkPoolWorker-1] BTC-GCR
+[2018-03-05 15:18:03,189: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:18:03,189: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:18:03,190: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:18:03,190: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:18:03,190: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,190: WARNING/ForkPoolWorker-1] BTC-TX
+[2018-03-05 15:18:03,205: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,205: WARNING/ForkPoolWorker-1] BTC-OMNI
+[2018-03-05 15:18:03,210: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:18:03,210: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:18:03,210: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:18:03,210: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:18:03,211: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,211: WARNING/ForkPoolWorker-1] BTC-AMP
+[2018-03-05 15:18:03,220: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,220: WARNING/ForkPoolWorker-1] BTC-SLS
+[2018-03-05 15:18:03,230: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,230: WARNING/ForkPoolWorker-1] BTC-RADS
+[2018-03-05 15:18:03,242: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,242: WARNING/ForkPoolWorker-1] BTC-BSD
+[2018-03-05 15:18:03,284: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,285: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,297: WARNING/ForkPoolWorker-1] BTC-PIVX
+[2018-03-05 15:18:03,302: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,302: WARNING/ForkPoolWorker-1] BTC-MEME
+[2018-03-05 15:18:03,291: WARNING/ForkPoolWorker-1] BTC-XVG
+[2018-03-05 15:18:03,293: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,307: WARNING/ForkPoolWorker-1] BTC-XVC
+[2018-03-05 15:18:03,338: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,338: WARNING/ForkPoolWorker-1] BTC-STEEM
+[2018-03-05 15:18:03,341: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,341: WARNING/ForkPoolWorker-1] BTC-2GIVE
+[2018-03-05 15:18:03,368: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,369: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,379: WARNING/ForkPoolWorker-1] BTC-LSK
+[2018-03-05 15:18:03,380: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,386: WARNING/ForkPoolWorker-1] BTC-WAVES
+[2018-03-05 15:18:03,388: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,389: WARNING/ForkPoolWorker-1] BTC-LBC
+[2018-03-05 15:18:03,380: WARNING/ForkPoolWorker-1] BTC-BRK
+[2018-03-05 15:18:03,412: INFO/MainProcess] Received task: summary_writer.signal_finder.rsi[876ab09d-b641-457e-bd8a-0a92fd3cfb9a]  
+[2018-03-05 15:18:03,429: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,430: WARNING/ForkPoolWorker-1] BTC-VRC
+[2018-03-05 15:18:03,433: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,433: WARNING/ForkPoolWorker-1] BTC-CURE
+[2018-03-05 15:18:03,468: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,468: WARNING/ForkPoolWorker-1] ETH-SRN
+[2018-03-05 15:18:03,471: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,472: WARNING/ForkPoolWorker-1] ETH-DGB
+[2018-03-05 15:18:03,475: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,475: WARNING/ForkPoolWorker-1] ETH-FCT
+[2018-03-05 15:18:03,491: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,492: WARNING/ForkPoolWorker-1] BTC-ZRX
+[2018-03-05 15:18:03,497: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,497: WARNING/ForkPoolWorker-1] BTC-XMR
+[2018-03-05 15:18:03,500: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,518: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,542: WARNING/ForkPoolWorker-1] BTC-START
+[2018-03-05 15:18:03,533: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,548: WARNING/ForkPoolWorker-1] BTC-KORE
+[2018-03-05 15:18:03,532: WARNING/ForkPoolWorker-1] BTC-CLOAK
+[2018-03-05 15:18:03,573: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,581: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,582: WARNING/ForkPoolWorker-1] BTC-XDN
+[2018-03-05 15:18:03,588: WARNING/ForkPoolWorker-1] BTC-TRUST
+[2018-03-05 15:18:03,613: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,613: WARNING/ForkPoolWorker-1] BTC-NAV
+[2018-03-05 15:18:03,642: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,650: WARNING/ForkPoolWorker-1] BTC-SEQ
+[2018-03-05 15:18:03,643: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,654: WARNING/ForkPoolWorker-1] USDT-OMG
+[2018-03-05 15:18:03,656: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:18:03,656: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:18:03,657: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:18:03,657: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:18:03,657: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,658: WARNING/ForkPoolWorker-1] BTC-ADA
+[2018-03-05 15:18:03,661: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,662: WARNING/ForkPoolWorker-1] BTC-MANA
+[2018-03-05 15:18:03,664: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,665: WARNING/ForkPoolWorker-1] ETH-MANA
+[2018-03-05 15:18:03,693: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,731: WARNING/ForkPoolWorker-1] BTC-SALT
+[2018-03-05 15:18:03,694: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,733: WARNING/ForkPoolWorker-1] ETH-SALT
+[2018-03-05 15:18:03,723: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:18:03,735: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:18:03,736: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:18:03,736: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:18:03,736: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,736: WARNING/ForkPoolWorker-1] BTC-REP
+[2018-03-05 15:18:03,710: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,739: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,773: WARNING/ForkPoolWorker-1] BTC-SHIFT
+[2018-03-05 15:18:03,759: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,775: WARNING/ForkPoolWorker-1] BTC-ARDR
+[2018-03-05 15:18:03,778: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,779: WARNING/ForkPoolWorker-1] BTC-XZC
+[2018-03-05 15:18:03,768: WARNING/ForkPoolWorker-1] BTC-TIX
+[2018-03-05 15:18:03,802: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,803: WARNING/ForkPoolWorker-1] BTC-LTC
+[2018-03-05 15:18:03,809: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,848: WARNING/ForkPoolWorker-1] BTC-RDD
+[2018-03-05 15:18:03,837: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,853: WARNING/ForkPoolWorker-1] BTC-NLG
+[2018-03-05 15:18:03,861: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,861: WARNING/ForkPoolWorker-1] BTC-RBY
+[2018-03-05 15:18:03,873: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,873: WARNING/ForkPoolWorker-1] BTC-XWC
+[2018-03-05 15:18:03,888: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,888: WARNING/ForkPoolWorker-1] BTC-MONA
+[2018-03-05 15:18:03,921: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:03,921: WARNING/ForkPoolWorker-1] BTC-THC
+[2018-03-05 15:18:04,082: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,082: WARNING/ForkPoolWorker-1] BTC-ENRG
+[2018-03-05 15:18:04,099: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,099: WARNING/ForkPoolWorker-1] BTC-ERC
+[2018-03-05 15:18:04,105: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,105: WARNING/ForkPoolWorker-1] BTC-UBQ
+[2018-03-05 15:18:04,134: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,135: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,136: WARNING/ForkPoolWorker-1] BTC-GNO
+[2018-03-05 15:18:04,140: WARNING/ForkPoolWorker-1] BTC-PAY
+[2018-03-05 15:18:04,164: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,164: WARNING/ForkPoolWorker-1] USDT-BCC
+[2018-03-05 15:18:04,189: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,189: WARNING/ForkPoolWorker-1] BTC-BCC
+[2018-03-05 15:18:04,192: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,193: WARNING/ForkPoolWorker-1] BTC-DNT
+[2018-03-05 15:18:04,221: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,241: WARNING/ForkPoolWorker-1] ETH-DNT
+[2018-03-05 15:18:04,249: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,249: WARNING/ForkPoolWorker-1] ETH-TIX
+[2018-03-05 15:18:04,233: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,256: WARNING/ForkPoolWorker-1] USDT-NEO
+[2018-03-05 15:18:04,261: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,262: WARNING/ForkPoolWorker-1] BTC-RCN
+[2018-03-05 15:18:04,272: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,272: WARNING/ForkPoolWorker-1] ETH-RCN
+[2018-03-05 15:18:04,277: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,277: WARNING/ForkPoolWorker-1] BTC-VIB
+[2018-03-05 15:18:04,353: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,361: WARNING/ForkPoolWorker-1] ETH-VIB
+[2018-03-05 15:18:04,368: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,368: WARNING/ForkPoolWorker-1] BTC-MER
+[2018-03-05 15:18:04,354: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,381: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,388: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,393: WARNING/ForkPoolWorker-1] ETH-POWR
+[2018-03-05 15:18:04,389: WARNING/ForkPoolWorker-1] BTC-POWR
+[2018-03-05 15:18:04,398: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,398: WARNING/ForkPoolWorker-1] BTC-BTG
+[2018-03-05 15:18:04,388: WARNING/ForkPoolWorker-1] ETH-WAVES
+[2018-03-05 15:18:04,425: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,426: WARNING/ForkPoolWorker-1] ETH-BTG
+[2018-03-05 15:18:04,426: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,433: WARNING/ForkPoolWorker-1] USDT-BTG
+[2018-03-05 15:18:04,430: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,434: WARNING/ForkPoolWorker-1] USDT-XVG
+[2018-03-05 15:18:04,428: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:18:04,441: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:18:04,441: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:18:04,441: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:18:04,461: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,462: WARNING/ForkPoolWorker-1] BTC-SRN
+[2018-03-05 15:18:04,464: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,465: WARNING/ForkPoolWorker-1] ETH-STRAT
+[2018-03-05 15:18:04,467: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,468: WARNING/ForkPoolWorker-1] BTC-LGD
+[2018-03-05 15:18:04,461: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,478: WARNING/ForkPoolWorker-1] BTC-IGNIS
+[2018-03-05 15:18:04,480: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,481: WARNING/ForkPoolWorker-1] BTC-ADX
+[2018-03-05 15:18:04,482: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,482: WARNING/ForkPoolWorker-1] ETH-ADX
+[2018-03-05 15:18:04,497: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,497: WARNING/ForkPoolWorker-1] BTC-IOP
+[2018-03-05 15:18:04,523: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,523: WARNING/ForkPoolWorker-1] BTC-KMD
+[2018-03-05 15:18:04,536: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,539: WARNING/ForkPoolWorker-1] BTC-TRST
+[2018-03-05 15:18:04,539: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,544: WARNING/ForkPoolWorker-1] ETH-GNT
+[2018-03-05 15:18:04,537: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:18:04,559: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:18:04,561: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,567: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,567: WARNING/ForkPoolWorker-1] BTC-GBG
+[2018-03-05 15:18:04,567: WARNING/ForkPoolWorker-1] BTC-XST
+[2018-03-05 15:18:04,567: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:18:04,571: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:18:04,571: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,572: WARNING/ForkPoolWorker-1] BTC-SIB
+[2018-03-05 15:18:04,574: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,575: WARNING/ForkPoolWorker-1] BTC-ION
+[2018-03-05 15:18:04,577: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,577: WARNING/ForkPoolWorker-1] BTC-LMC
+[2018-03-05 15:18:04,592: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,597: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,609: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,609: WARNING/ForkPoolWorker-1] ETH-REP
+[2018-03-05 15:18:04,609: WARNING/ForkPoolWorker-1] USDT-ETH
+[2018-03-05 15:18:04,616: WARNING/ForkPoolWorker-1] ETH-WINGS
+[2018-03-05 15:18:04,624: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,652: WARNING/ForkPoolWorker-1] ETH-DASH
+[2018-03-05 15:18:04,633: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,625: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,654: WARNING/ForkPoolWorker-1] ETH-SC
+[2018-03-05 15:18:04,654: WARNING/ForkPoolWorker-1] ETH-ZEC
+[2018-03-05 15:18:04,684: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:18:04,684: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:18:04,685: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:18:04,685: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:18:04,685: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,685: WARNING/ForkPoolWorker-1] USDT-ZEC
+[2018-03-05 15:18:04,687: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,687: WARNING/ForkPoolWorker-1] USDT-LTC
+[2018-03-05 15:18:04,698: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:18:04,706: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,721: WARNING/ForkPoolWorker-1] USDT-ETC
+[2018-03-05 15:18:04,711: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:18:04,720: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,732: WARNING/ForkPoolWorker-1] ETH-LTC
+[2018-03-05 15:18:04,723: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:18:04,734: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:18:04,734: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,717: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:18:04,735: WARNING/ForkPoolWorker-1] USDT-XRP
+[2018-03-05 15:18:04,741: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:18:04,742: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:18:04,743: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:18:04,743: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,743: WARNING/ForkPoolWorker-1] BTC-BCPT
+[2018-03-05 15:18:04,745: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,746: WARNING/ForkPoolWorker-1] BTC-VIA
+[2018-03-05 15:18:04,762: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,763: WARNING/ForkPoolWorker-1] BTC-PINK
+[2018-03-05 15:18:04,781: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,781: WARNING/ForkPoolWorker-1] BTC-IOC
+[2018-03-05 15:18:04,792: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,798: WARNING/ForkPoolWorker-1] BTC-QWARK
+[2018-03-05 15:18:04,813: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,820: WARNING/ForkPoolWorker-1] BTC-CRW
+[2018-03-05 15:18:04,816: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,819: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,822: WARNING/ForkPoolWorker-1] BTC-SNT
+[2018-03-05 15:18:04,822: WARNING/ForkPoolWorker-1] ETH-XRP
+[2018-03-05 15:18:04,814: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,842: WARNING/ForkPoolWorker-1] BTC-SWT
+[2018-03-05 15:18:04,842: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,851: WARNING/ForkPoolWorker-1] ETH-SNT
+[2018-03-05 15:18:04,863: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,863: WARNING/ForkPoolWorker-1] BTC-DCT
+[2018-03-05 15:18:04,865: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,865: WARNING/ForkPoolWorker-1] BTC-XEL
+[2018-03-05 15:18:04,898: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,898: WARNING/ForkPoolWorker-1] BTC-MCO
+[2018-03-05 15:18:04,917: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,917: WARNING/ForkPoolWorker-1] ETH-BCPT
+[2018-03-05 15:18:04,920: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,920: WARNING/ForkPoolWorker-1] BTC-CANN
+[2018-03-05 15:18:04,942: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,942: WARNING/ForkPoolWorker-1] BTC-SYS
+[2018-03-05 15:18:04,948: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,948: WARNING/ForkPoolWorker-1] BTC-NEOS
+[2018-03-05 15:18:04,958: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,962: WARNING/ForkPoolWorker-1] BTC-FLDC
+[2018-03-05 15:18:04,958: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:04,976: WARNING/ForkPoolWorker-1] ETH-MCO
+[2018-03-05 15:18:04,959: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,002: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,016: WARNING/ForkPoolWorker-1] ETH-ADT
+[2018-03-05 15:18:05,009: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,008: WARNING/ForkPoolWorker-1] BTC-ADT
+[2018-03-05 15:18:05,027: WARNING/ForkPoolWorker-1] BTC-GRC
+[2018-03-05 15:18:05,029: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,033: WARNING/ForkPoolWorker-1] BTC-BCY
+[2018-03-05 15:18:05,029: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,035: WARNING/ForkPoolWorker-1] BTC-MLN
+[2018-03-05 15:18:05,075: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,083: WARNING/ForkPoolWorker-1] BTC-ARK
+[2018-03-05 15:18:05,076: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,088: WARNING/ForkPoolWorker-1] BTC-DYN
+[2018-03-05 15:18:05,091: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,091: WARNING/ForkPoolWorker-1] BTC-TKS
+[2018-03-05 15:18:05,114: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,115: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,124: WARNING/ForkPoolWorker-1] BTC-INCNT
+[2018-03-05 15:18:05,127: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,127: WARNING/ForkPoolWorker-1] BTC-GBYTE
+[2018-03-05 15:18:05,120: WARNING/ForkPoolWorker-1] BTC-MUSIC
+[2018-03-05 15:18:05,138: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,138: WARNING/ForkPoolWorker-1] ETH-PAY
+[2018-03-05 15:18:05,167: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,172: WARNING/ForkPoolWorker-1] BTC-STORJ
+[2018-03-05 15:18:05,194: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,194: WARNING/ForkPoolWorker-1] BTC-EXP
+[2018-03-05 15:18:05,209: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,209: WARNING/ForkPoolWorker-1] BTC-INFX
+[2018-03-05 15:18:05,219: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,219: WARNING/ForkPoolWorker-1] BTC-DCR
+[2018-03-05 15:18:05,242: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,245: WARNING/ForkPoolWorker-1] BTC-PDC
+[2018-03-05 15:18:05,248: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,249: WARNING/ForkPoolWorker-1] BTC-GNT
+[2018-03-05 15:18:05,273: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:18:05,274: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,284: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,287: WARNING/ForkPoolWorker-1] BTC-EDG
+[2018-03-05 15:18:05,285: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,289: WARNING/ForkPoolWorker-1] ETH-STORJ
+[2018-03-05 15:18:05,286: WARNING/ForkPoolWorker-1] BTC-NXC
+[2018-03-05 15:18:05,286: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,295: WARNING/ForkPoolWorker-1] BTC-EXCL
+[2018-03-05 15:18:05,285: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:18:05,306: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:18:05,306: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:18:05,307: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,307: WARNING/ForkPoolWorker-1] BTC-SWIFT
+[2018-03-05 15:18:05,308: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,335: WARNING/ForkPoolWorker-1] BTC-DOPE
+[2018-03-05 15:18:05,337: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,366: WARNING/ForkPoolWorker-1] BTC-BLOCK
+[2018-03-05 15:18:05,360: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,371: WARNING/ForkPoolWorker-1] BTC-ABY
+[2018-03-05 15:18:05,386: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,387: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,395: WARNING/ForkPoolWorker-1] BTC-BYC
+[2018-03-05 15:18:05,401: WARNING/ForkPoolWorker-1] BTC-XMG
+[2018-03-05 15:18:05,402: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,441: WARNING/ForkPoolWorker-1] BTC-BLITZ
+[2018-03-05 15:18:05,426: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,444: WARNING/ForkPoolWorker-1] BTC-RLC
+[2018-03-05 15:18:05,413: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,453: WARNING/ForkPoolWorker-1] BTC-WINGS
+[2018-03-05 15:18:05,455: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,456: WARNING/ForkPoolWorker-1] BTC-GUP
+[2018-03-05 15:18:05,470: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,471: WARNING/ForkPoolWorker-1] BTC-LUN
+[2018-03-05 15:18:05,496: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,501: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,501: WARNING/ForkPoolWorker-1] ETH-GUP
+[2018-03-05 15:18:05,513: WARNING/ForkPoolWorker-1] ETH-RLC
+[2018-03-05 15:18:05,535: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,565: WARNING/ForkPoolWorker-1] USDT-DASH
+[2018-03-05 15:18:05,573: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,573: WARNING/ForkPoolWorker-1] ETH-BCC
+[2018-03-05 15:18:05,578: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,578: WARNING/ForkPoolWorker-1] ETH-ADA
+[2018-03-05 15:18:05,592: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:18:05,593: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,606: WARNING/ForkPoolWorker-1] BTC-ENG
+[2018-03-05 15:18:05,604: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:18:05,632: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,644: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:18:05,646: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,647: WARNING/ForkPoolWorker-1] ETH-ENG
+[2018-03-05 15:18:05,647: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:18:05,652: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,648: WARNING/ForkPoolWorker-1] Traceback (most recent call last):
+[2018-03-05 15:18:05,649: WARNING/ForkPoolWorker-1] USDT-ADA
+[2018-03-05 15:18:05,648: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,652: WARNING/ForkPoolWorker-1] BTC-UKG
+[2018-03-05 15:18:05,656: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:18:05,674: WARNING/ForkPoolWorker-1] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:18:05,674: WARNING/ForkPoolWorker-1] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:18:05,671: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,684: WARNING/ForkPoolWorker-1] ETH-UKG
+[2018-03-05 15:18:05,670: WARNING/ForkPoolWorker-1] USDT-NXT
+[2018-03-05 15:18:05,674: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,696: WARNING/ForkPoolWorker-1] market:
+[2018-03-05 15:18:05,696: WARNING/ForkPoolWorker-1] BTC-BURST
+[2018-03-05 15:18:05,696: WARNING/ForkPoolWorker-1] BTC-DGB
+[2018-03-05 15:18:05,770: WARNING/ForkPoolWorker-1] Execution time = 3.90377
+[2018-03-05 15:18:05,772: INFO/ForkPoolWorker-1] Task summary_writer.signal_finder.rsi[c5d2dc93-ef8e-4f85-87ae-308da7452e2a] succeeded in 3.905961763113737s: None
+[2018-03-05 15:18:05,777: WARNING/ForkPoolWorker-1] Get latest tick...
+[2018-03-05 15:18:07,411: ERROR/MainProcess] Received unregistered task of type 'summary_writer.exchange_rate_cal.plan_pricing_calculate'.
+The message has been ignored and discarded.
+
+Did you remember to import the module containing this task?
+Or maybe you're using relative imports?
+
+Please see
+http://docs.celeryq.org/en/latest/internals/protocol.html
+for more information.
+
+The full contents of the message body was:
+b'[[], {}, {"chain": null, "callbacks": null, "errbacks": null, "chord": null}]' (77b)
+Traceback (most recent call last):
+  File "/root/miniconda2/envs/py35/lib/python3.5/site-packages/celery/worker/consumer/consumer.py", line 559, in on_task_received
+    strategy = strategies[type_]
+KeyError: 'summary_writer.exchange_rate_cal.plan_pricing_calculate'
+[2018-03-05 15:18:07,413: INFO/MainProcess] Received task: summary_writer.tasks.get_latest_tick[2cb8aab0-7afd-4890-bd86-df640c3d8eef]  
+[2018-03-05 15:19:00,464: WARNING/ForkPoolWorker-2] Execution time = 60.86561
+[2018-03-05 15:19:00,465: INFO/ForkPoolWorker-2] Task summary_writer.tasks.get_ticker[f90e4a05-32e2-422b-a189-4e453473ce3e] succeeded in 60.867058341391385s: None
+[2018-03-05 15:19:00,466: WARNING/ForkPoolWorker-2] Get ticker....
+[2018-03-05 15:19:01,513: INFO/MainProcess] Received task: summary_writer.tasks.get_ticker[150d55cf-e1f2-45d5-9d97-66f3fbc66617]  
+[2018-03-05 15:19:30,197: WARNING/ForkPoolWorker-2] Execution time = 29.73046
+[2018-03-05 15:19:30,198: INFO/ForkPoolWorker-2] Task summary_writer.tasks.get_ticker[97542685-1f84-43dd-97f1-e435c6410b9c] succeeded in 29.731625450775027s: None
+[2018-03-05 15:19:30,199: WARNING/ForkPoolWorker-2] Get ticker....
+[2018-03-05 15:19:30,213: INFO/MainProcess] Received task: summary_writer.tasks.get_ticker[3ef7906e-6725-4b99-b49d-e0820b02633d]  
+[2018-03-05 15:19:54,163: WARNING/ForkPoolWorker-2] Execution time = 23.96423
+[2018-03-05 15:19:54,165: INFO/ForkPoolWorker-2] Task summary_writer.tasks.get_ticker[5ef4fa3a-96d8-4e0a-b438-4937eb2b60ef] succeeded in 23.96631334349513s: None
+[2018-03-05 15:19:54,171: WARNING/ForkPoolWorker-2] Get ticker....
+[2018-03-05 15:19:55,225: INFO/MainProcess] Received task: summary_writer.tasks.get_latest_tick[fb124f9e-567c-476b-806e-e8852487f2d2]  
+[2018-03-05 15:20:13,542: WARNING/ForkPoolWorker-2] Execution time = 19.37133
+[2018-03-05 15:20:13,544: INFO/ForkPoolWorker-2] Task summary_writer.tasks.get_ticker[95d6175d-f38c-4c1c-b8cc-c27e860a14cd] succeeded in 19.373375019058585s: None
+[2018-03-05 15:20:13,546: WARNING/ForkPoolWorker-2] Get ticker....
+[2018-03-05 15:20:13,628: ERROR/MainProcess] Received unregistered task of type 'summary_writer.exchange_rate_cal.plan_pricing_calculate'.
+The message has been ignored and discarded.
+
+Did you remember to import the module containing this task?
+Or maybe you're using relative imports?
+
+Please see
+http://docs.celeryq.org/en/latest/internals/protocol.html
+for more information.
+
+The full contents of the message body was:
+b'[[], {}, {"chain": null, "callbacks": null, "errbacks": null, "chord": null}]' (77b)
+Traceback (most recent call last):
+  File "/root/miniconda2/envs/py35/lib/python3.5/site-packages/celery/worker/consumer/consumer.py", line 559, in on_task_received
+    strategy = strategies[type_]
+KeyError: 'summary_writer.exchange_rate_cal.plan_pricing_calculate'
+[2018-03-05 15:20:13,630: INFO/MainProcess] Received task: summary_writer.tasks.get_ticker[bb2b48a5-3108-41c1-b029-e6038ef048fc]  
+[2018-03-05 15:20:29,685: WARNING/ForkPoolWorker-2] Execution time = 16.13883
+[2018-03-05 15:20:29,686: INFO/ForkPoolWorker-2] Task summary_writer.tasks.get_ticker[9b5fc7ca-25d8-429a-89ad-0ec02f10118b] succeeded in 16.14002116303891s: None
+[2018-03-05 15:20:29,688: WARNING/ForkPoolWorker-2] Get latest tick...
+[2018-03-05 15:20:30,238: INFO/MainProcess] Received task: summary_writer.signal_finder.rsi[952a913d-fdc6-48bc-a802-6354478ba452]  
+[2018-03-05 15:20:35,009: INFO/ForkPoolWorker-3] Task summary_writer.tasks.get_latest_tick[5ed4d0e7-b3f1-4a51-858b-6d6c481d6e83] succeeded in 353.9293797109276s: None
+[2018-03-05 15:20:35,011: WARNING/ForkPoolWorker-3] System analysing....
+[2018-03-05 15:20:35,045: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,045: WARNING/ForkPoolWorker-3] BTC-VEE
+[2018-03-05 15:20:35,049: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,049: WARNING/ForkPoolWorker-3] ETH-VEE
+[2018-03-05 15:20:35,051: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,051: WARNING/ForkPoolWorker-3] BTC-TRX
+[2018-03-05 15:20:35,105: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,105: WARNING/ForkPoolWorker-3] ETH-TRX
+[2018-03-05 15:20:35,114: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,115: WARNING/ForkPoolWorker-3] BTC-PTC
+[2018-03-05 15:20:35,117: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,117: WARNING/ForkPoolWorker-3] BTC-GRS
+[2018-03-05 15:20:35,152: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,152: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,153: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,153: WARNING/ForkPoolWorker-3] BTC-BAY
+[2018-03-05 15:20:35,153: WARNING/ForkPoolWorker-3] BTC-DOGE
+[2018-03-05 15:20:35,153: WARNING/ForkPoolWorker-3] BTC-XEM
+[2018-03-05 15:20:35,179: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,180: WARNING/ForkPoolWorker-3] BTC-FAIR
+[2018-03-05 15:20:35,202: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,206: WARNING/ForkPoolWorker-3] BTC-SPR
+[2018-03-05 15:20:35,208: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,209: WARNING/ForkPoolWorker-3] BTC-VTR
+[2018-03-05 15:20:35,227: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,228: WARNING/ForkPoolWorker-3] BTC-CLAM
+[2018-03-05 15:20:35,231: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,231: WARNING/ForkPoolWorker-3] BTC-DMD
+[2018-03-05 15:20:35,239: INFO/MainProcess] Received task: summary_writer.tasks.get_ticker[0cbed375-5274-4103-93aa-141016764004]  
+[2018-03-05 15:20:35,257: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,258: WARNING/ForkPoolWorker-3] BTC-GAM
+[2018-03-05 15:20:35,266: WARNING/ForkPoolWorker-3] Traceback (most recent call last):
+[2018-03-05 15:20:35,266: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:20:35,267: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:20:35,267: WARNING/ForkPoolWorker-3] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:20:35,267: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,267: WARNING/ForkPoolWorker-3] BTC-XRP
+[2018-03-05 15:20:35,273: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,273: WARNING/ForkPoolWorker-3] BTC-GAME
+[2018-03-05 15:20:35,290: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,290: WARNING/ForkPoolWorker-3] BTC-COVAL
+[2018-03-05 15:20:35,296: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,296: WARNING/ForkPoolWorker-3] BTC-SPHR
+[2018-03-05 15:20:35,302: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,302: WARNING/ForkPoolWorker-3] BTC-OK
+[2018-03-05 15:20:35,334: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,334: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,334: WARNING/ForkPoolWorker-3] BTC-NXS
+[2018-03-05 15:20:35,335: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,336: WARNING/ForkPoolWorker-3] BTC-BITB
+[2018-03-05 15:20:35,335: WARNING/ForkPoolWorker-3] BTC-XCP
+[2018-03-05 15:20:35,363: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,363: WARNING/ForkPoolWorker-3] BTC-GEO
+[2018-03-05 15:20:35,372: WARNING/ForkPoolWorker-3] Traceback (most recent call last):
+[2018-03-05 15:20:35,372: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 98, in find_signal
+    send_trading_alert_rsi(market_name, 'buy', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:20:35,372: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:20:35,373: WARNING/ForkPoolWorker-3] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:20:35,373: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,373: WARNING/ForkPoolWorker-3] BTC-FLO
+[2018-03-05 15:20:35,378: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,378: WARNING/ForkPoolWorker-3] BTC-NBT
+[2018-03-05 15:20:35,380: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,380: WARNING/ForkPoolWorker-3] BTC-SNRG
+[2018-03-05 15:20:35,394: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,394: WARNING/ForkPoolWorker-3] BTC-PKB
+[2018-03-05 15:20:35,407: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,407: WARNING/ForkPoolWorker-3] BTC-CPC
+[2018-03-05 15:20:35,415: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,415: WARNING/ForkPoolWorker-3] BTC-DTB
+[2018-03-05 15:20:35,421: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,421: WARNING/ForkPoolWorker-3] BTC-OMG
+[2018-03-05 15:20:35,422: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,422: WARNING/ForkPoolWorker-3] ETH-OMG
+[2018-03-05 15:20:35,438: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,439: WARNING/ForkPoolWorker-3] BTC-CVC
+[2018-03-05 15:20:35,453: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,453: WARNING/ForkPoolWorker-3] ETH-CVC
+[2018-03-05 15:20:35,459: WARNING/ForkPoolWorker-3] Traceback (most recent call last):
+[2018-03-05 15:20:35,464: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:20:35,464: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:20:35,464: WARNING/ForkPoolWorker-3] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:20:35,464: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,464: WARNING/ForkPoolWorker-3] BTC-QTUM
+[2018-03-05 15:20:35,459: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,469: WARNING/ForkPoolWorker-3] BTC-PART
+[2018-03-05 15:20:35,481: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,481: WARNING/ForkPoolWorker-3] ETH-QTUM
+[2018-03-05 15:20:35,488: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,488: WARNING/ForkPoolWorker-3] ETH-XMR
+[2018-03-05 15:20:35,512: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,512: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,513: WARNING/ForkPoolWorker-3] ETH-XLM
+[2018-03-05 15:20:35,513: WARNING/ForkPoolWorker-3] ETH-XEM
+[2018-03-05 15:20:35,513: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,516: WARNING/ForkPoolWorker-3] ETH-NEO
+[2018-03-05 15:20:35,536: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,537: WARNING/ForkPoolWorker-3] USDT-XMR
+[2018-03-05 15:20:35,549: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,549: WARNING/ForkPoolWorker-3] BTC-WAX
+[2018-03-05 15:20:35,553: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,553: WARNING/ForkPoolWorker-3] BTC-VTC
+[2018-03-05 15:20:35,574: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,574: WARNING/ForkPoolWorker-3] BTC-PPC
+[2018-03-05 15:20:35,575: WARNING/ForkPoolWorker-3] Traceback (most recent call last):
+[2018-03-05 15:20:35,575: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:20:35,575: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:20:35,575: WARNING/ForkPoolWorker-3] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:20:35,576: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,576: WARNING/ForkPoolWorker-3] BTC-FTC
+[2018-03-05 15:20:35,577: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,577: WARNING/ForkPoolWorker-3] BTC-NXT
+[2018-03-05 15:20:35,590: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,590: WARNING/ForkPoolWorker-3] BTC-DASH
+[2018-03-05 15:20:35,604: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,604: WARNING/ForkPoolWorker-3] BTC-POT
+[2018-03-05 15:20:35,613: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,613: WARNING/ForkPoolWorker-3] BTC-BLK
+[2018-03-05 15:20:35,621: WARNING/ForkPoolWorker-3] Traceback (most recent call last):
+[2018-03-05 15:20:35,621: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:20:35,621: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:20:35,621: WARNING/ForkPoolWorker-3] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:20:35,622: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,622: WARNING/ForkPoolWorker-3] BTC-EMC2
+[2018-03-05 15:20:35,625: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,625: WARNING/ForkPoolWorker-3] BTC-MUE
+[2018-03-05 15:20:35,627: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,627: WARNING/ForkPoolWorker-3] BTC-XMY
+[2018-03-05 15:20:35,641: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,641: WARNING/ForkPoolWorker-3] BTC-AUR
+[2018-03-05 15:20:35,654: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,654: WARNING/ForkPoolWorker-3] BTC-EFL
+[2018-03-05 15:20:35,662: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,662: WARNING/ForkPoolWorker-3] BTC-GLD
+[2018-03-05 15:20:35,667: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,667: WARNING/ForkPoolWorker-3] BTC-SLR
+[2018-03-05 15:20:35,669: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,669: WARNING/ForkPoolWorker-3] BTC-AEON
+[2018-03-05 15:20:35,685: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,685: WARNING/ForkPoolWorker-3] BTC-ETH
+[2018-03-05 15:20:35,693: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,693: WARNING/ForkPoolWorker-3] BTC-STRAT
+[2018-03-05 15:20:35,699: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,704: WARNING/ForkPoolWorker-3] BTC-UNB
+[2018-03-05 15:20:35,699: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,705: WARNING/ForkPoolWorker-3] BTC-SYNX
+[2018-03-05 15:20:35,716: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,716: WARNING/ForkPoolWorker-3] BTC-EBST
+[2018-03-05 15:20:35,728: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,728: WARNING/ForkPoolWorker-3] BTC-VRM
+[2018-03-05 15:20:35,737: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,737: WARNING/ForkPoolWorker-3] ETH-WAX
+[2018-03-05 15:20:35,744: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,744: WARNING/ForkPoolWorker-3] ETH-ZRX
+[2018-03-05 15:20:35,746: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,746: WARNING/ForkPoolWorker-3] BTC-AGRS
+[2018-03-05 15:20:35,753: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,753: WARNING/ForkPoolWorker-3] BTC-XLM
+[2018-03-05 15:20:35,762: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,762: WARNING/ForkPoolWorker-3] USDT-BTC
+[2018-03-05 15:20:35,781: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,781: WARNING/ForkPoolWorker-3] BTC-SBD
+[2018-03-05 15:20:35,786: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,786: WARNING/ForkPoolWorker-3] BTC-BRX
+[2018-03-05 15:20:35,804: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,804: WARNING/ForkPoolWorker-3] BTC-CLUB
+[2018-03-05 15:20:35,806: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,806: WARNING/ForkPoolWorker-3] BTC-ETC
+[2018-03-05 15:20:35,822: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,822: WARNING/ForkPoolWorker-3] ETH-ETC
+[2018-03-05 15:20:35,834: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,835: WARNING/ForkPoolWorker-3] BTC-NEO
+[2018-03-05 15:20:35,843: WARNING/ForkPoolWorker-3] Traceback (most recent call last):
+[2018-03-05 15:20:35,843: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:20:35,844: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:20:35,844: WARNING/ForkPoolWorker-3] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:20:35,844: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,844: WARNING/ForkPoolWorker-3] ETH-1ST
+[2018-03-05 15:20:35,847: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,847: WARNING/ForkPoolWorker-3] ETH-QRL
+[2018-03-05 15:20:35,849: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,849: WARNING/ForkPoolWorker-3] BTC-CRB
+[2018-03-05 15:20:35,868: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,868: WARNING/ForkPoolWorker-3] ETH-CRB
+[2018-03-05 15:20:35,889: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,889: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,889: WARNING/ForkPoolWorker-3] BTC-VOX
+[2018-03-05 15:20:35,890: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,892: WARNING/ForkPoolWorker-3] BTC-FCT
+[2018-03-05 15:20:35,890: WARNING/ForkPoolWorker-3] BTC-EMC
+[2018-03-05 15:20:35,911: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,911: WARNING/ForkPoolWorker-3] BTC-MAID
+[2018-03-05 15:20:35,933: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,933: WARNING/ForkPoolWorker-3] BTC-EGC
+[2018-03-05 15:20:35,934: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,935: WARNING/ForkPoolWorker-3] BTC-ZEC
+[2018-03-05 15:20:35,948: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,948: WARNING/ForkPoolWorker-3] BTC-ZCL
+[2018-03-05 15:20:35,956: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,956: WARNING/ForkPoolWorker-3] BTC-GOLOS
+[2018-03-05 15:20:35,957: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,957: WARNING/ForkPoolWorker-3] ETH-LUN
+[2018-03-05 15:20:35,973: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,973: WARNING/ForkPoolWorker-3] ETH-GNO
+[2018-03-05 15:20:35,977: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,977: WARNING/ForkPoolWorker-3] BTC-HMQ
+[2018-03-05 15:20:35,990: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:35,990: WARNING/ForkPoolWorker-3] ETH-HMQ
+[2018-03-05 15:20:36,014: WARNING/ForkPoolWorker-3] Traceback (most recent call last):
+[2018-03-05 15:20:36,014: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:20:36,014: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:20:36,015: WARNING/ForkPoolWorker-3] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:20:36,015: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,015: WARNING/ForkPoolWorker-3] BTC-ANT
+[2018-03-05 15:20:36,025: WARNING/ForkPoolWorker-3] Traceback (most recent call last):
+[2018-03-05 15:20:36,026: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,026: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:20:36,027: WARNING/ForkPoolWorker-3] ETH-TRST
+[2018-03-05 15:20:36,027: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:20:36,029: WARNING/ForkPoolWorker-3] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:20:36,029: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,029: WARNING/ForkPoolWorker-3] ETH-ANT
+[2018-03-05 15:20:36,057: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,058: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,058: WARNING/ForkPoolWorker-3] BTC-SC
+[2018-03-05 15:20:36,058: WARNING/ForkPoolWorker-3] ETH-BAT
+[2018-03-05 15:20:36,067: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,073: WARNING/ForkPoolWorker-3] BTC-BAT
+[2018-03-05 15:20:36,085: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,085: WARNING/ForkPoolWorker-3] BTC-ZEN
+[2018-03-05 15:20:36,101: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,101: WARNING/ForkPoolWorker-3] BTC-1ST
+[2018-03-05 15:20:36,105: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,106: WARNING/ForkPoolWorker-3] BTC-QRL
+[2018-03-05 15:20:36,108: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,108: WARNING/ForkPoolWorker-3] ETH-LGD
+[2018-03-05 15:20:36,132: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,132: WARNING/ForkPoolWorker-3] BTC-PTOY
+[2018-03-05 15:20:36,141: WARNING/ForkPoolWorker-3] Traceback (most recent call last):
+[2018-03-05 15:20:36,142: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,142: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:20:36,142: WARNING/ForkPoolWorker-3] ETH-PTOY
+[2018-03-05 15:20:36,143: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:20:36,144: WARNING/ForkPoolWorker-3] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:20:36,145: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,145: WARNING/ForkPoolWorker-3] BTC-CFI
+[2018-03-05 15:20:36,148: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,148: WARNING/ForkPoolWorker-3] ETH-CFI
+[2018-03-05 15:20:36,163: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,163: WARNING/ForkPoolWorker-3] BTC-BNT
+[2018-03-05 15:20:36,180: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,183: WARNING/ForkPoolWorker-3] ETH-BNT
+[2018-03-05 15:20:36,183: WARNING/ForkPoolWorker-3] Traceback (most recent call last):
+[2018-03-05 15:20:36,188: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:20:36,188: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:20:36,188: WARNING/ForkPoolWorker-3] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:20:36,188: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,188: WARNING/ForkPoolWorker-3] BTC-NMR
+[2018-03-05 15:20:36,201: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,202: WARNING/ForkPoolWorker-3] ETH-NMR
+[2018-03-05 15:20:36,214: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,214: WARNING/ForkPoolWorker-3] BTC-GCR
+[2018-03-05 15:20:36,217: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,217: WARNING/ForkPoolWorker-3] BTC-TX
+[2018-03-05 15:20:36,238: WARNING/ForkPoolWorker-3] Traceback (most recent call last):
+[2018-03-05 15:20:36,238: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:20:36,238: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:20:36,238: WARNING/ForkPoolWorker-3] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:20:36,238: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,238: WARNING/ForkPoolWorker-3] BTC-OMNI
+[2018-03-05 15:20:36,240: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,240: WARNING/ForkPoolWorker-3] BTC-AMP
+[2018-03-05 15:20:36,247: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,248: WARNING/ForkPoolWorker-3] BTC-SLS
+[2018-03-05 15:20:36,266: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,266: WARNING/ForkPoolWorker-3] BTC-RADS
+[2018-03-05 15:20:36,268: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,268: WARNING/ForkPoolWorker-3] BTC-BSD
+[2018-03-05 15:20:36,284: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,284: WARNING/ForkPoolWorker-3] BTC-XVG
+[2018-03-05 15:20:36,293: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,296: WARNING/ForkPoolWorker-3] BTC-PIVX
+[2018-03-05 15:20:36,293: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,297: WARNING/ForkPoolWorker-3] BTC-XVC
+[2018-03-05 15:20:36,299: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,299: WARNING/ForkPoolWorker-3] BTC-MEME
+[2018-03-05 15:20:36,313: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,314: WARNING/ForkPoolWorker-3] BTC-STEEM
+[2018-03-05 15:20:36,328: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,328: WARNING/ForkPoolWorker-3] BTC-2GIVE
+[2018-03-05 15:20:36,331: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,331: WARNING/ForkPoolWorker-3] BTC-LSK
+[2018-03-05 15:20:36,344: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,344: WARNING/ForkPoolWorker-3] BTC-BRK
+[2018-03-05 15:20:36,345: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,345: WARNING/ForkPoolWorker-3] BTC-WAVES
+[2018-03-05 15:20:36,362: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,363: WARNING/ForkPoolWorker-3] BTC-LBC
+[2018-03-05 15:20:36,376: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,376: WARNING/ForkPoolWorker-3] BTC-VRC
+[2018-03-05 15:20:36,378: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,378: WARNING/ForkPoolWorker-3] BTC-CURE
+[2018-03-05 15:20:36,386: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,386: WARNING/ForkPoolWorker-3] ETH-SRN
+[2018-03-05 15:20:36,396: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,397: WARNING/ForkPoolWorker-3] ETH-DGB
+[2018-03-05 15:20:36,417: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,417: WARNING/ForkPoolWorker-3] ETH-FCT
+[2018-03-05 15:20:36,419: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,420: WARNING/ForkPoolWorker-3] BTC-ZRX
+[2018-03-05 15:20:36,426: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,426: WARNING/ForkPoolWorker-3] BTC-XMR
+[2018-03-05 15:20:36,432: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,433: WARNING/ForkPoolWorker-3] BTC-CLOAK
+[2018-03-05 15:20:36,441: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,442: WARNING/ForkPoolWorker-3] BTC-START
+[2018-03-05 15:20:36,453: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,453: WARNING/ForkPoolWorker-3] BTC-KORE
+[2018-03-05 15:20:36,468: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,468: WARNING/ForkPoolWorker-3] BTC-XDN
+[2018-03-05 15:20:36,475: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,475: WARNING/ForkPoolWorker-3] BTC-TRUST
+[2018-03-05 15:20:36,488: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,488: WARNING/ForkPoolWorker-3] BTC-NAV
+[2018-03-05 15:20:36,492: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,493: WARNING/ForkPoolWorker-3] BTC-SEQ
+[2018-03-05 15:20:36,504: WARNING/ForkPoolWorker-3] Traceback (most recent call last):
+[2018-03-05 15:20:36,504: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:20:36,504: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:20:36,504: WARNING/ForkPoolWorker-3] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:20:36,505: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,505: WARNING/ForkPoolWorker-3] USDT-OMG
+[2018-03-05 15:20:36,506: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,506: WARNING/ForkPoolWorker-3] BTC-ADA
+[2018-03-05 15:20:36,510: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,510: WARNING/ForkPoolWorker-3] BTC-MANA
+[2018-03-05 15:20:36,528: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,528: WARNING/ForkPoolWorker-3] ETH-MANA
+[2018-03-05 15:20:36,529: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,529: WARNING/ForkPoolWorker-3] BTC-SALT
+[2018-03-05 15:20:36,544: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,544: WARNING/ForkPoolWorker-3] ETH-SALT
+[2018-03-05 15:20:36,545: WARNING/ForkPoolWorker-3] Traceback (most recent call last):
+[2018-03-05 15:20:36,545: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:20:36,546: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:20:36,546: WARNING/ForkPoolWorker-3] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:20:36,546: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,546: WARNING/ForkPoolWorker-3] BTC-TIX
+[2018-03-05 15:20:36,548: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,549: WARNING/ForkPoolWorker-3] BTC-REP
+[2018-03-05 15:20:36,567: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,567: WARNING/ForkPoolWorker-3] BTC-SHIFT
+[2018-03-05 15:20:36,569: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,569: WARNING/ForkPoolWorker-3] BTC-ARDR
+[2018-03-05 15:20:36,577: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,577: WARNING/ForkPoolWorker-3] BTC-XZC
+[2018-03-05 15:20:36,599: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,600: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,600: WARNING/ForkPoolWorker-3] BTC-LTC
+[2018-03-05 15:20:36,600: WARNING/ForkPoolWorker-3] BTC-RDD
+[2018-03-05 15:20:36,615: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,615: WARNING/ForkPoolWorker-3] BTC-NLG
+[2018-03-05 15:20:36,617: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,617: WARNING/ForkPoolWorker-3] BTC-RBY
+[2018-03-05 15:20:36,621: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,621: WARNING/ForkPoolWorker-3] BTC-XWC
+[2018-03-05 15:20:36,637: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,637: WARNING/ForkPoolWorker-3] BTC-MONA
+[2018-03-05 15:20:36,649: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,649: WARNING/ForkPoolWorker-3] BTC-THC
+[2018-03-05 15:20:36,671: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,672: WARNING/ForkPoolWorker-3] BTC-ENRG
+[2018-03-05 15:20:36,673: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,673: WARNING/ForkPoolWorker-3] BTC-ERC
+[2018-03-05 15:20:36,675: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,675: WARNING/ForkPoolWorker-3] BTC-UBQ
+[2018-03-05 15:20:36,694: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,694: WARNING/ForkPoolWorker-3] BTC-GNO
+[2018-03-05 15:20:36,696: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,696: WARNING/ForkPoolWorker-3] BTC-PAY
+[2018-03-05 15:20:36,703: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,710: WARNING/ForkPoolWorker-3] USDT-BCC
+[2018-03-05 15:20:36,716: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,716: WARNING/ForkPoolWorker-3] BTC-BCC
+[2018-03-05 15:20:36,718: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,718: WARNING/ForkPoolWorker-3] BTC-DNT
+[2018-03-05 15:20:36,738: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,738: WARNING/ForkPoolWorker-3] ETH-DNT
+[2018-03-05 15:20:36,740: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,740: WARNING/ForkPoolWorker-3] USDT-NEO
+[2018-03-05 15:20:36,755: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,756: WARNING/ForkPoolWorker-3] ETH-TIX
+[2018-03-05 15:20:36,757: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,757: WARNING/ForkPoolWorker-3] BTC-RCN
+[2018-03-05 15:20:36,765: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,766: WARNING/ForkPoolWorker-3] ETH-RCN
+[2018-03-05 15:20:36,778: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,778: WARNING/ForkPoolWorker-3] BTC-VIB
+[2018-03-05 15:20:36,792: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,793: WARNING/ForkPoolWorker-3] ETH-VIB
+[2018-03-05 15:20:36,804: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,805: WARNING/ForkPoolWorker-3] ETH-WAVES
+[2018-03-05 15:20:36,809: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,809: WARNING/ForkPoolWorker-3] BTC-MER
+[2018-03-05 15:20:36,823: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,823: WARNING/ForkPoolWorker-3] BTC-POWR
+[2018-03-05 15:20:36,832: WARNING/ForkPoolWorker-3] Traceback (most recent call last):
+[2018-03-05 15:20:36,832: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:20:36,833: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:20:36,833: WARNING/ForkPoolWorker-3] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:20:36,833: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,833: WARNING/ForkPoolWorker-3] ETH-POWR
+[2018-03-05 15:20:36,836: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,837: WARNING/ForkPoolWorker-3] BTC-BTG
+[2018-03-05 15:20:36,838: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,838: WARNING/ForkPoolWorker-3] ETH-BTG
+[2018-03-05 15:20:36,866: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,866: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,867: WARNING/ForkPoolWorker-3] USDT-BTG
+[2018-03-05 15:20:36,867: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,867: WARNING/ForkPoolWorker-3] USDT-XVG
+[2018-03-05 15:20:36,868: WARNING/ForkPoolWorker-3] BTC-IGNIS
+[2018-03-05 15:20:36,908: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,909: WARNING/ForkPoolWorker-3] BTC-SRN
+[2018-03-05 15:20:36,910: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,910: WARNING/ForkPoolWorker-3] ETH-STRAT
+[2018-03-05 15:20:36,921: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,921: WARNING/ForkPoolWorker-3] BTC-LGD
+[2018-03-05 15:20:36,928: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,928: WARNING/ForkPoolWorker-3] BTC-ADX
+[2018-03-05 15:20:36,929: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,929: WARNING/ForkPoolWorker-3] ETH-ADX
+[2018-03-05 15:20:36,949: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,949: WARNING/ForkPoolWorker-3] BTC-IOP
+[2018-03-05 15:20:36,952: WARNING/ForkPoolWorker-3] Traceback (most recent call last):
+[2018-03-05 15:20:36,952: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:20:36,952: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:20:36,952: WARNING/ForkPoolWorker-3] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:20:36,953: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,953: WARNING/ForkPoolWorker-3] BTC-KMD
+[2018-03-05 15:20:36,964: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,964: WARNING/ForkPoolWorker-3] BTC-TRST
+[2018-03-05 15:20:36,967: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,967: WARNING/ForkPoolWorker-3] ETH-GNT
+[2018-03-05 15:20:36,969: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,969: WARNING/ForkPoolWorker-3] BTC-XST
+[2018-03-05 15:20:36,992: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,993: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,994: WARNING/ForkPoolWorker-3] BTC-SIB
+[2018-03-05 15:20:36,993: WARNING/ForkPoolWorker-3] BTC-GBG
+[2018-03-05 15:20:36,993: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:36,997: WARNING/ForkPoolWorker-3] BTC-ION
+[2018-03-05 15:20:37,016: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,017: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,017: WARNING/ForkPoolWorker-3] BTC-LMC
+[2018-03-05 15:20:37,017: WARNING/ForkPoolWorker-3] ETH-REP
+[2018-03-05 15:20:37,025: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,030: WARNING/ForkPoolWorker-3] USDT-ETH
+[2018-03-05 15:20:37,032: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,032: WARNING/ForkPoolWorker-3] ETH-WINGS
+[2018-03-05 15:20:37,051: WARNING/ForkPoolWorker-3] Traceback (most recent call last):
+[2018-03-05 15:20:37,051: WARNING/ForkPoolWorker-3] Traceback (most recent call last):
+[2018-03-05 15:20:37,051: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:20:37,052: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:20:37,052: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:20:37,052: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:20:37,052: WARNING/ForkPoolWorker-3] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:20:37,052: WARNING/ForkPoolWorker-3] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:20:37,053: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,053: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,053: WARNING/ForkPoolWorker-3] ETH-DASH
+[2018-03-05 15:20:37,054: WARNING/ForkPoolWorker-3] ETH-SC
+[2018-03-05 15:20:37,056: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,057: WARNING/ForkPoolWorker-3] ETH-ZEC
+[2018-03-05 15:20:37,080: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,080: WARNING/ForkPoolWorker-3] USDT-ZEC
+[2018-03-05 15:20:37,083: WARNING/ForkPoolWorker-3] Traceback (most recent call last):
+[2018-03-05 15:20:37,083: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:20:37,083: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:20:37,083: WARNING/ForkPoolWorker-3] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:20:37,083: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,083: WARNING/ForkPoolWorker-3] USDT-LTC
+[2018-03-05 15:20:37,086: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,086: WARNING/ForkPoolWorker-3] USDT-ETC
+[2018-03-05 15:20:37,103: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,103: WARNING/ForkPoolWorker-3] ETH-LTC
+[2018-03-05 15:20:37,104: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,105: WARNING/ForkPoolWorker-3] USDT-XRP
+[2018-03-05 15:20:37,115: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,121: WARNING/ForkPoolWorker-3] BTC-BCPT
+[2018-03-05 15:20:37,122: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,122: WARNING/ForkPoolWorker-3] BTC-VIA
+[2018-03-05 15:20:37,127: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,128: WARNING/ForkPoolWorker-3] BTC-PINK
+[2018-03-05 15:20:37,136: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,139: WARNING/ForkPoolWorker-3] BTC-IOC
+[2018-03-05 15:20:37,153: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,153: WARNING/ForkPoolWorker-3] BTC-QWARK
+[2018-03-05 15:20:37,165: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,165: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,165: WARNING/ForkPoolWorker-3] BTC-CRW
+[2018-03-05 15:20:37,166: WARNING/ForkPoolWorker-3] BTC-SWT
+[2018-03-05 15:20:37,184: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,184: WARNING/ForkPoolWorker-3] ETH-XRP
+[2018-03-05 15:20:37,186: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,186: WARNING/ForkPoolWorker-3] BTC-SNT
+[2018-03-05 15:20:37,199: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,205: WARNING/ForkPoolWorker-3] ETH-SNT
+[2018-03-05 15:20:37,218: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,218: WARNING/ForkPoolWorker-3] BTC-DCT
+[2018-03-05 15:20:37,220: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,220: WARNING/ForkPoolWorker-3] BTC-XEL
+[2018-03-05 15:20:37,225: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,238: WARNING/ForkPoolWorker-3] BTC-MCO
+[2018-03-05 15:20:37,240: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,241: WARNING/ForkPoolWorker-3] ETH-BCPT
+[2018-03-05 15:20:37,249: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,250: WARNING/ForkPoolWorker-3] BTC-CANN
+[2018-03-05 15:20:37,263: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,263: WARNING/ForkPoolWorker-3] BTC-SYS
+[2018-03-05 15:20:37,278: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,278: WARNING/ForkPoolWorker-3] BTC-NEOS
+[2018-03-05 15:20:37,297: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,297: WARNING/ForkPoolWorker-3] BTC-FLDC
+[2018-03-05 15:20:37,303: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,304: WARNING/ForkPoolWorker-3] ETH-MCO
+[2018-03-05 15:20:37,327: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,327: WARNING/ForkPoolWorker-3] BTC-ADT
+[2018-03-05 15:20:37,335: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,335: WARNING/ForkPoolWorker-3] ETH-ADT
+[2018-03-05 15:20:37,337: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,337: WARNING/ForkPoolWorker-3] BTC-GRC
+[2018-03-05 15:20:37,360: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,361: WARNING/ForkPoolWorker-3] BTC-BCY
+[2018-03-05 15:20:37,366: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,366: WARNING/ForkPoolWorker-3] BTC-MLN
+[2018-03-05 15:20:37,395: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,395: WARNING/ForkPoolWorker-3] BTC-ARK
+[2018-03-05 15:20:37,409: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,409: WARNING/ForkPoolWorker-3] BTC-DYN
+[2018-03-05 15:20:37,411: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,411: WARNING/ForkPoolWorker-3] BTC-TKS
+[2018-03-05 15:20:37,426: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,426: WARNING/ForkPoolWorker-3] BTC-MUSIC
+[2018-03-05 15:20:37,431: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,432: WARNING/ForkPoolWorker-3] BTC-INCNT
+[2018-03-05 15:20:37,433: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,433: WARNING/ForkPoolWorker-3] BTC-GBYTE
+[2018-03-05 15:20:37,449: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,449: WARNING/ForkPoolWorker-3] ETH-PAY
+[2018-03-05 15:20:37,462: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,464: WARNING/ForkPoolWorker-3] BTC-STORJ
+[2018-03-05 15:20:37,470: WARNING/ForkPoolWorker-3] Traceback (most recent call last):
+[2018-03-05 15:20:37,481: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:20:37,482: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:20:37,482: WARNING/ForkPoolWorker-3] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:20:37,483: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,483: WARNING/ForkPoolWorker-3] BTC-EXP
+[2018-03-05 15:20:37,484: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,485: WARNING/ForkPoolWorker-3] BTC-INFX
+[2018-03-05 15:20:37,500: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,500: WARNING/ForkPoolWorker-3] BTC-DCR
+[2018-03-05 15:20:37,506: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,506: WARNING/ForkPoolWorker-3] BTC-PDC
+[2018-03-05 15:20:37,517: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,517: WARNING/ForkPoolWorker-3] BTC-GNT
+[2018-03-05 15:20:37,522: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,522: WARNING/ForkPoolWorker-3] BTC-NXC
+[2018-03-05 15:20:37,534: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,534: WARNING/ForkPoolWorker-3] BTC-EDG
+[2018-03-05 15:20:37,539: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,539: WARNING/ForkPoolWorker-3] ETH-STORJ
+[2018-03-05 15:20:37,550: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,550: WARNING/ForkPoolWorker-3] BTC-EXCL
+[2018-03-05 15:20:37,551: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,551: WARNING/ForkPoolWorker-3] BTC-SWIFT
+[2018-03-05 15:20:37,566: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,566: WARNING/ForkPoolWorker-3] BTC-DOPE
+[2018-03-05 15:20:37,575: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,575: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,575: WARNING/ForkPoolWorker-3] BTC-BLOCK
+[2018-03-05 15:20:37,584: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,584: WARNING/ForkPoolWorker-3] BTC-BYC
+[2018-03-05 15:20:37,576: WARNING/ForkPoolWorker-3] BTC-ABY
+[2018-03-05 15:20:37,597: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,597: WARNING/ForkPoolWorker-3] BTC-XMG
+[2018-03-05 15:20:37,598: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,598: WARNING/ForkPoolWorker-3] BTC-BLITZ
+[2018-03-05 15:20:37,616: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,616: WARNING/ForkPoolWorker-3] BTC-WINGS
+[2018-03-05 15:20:37,627: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,627: WARNING/ForkPoolWorker-3] BTC-RLC
+[2018-03-05 15:20:37,629: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,629: WARNING/ForkPoolWorker-3] BTC-GUP
+[2018-03-05 15:20:37,633: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,633: WARNING/ForkPoolWorker-3] BTC-LUN
+[2018-03-05 15:20:37,644: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,645: WARNING/ForkPoolWorker-3] ETH-GUP
+[2018-03-05 15:20:37,660: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,660: WARNING/ForkPoolWorker-3] ETH-RLC
+[2018-03-05 15:20:37,668: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,669: WARNING/ForkPoolWorker-3] USDT-DASH
+[2018-03-05 15:20:37,671: WARNING/ForkPoolWorker-3] Traceback (most recent call last):
+[2018-03-05 15:20:37,672: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:20:37,672: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:20:37,672: WARNING/ForkPoolWorker-3] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:20:37,672: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,672: WARNING/ForkPoolWorker-3] ETH-BCC
+[2018-03-05 15:20:37,689: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,689: WARNING/ForkPoolWorker-3] ETH-ADA
+[2018-03-05 15:20:37,693: WARNING/ForkPoolWorker-3] Traceback (most recent call last):
+[2018-03-05 15:20:37,693: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:20:37,693: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:20:37,693: WARNING/ForkPoolWorker-3] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:20:37,693: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,693: WARNING/ForkPoolWorker-3] BTC-ENG
+[2018-03-05 15:20:37,694: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,695: WARNING/ForkPoolWorker-3] ETH-ENG
+[2018-03-05 15:20:37,710: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,710: WARNING/ForkPoolWorker-3] USDT-ADA
+[2018-03-05 15:20:37,713: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,713: WARNING/ForkPoolWorker-3] USDT-NXT
+[2018-03-05 15:20:37,715: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,715: WARNING/ForkPoolWorker-3] BTC-UKG
+[2018-03-05 15:20:37,730: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,730: WARNING/ForkPoolWorker-3] ETH-UKG
+[2018-03-05 15:20:37,731: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,731: WARNING/ForkPoolWorker-3] BTC-DGB
+[2018-03-05 15:20:37,739: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:20:37,739: WARNING/ForkPoolWorker-3] BTC-BURST
+[2018-03-05 15:20:37,760: WARNING/ForkPoolWorker-3] Execution time = 2.74860
+[2018-03-05 15:20:37,761: INFO/ForkPoolWorker-3] Task summary_writer.signal_finder.rsi[599bd9ff-d7f5-4954-ae19-ceb5eab156aa] succeeded in 2.750281990505755s: None
+[2018-03-05 15:20:37,763: WARNING/ForkPoolWorker-3] Get ticker....
+[2018-03-05 15:20:39,144: INFO/MainProcess] Received task: summary_writer.tasks.get_ticker[67f4dbfe-b67c-452d-9ee0-398cf98d5877]  
+[2018-03-05 15:22:16,955: WARNING/ForkPoolWorker-3] Execution time = 99.19198
+[2018-03-05 15:22:16,957: INFO/ForkPoolWorker-3] Task summary_writer.tasks.get_ticker[c3d544b5-ceaa-4c2f-9d73-43c40ef3b90d] succeeded in 99.19453759398311s: None
+[2018-03-05 15:22:16,960: WARNING/ForkPoolWorker-3] Get ticker....
+[2018-03-05 15:22:17,877: INFO/MainProcess] Received task: summary_writer.tasks.get_ticker[9a197612-b349-451e-81b7-2485d7ac884f]  
+[2018-03-05 15:23:11,589: WARNING/ForkPoolWorker-3] Execution time = 54.62826
+[2018-03-05 15:23:11,590: INFO/ForkPoolWorker-3] Task summary_writer.tasks.get_ticker[0dff65a0-3599-41f6-b810-681671f4d447] succeeded in 54.63004874251783s: None
+[2018-03-05 15:23:11,594: WARNING/ForkPoolWorker-3] Updating markets...
+[2018-03-05 15:23:11,967: INFO/MainProcess] Received task: summary_writer.tasks.get_ticker[f9419141-a9ee-41c7-ae2f-cb53fad3f26c]  
+[2018-03-05 15:23:11,974: WARNING/ForkPoolWorker-3] got 272 markets
+[2018-03-05 15:23:14,720: WARNING/ForkPoolWorker-3] Completed
+[2018-03-05 15:23:14,721: WARNING/ForkPoolWorker-3] Updating market summary...
+[2018-03-05 15:23:18,264: INFO/ForkPoolWorker-3] Task summary_writer.tasks.update_market_summary[42f07bf9-15ed-45a5-9c93-45df85ff8c4a] succeeded in 6.669729419052601s: None
+[2018-03-05 15:23:18,268: WARNING/ForkPoolWorker-3] Get ticker....
+[2018-03-05 15:23:19,180: INFO/MainProcess] Received task: summary_writer.tasks.get_ticker[10c27eba-a765-4b02-af74-1a251815d832]  
+[2018-03-05 15:23:53,528: WARNING/ForkPoolWorker-3] Execution time = 35.26041
+[2018-03-05 15:23:53,529: INFO/ForkPoolWorker-3] Task summary_writer.tasks.get_ticker[d6485ffd-a83b-414f-8255-c816b35ad88a] succeeded in 35.26185863185674s: None
+[2018-03-05 15:23:53,531: WARNING/ForkPoolWorker-3] System analysing....
+[2018-03-05 15:23:53,549: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,549: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,549: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,550: WARNING/ForkPoolWorker-3] BTC-GEO
+[2018-03-05 15:23:53,550: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,553: WARNING/ForkPoolWorker-3] BTC-UNB
+[2018-03-05 15:23:53,549: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,555: WARNING/ForkPoolWorker-3] BTC-FLO
+[2018-03-05 15:23:53,550: WARNING/ForkPoolWorker-3] BTC-GLD
+[2018-03-05 15:23:53,550: WARNING/ForkPoolWorker-3] BTC-DOGE
+[2018-03-05 15:23:53,550: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,582: WARNING/ForkPoolWorker-3] BTC-VTC
+[2018-03-05 15:23:53,585: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,585: WARNING/ForkPoolWorker-3] BTC-PPC
+[2018-03-05 15:23:53,606: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,606: WARNING/ForkPoolWorker-3] BTC-SLR
+[2018-03-05 15:23:53,619: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,636: WARNING/ForkPoolWorker-3] BTC-PTC
+[2018-03-05 15:23:53,620: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,638: WARNING/ForkPoolWorker-3] BTC-NBT
+[2018-03-05 15:23:53,639: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,640: WARNING/ForkPoolWorker-3] BTC-CLAM
+[2018-03-05 15:23:53,621: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,642: WARNING/ForkPoolWorker-3] BTC-MUE
+[2018-03-05 15:23:53,622: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,664: WARNING/ForkPoolWorker-3] BTC-XEM
+[2018-03-05 15:23:53,666: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,666: WARNING/ForkPoolWorker-3] BTC-SYNX
+[2018-03-05 15:23:53,670: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,670: WARNING/ForkPoolWorker-3] BTC-EBST
+[2018-03-05 15:23:53,671: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,671: WARNING/ForkPoolWorker-3] BTC-VRM
+[2018-03-05 15:23:53,689: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,691: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,696: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,696: WARNING/ForkPoolWorker-3] BTC-DMD
+[2018-03-05 15:23:53,708: WARNING/ForkPoolWorker-3] BTC-GAM
+[2018-03-05 15:23:53,712: WARNING/ForkPoolWorker-3] BTC-SPHR
+[2018-03-05 15:23:53,723: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,723: WARNING/ForkPoolWorker-3] BTC-OK
+[2018-03-05 15:23:53,722: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,746: WARNING/ForkPoolWorker-3] BTC-OMG
+[2018-03-05 15:23:53,752: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,753: WARNING/ForkPoolWorker-3] BTC-SNRG
+[2018-03-05 15:23:53,754: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,754: WARNING/ForkPoolWorker-3] BTC-PKB
+[2018-03-05 15:23:53,713: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,755: WARNING/ForkPoolWorker-3] BTC-DTB
+[2018-03-05 15:23:53,778: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,778: WARNING/ForkPoolWorker-3] ETH-OMG
+[2018-03-05 15:23:53,785: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,788: WARNING/ForkPoolWorker-3] BTC-CVC
+[2018-03-05 15:23:53,807: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,807: WARNING/ForkPoolWorker-3] ETH-CVC
+[2018-03-05 15:23:53,812: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,813: WARNING/ForkPoolWorker-3] BTC-PART
+[2018-03-05 15:23:53,824: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,824: WARNING/ForkPoolWorker-3] BTC-QTUM
+[2018-03-05 15:23:53,842: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,842: WARNING/ForkPoolWorker-3] ETH-QTUM
+[2018-03-05 15:23:53,846: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,846: WARNING/ForkPoolWorker-3] ETH-NEO
+[2018-03-05 15:23:53,849: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,849: WARNING/ForkPoolWorker-3] USDT-XMR
+[2018-03-05 15:23:53,882: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,886: WARNING/ForkPoolWorker-3] BTC-WAX
+[2018-03-05 15:23:53,888: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,889: WARNING/ForkPoolWorker-3] ETH-WAX
+[2018-03-05 15:23:53,912: WARNING/ForkPoolWorker-3] Traceback (most recent call last):
+[2018-03-05 15:23:53,913: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:23:53,913: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:23:53,913: WARNING/ForkPoolWorker-3] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:23:53,914: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,914: WARNING/ForkPoolWorker-3] ETH-ZRX
+[2018-03-05 15:23:53,916: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,919: WARNING/ForkPoolWorker-3] Traceback (most recent call last):
+[2018-03-05 15:23:53,933: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:23:53,920: WARNING/ForkPoolWorker-3] BTC-VEE
+[2018-03-05 15:23:53,933: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,936: WARNING/ForkPoolWorker-3] BTC-TRX
+[2018-03-05 15:23:53,934: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:23:53,938: WARNING/ForkPoolWorker-3] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:23:53,938: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,938: WARNING/ForkPoolWorker-3] ETH-TRX
+[2018-03-05 15:23:53,919: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,976: WARNING/ForkPoolWorker-3] ETH-VEE
+[2018-03-05 15:23:53,957: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,979: WARNING/ForkPoolWorker-3] BTC-FTC
+[2018-03-05 15:23:53,975: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,958: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,996: WARNING/ForkPoolWorker-3] BTC-NXT
+[2018-03-05 15:23:53,996: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:53,987: WARNING/ForkPoolWorker-3] BTC-DASH
+[2018-03-05 15:23:54,009: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:54,017: WARNING/ForkPoolWorker-3] BTC-BLK
+[2018-03-05 15:23:54,011: WARNING/ForkPoolWorker-3] BTC-POT
+[2018-03-05 15:23:54,051: ERROR/MainProcess] Received unregistered task of type 'summary_writer.exchange_rate_cal.plan_pricing_calculate'.
+The message has been ignored and discarded.
+
+Did you remember to import the module containing this task?
+Or maybe you're using relative imports?
+
+Please see
+http://docs.celeryq.org/en/latest/internals/protocol.html
+for more information.
+
+The full contents of the message body was:
+b'[[], {}, {"chord": null, "chain": null, "callbacks": null, "errbacks": null}]' (77b)
+Traceback (most recent call last):
+  File "/root/miniconda2/envs/py35/lib/python3.5/site-packages/celery/worker/consumer/consumer.py", line 559, in on_task_received
+    strategy = strategies[type_]
+KeyError: 'summary_writer.exchange_rate_cal.plan_pricing_calculate'
+[2018-03-05 15:23:54,010: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:54,053: WARNING/ForkPoolWorker-3] BTC-EMC2
+[2018-03-05 15:23:54,058: INFO/MainProcess] Received task: summary_writer.signal_finder.rsi[55d92c62-2d9c-4ec9-b626-6faf0ff96e1e]  
+[2018-03-05 15:23:54,047: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:54,086: WARNING/ForkPoolWorker-3] BTC-XMY
+[2018-03-05 15:23:54,093: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:54,093: WARNING/ForkPoolWorker-3] BTC-AUR
+[2018-03-05 15:23:54,125: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:54,126: WARNING/ForkPoolWorker-3] BTC-EFL
+[2018-03-05 15:23:54,133: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:54,133: WARNING/ForkPoolWorker-3] BTC-GRS
+[2018-03-05 15:23:54,175: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:54,175: WARNING/ForkPoolWorker-3] BTC-BAY
+[2018-03-05 15:23:54,182: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:54,182: WARNING/ForkPoolWorker-3] BTC-FAIR
+[2018-03-05 15:23:54,183: WARNING/ForkPoolWorker-3] Traceback (most recent call last):
+[2018-03-05 15:23:54,183: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 96, in find_signal
+    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+[2018-03-05 15:23:54,183: WARNING/ForkPoolWorker-3] File "/root/be_signal_finder/be-signal-finder-django/summary_writer/signal_finder.py", line 46, in send_trading_alert_rsi
+    content = strategy.message
+[2018-03-05 15:23:54,183: WARNING/ForkPoolWorker-3] AttributeError: 'NoneType' object has no attribute 'message'
+[2018-03-05 15:23:54,184: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:54,184: WARNING/ForkPoolWorker-3] BTC-SPR
+[2018-03-05 15:23:54,185: WARNING/ForkPoolWorker-3] market:
+[2018-03-05 15:23:54,185: WARNING/ForkPoolWorker-3] BTC-VTR
+Killed
