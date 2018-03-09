@@ -35,7 +35,6 @@ https://medium.com/@yehandjoe/celery-4-periodic-task-in-django-9f6b5a8c21c7
 @task()
 def update_markets():
     print('Updating markets...')
-    db.connections.close_all()
     res = bittrex_api.get_markets()
     # print(res)
     if res['success']:
@@ -61,7 +60,6 @@ def update_markets():
 
 @task()
 def update_market_summary():
-    db.connections.close_all()
     update_markets()
     print('Updating market summary...')
     res = bittrex_api.get_market_summaries()
@@ -102,7 +100,6 @@ def update_market_summary():
 @task()
 def get_latest_tick():
     print('Get latest tick...')
-    db.connections.close_all()
     markets = Market.objects.all()
     for market in markets:
         candle_count = Candle.objects.filter(market__market_name=market.market_name).count()
@@ -169,10 +166,8 @@ def process_queue():
 @task()
 def get_ticker():
     print('Get ticker....')
-
     start_time = time.time()
-    
-    db.connections.close_all()
+
     markets = Market.objects.all()
 
     for i in range(3):
@@ -191,8 +186,7 @@ def get_ticker():
 @task()
 def check_overdue_action():
     start_time = time.time()
-    
-    db.connections.close_all()
+
     markets = Market.objects.all()
 
     accounts = Profile.objects.all()

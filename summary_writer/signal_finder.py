@@ -67,7 +67,6 @@ def send_trading_alert_rsi(market_name, action, open_price=0, high_price=0, low_
                 send_mail(title, us.profile.user.email, content)
 
 
-
 def find_signal(market_name):
     print('market: ', market_name)
     candles = Candle.objects.filter(market__market_name=market_name).order_by('-timestamp')[:100]
@@ -92,16 +91,19 @@ def find_signal(market_name):
     middle = np.nan_to_num(middle)
     lower = np.nan_to_num(lower)
     real = np.nan_to_num(real)
-    
+
     tick = Ticker.objects.filter(market__market_name=market_name).order_by('-timestamp').first()
     if tick is not None:
         price = tick.bid + tick.ask / 2
         try:
             if price > upper[len(upper) - 1] and real[len(real) - 1] > 70:
                 # print('sell')
-                send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+                send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0],
+                                       high_price=df['high'].iloc[0], low_price=df['low'].iloc[0],
+                                       close_price=df['close'].iloc[0], price=price)
             elif price < lower[len(lower) - 1] and real[len(real) - 1] < 30:
-                send_trading_alert_rsi(market_name, 'buy', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0], low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+                send_trading_alert_rsi(market_name, 'buy', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0],
+                                       low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
         except Exception as e:
             traceback.print_exc()
 
@@ -118,7 +120,7 @@ def rsi():
     print('System analysing....')
     start_time = time.time()
     db.connections.close_all()
-    
+
     markets = Market.objects.all()
 
     for i in range(3):
@@ -128,7 +130,7 @@ def rsi():
 
     for market in markets:
         rsi_queue.put(market.market_name)
-    
+
     rsi_queue.join()
     print("Execution time = {0:.5f}".format(time.time() - start_time))
 
@@ -156,18 +158,18 @@ def send_trading_alert_cp(market_name, action, open_price=0, high_price=0, low_p
         content = content.replace('#ClosePrice#', close_price)
     if '#Price#' in content:
         content = content.replace('#Price#', price)
-    print('sending with content ', content)
+    # print('sending with content ', content)
     for us in UserSubscription.objects.filter(market=Market.objects.filter(market_name=market_name).first()):
         send_mail(title, us.profile.user.email, content)
 
 
 def find_signal_cp(market_name):
-    print('market: ', market_name)
+    # print('market: ', market_name)
     candle = Candle.objects.filter(market__market_name=market_name).order_by('-timestamp').first()
     tick = Ticker.objects.filter(market__market_name=market_name).order_by('-timestamp').first()
     if candle is not None and tick is not None:
         pct = tick.bid - candle.close / candle.close
-        if pct >= 0.1:
+        if pct >= 0.1 or pct <= 0.1:
             send_trading_alert_cp(market_name, '', candle.open, candle.high, candle.low, candle.close, tick.bid)
 
 
@@ -181,7 +183,7 @@ def cp_process_queue():
 @task()
 def close_price_strategy():
     print('System analysing....')
-    db.connections.close_all()
+    # db.connections.close_all()
     start_time = time.time()
     markets = Market.objects.filter(market_name="USDT-BTC")
 
@@ -192,6 +194,6 @@ def close_price_strategy():
 
     for market in markets:
         cp_queue.put(market.market_name)
-    
+
     cp_queue.join()
     print("Execution time = {0:.5f}".format(time.time() - start_time))

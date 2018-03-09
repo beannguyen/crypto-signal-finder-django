@@ -180,6 +180,10 @@ CELERY_BEAT_SCHEDULE = {
         'task': 'summary_writer.signal_finder.rsi',
         'schedule': crontab(minute='*/15')
     },
+    'cp_find_signal': {
+        'task': 'summary_writer.signal_finder.close_price_strategy',
+        'schedule': crontab(minute='*/15')
+    },
     'plan_pricing_calculate': {
         'task': 'summary_writer.exchange_rate_cal.plan_pricing_calculate',
         'schedule': crontab(minute='*/15')
