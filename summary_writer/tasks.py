@@ -11,6 +11,7 @@ import threading
 import time
 from queue import Queue
 from datetime import datetime, date
+
 from django import db
 from django.db import connection
 
@@ -138,6 +139,7 @@ def get_latest_tick():
                     if not Candle.objects.filter(timestamp=candle.timestamp).exists():
                         candle.save()
 
+
 @task()
 def sendmail():
     send_mail('hell', 'bao.nlq94@gmail.com', '<p>Hello</p>')
@@ -152,8 +154,8 @@ def get_tick(market_name):
         latest_tick = res['result']
         if latest_tick is not None:
             # print(latest_tick)
-            Ticker.objects.create(market=Market.objects.get(market_name=market_name), 
-                                  bid=latest_tick['Bid'] if latest_tick['Bid'] is not None else 0, 
+            Ticker.objects.create(market=Market.objects.get(market_name=market_name),
+                                  bid=latest_tick['Bid'] if latest_tick['Bid'] is not None else 0,
                                   ask=latest_tick['Ask'] if latest_tick['Ask'] is not None else 0)
 
 
@@ -177,7 +179,7 @@ def get_ticker():
         t = threading.Thread(target=process_queue)
         t.daemon = True
         t.start()
-    
+
     for market in markets:
         # get_tick(market.market_name)
         queue.put(market.market_name)
@@ -215,4 +217,8 @@ def check_overdue_action():
 @task()
 def kill_all_idle_session():
     with connection.cursor() as cursor:
-        cursor.execute("SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'Database_Name' AND pid <> pg_backend_pid() AND state in ('idle', 'idle in transaction', 'idle in transaction (aborted)', 'disabled') AND state_change < current_timestamp - INTERVAL '15' MINUTE;")
+        cursor.execute(
+            "SELECT pg_terminate_backend(pid) FROM pg_stat_activity "
+            "WHERE datname = 'bsf_test1' AND pid <> pg_backend_pid() "
+            "AND state in ('idle', 'idle in transaction', 'idle in transaction (aborted)', 'disabled') "
+            "AND state_change < current_timestamp - INTERVAL '15' MINUTE;")
