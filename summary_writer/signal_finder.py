@@ -56,7 +56,7 @@ def send_trading_alert_rsi(market_name, action, open_price=0, high_price=0, low_
         content = content.replace('#ClosePrice#', '{}'.format(close_price))
     if '#Price#' in content:
         content = content.replace('#Price#', '{}'.format(price))
-    print('sending with content ', content)
+    # print('sending with content ', content)
     for us in UserSubscription.objects.filter(market=Market.objects.filter(market_name=market_name).first()):
         if SignalSendLog.objects.filter(profile=us.profile, market__market_name=market_name).exists():
             log = SignalSendLog.objects.filter(profile=us.profile, market=market_name).order_by('-timestamp').first()
@@ -68,7 +68,7 @@ def send_trading_alert_rsi(market_name, action, open_price=0, high_price=0, low_
 
 
 def find_signal(market_name):
-    print('market: ', market_name)
+    # print('market: ', market_name)
     candles = Candle.objects.filter(market__market_name=market_name).order_by('-timestamp')[:100]
     ticks = []
     for c in candles:
