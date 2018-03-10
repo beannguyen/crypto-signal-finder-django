@@ -206,13 +206,3 @@ def check_overdue_action():
                 #                                generate_reset_pwd_link(
                 #                                    u.username,
                 #                                    vc.verify_code)))
-
-
-@task()
-def kill_all_idle_session():
-    with connection.cursor() as cursor:
-        cursor.execute(
-            "SELECT pg_terminate_backend(pid) FROM pg_stat_activity "
-            "WHERE datname = 'bsf_test1' AND pid <> pg_backend_pid() "
-            "AND state in ('idle', 'idle in transaction', 'idle in transaction (aborted)', 'disabled') "
-            "AND state_change < current_timestamp - INTERVAL '5' MINUTE;")
