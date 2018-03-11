@@ -20,10 +20,11 @@ def _get_candle(market_name):
     if market.exists():
         market = market.first()
 
-        candle_count = Candle.objects.filter(market__market_name=market.market_name).count()
+        candle_count = Candle.objects.filter(market__market_name=market.market_name, timeframe=CANDLE_TF_1H).count()
+        # print('candle in db ', candle_count)
         if candle_count == 0:
             res_candles = bittrex_api_v2.get_candles(market=market.market_name, tick_interval=CANDLE_TF_1H)
-            # print('request status ', res_candles['success'])
+            # print('insert new candle set ', res_candles['success'])
             if res_candles['success']:
                 for c in res_candles['result']:
                     candle = Candle()
@@ -39,7 +40,7 @@ def _get_candle(market_name):
                     candle.save()
         else:
             res_latest_candle = bittrex_api_v2.get_latest_candle(market=market.market_name, tick_interval=CANDLE_TF_1H)
-            # print('request status ', res_latest_candle['success'])
+            print('insert new candle ', res_latest_candle['success'])
             if res_latest_candle['success']:
                 latest_candle = res_latest_candle['result'][0]
                 if latest_candle is not None:
@@ -68,6 +69,7 @@ def process_latest_candle_queue():
 def get_latest_candle():
     print('Get latest tick...')
     markets = Market.objects.all()
+    # print('get ', markets.count())
 
     for i in range(3):
         t = threading.Thread(target=process_latest_candle_queue)
@@ -78,4 +80,10 @@ def get_latest_candle():
         # get_tick(market.market_name)
         latest_candle_queue.put(market.market_name)
 
-    return None
+    latest_candle_queue.join()
+
+
+def test():
+    market = Market.objects.first()
+    print('get candle ', market.market_name)
+    _get_candle(market.market_name)
