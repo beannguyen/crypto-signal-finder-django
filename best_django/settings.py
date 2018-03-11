@@ -168,13 +168,13 @@ CELERY_BEAT_SCHEDULE = {
         'task': 'summary_writer.tasks.update_market_summary',
         'schedule': crontab(minute=0, hour='*/1')
     },
-    'get-latest-tick': {
-        'task': 'summary_writer.tasks.get_latest_tick',
-        'schedule': crontab(minute='*/15')
+    'get-latest-candle': {
+        'task': 'summary_writer.candle_task.get_latest_candle',
+        'schedule': crontab(minute='*/30')
     },
     'get-ticker': {
         'task': 'summary_writer.tasks.get_ticker',
-        'schedule': crontab(minute='*/5')
+        'schedule': crontab(minute='*/1')
     },
     'find_signal': {
         'task': 'summary_writer.signal_finder.rsi',
@@ -245,6 +245,11 @@ ACCOUNT_VERIFICATION_EMAIL = 1
 ACCOUNT_VERIFICATION_FORGOTPWD = 2
 
 UNLIMITED = -1
+
+CANDLE_TF_5M = 'fiveMin'
+CANDLE_TF_15M = ''
+CANDLE_TF_30M = 'thirtyMin'
+CANDLE_TF_1H = 'hour'
 
 EMAIL_HOST = 'smtp.gmail.com'
 # EMAIL_HOST_USER = 'vmod.game@gmail.com'
