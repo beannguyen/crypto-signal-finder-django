@@ -1,7 +1,7 @@
 import threading
 from queue import Queue
 
-import dateutil
+import dateutil.parser
 from bittrex import Bittrex, API_V2_0
 from celery.task import task
 
