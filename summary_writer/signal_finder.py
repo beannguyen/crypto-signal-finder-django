@@ -13,6 +13,7 @@ from queue import Queue
 from django import db
 
 from best_django.celery import app
+from best_django.settings import CANDLE_TF_1H
 from summary_writer.models import Market, MarketSummary, Candle, Ticker
 from rest.models import UserSubscription, SignalSendLog, Strategy
 from best_django import settings
@@ -21,6 +22,9 @@ from talib import MA_Type
 
 bittrex_api = Bittrex(settings.BITTREX_API_KEY, settings.BITTREX_SECRET_KEY)
 bittrex_api_v2 = Bittrex(settings.BITTREX_API_KEY, settings.BITTREX_SECRET_KEY, api_version=API_V2_0)
+
+
+selected_tf = CANDLE_TF_1H
 
 
 def send_trading_alert(market, action):
@@ -69,7 +73,7 @@ def send_trading_alert_rsi(market_name, action, open_price=0, high_price=0, low_
 
 def find_signal(market_name):
     # print('market: ', market_name)
-    candles = Candle.objects.filter(market__market_name=market_name).order_by('-timestamp')[:100]
+    candles = Candle.objects.filter(market__market_name=market_name, timeframe=selected_tf).order_by('-timestamp')[:100]
     ticks = []
     for c in candles:
         # print('tick: {} \n'.format(c.timestamp))
@@ -141,23 +145,25 @@ Close price strategy
 cp_queue = Queue()
 
 
-def send_trading_alert_cp(market_name, action, open_price=0, high_price=0, low_price=0, close_price=0, price=0):
+def send_trading_alert_cp(market_name, action, open_price=0, high_price=0, low_price=0, close_price=0, bid_price=0, ask_price=0):
     title = 'Signal Alert ' + market_name
     strategy = Strategy.objects.filter(name="ClosePrice").first()
     # replace variable in content
     content = strategy.message
     if '#MarketName#' in content:
-        content = content.replace('#MarketName#', market_name)
+        content = content.replace('#MarketName#', '{}'.format(market_name))
     if '#OpenPrice#' in content:
-        content = content.replace('#OpenPrice#', open_price)
+        content = content.replace('#OpenPrice#', '{}'.format(open_price))
     if '#HighPrice#' in content:
-        content = content.replace('#HighPrice#', high_price)
+        content = content.replace('#HighPrice#', '{}'.format(high_price))
     if '#LowPrice#' in content:
-        content = content.replace('#LowPrice#', low_price)
+        content = content.replace('#LowPrice#', '{}'.format(low_price))
     if '#ClosePrice#' in content:
-        content = content.replace('#ClosePrice#', close_price)
-    if '#Price#' in content:
-        content = content.replace('#Price#', price)
+        content = content.replace('#ClosePrice#', '{}'.format(close_price))
+    if '#Bid#' in content:
+        content = content.replace('#Bid#', '{}'.format(bid_price))
+    if '#Ask#' in content:
+        content = content.replace('#Ask#', '{}'.format(ask_price))
     # print('sending with content ', content)
     for us in UserSubscription.objects.filter(market=Market.objects.filter(market_name=market_name).first()):
         send_mail(title, us.profile.user.email, content)
@@ -165,12 +171,13 @@ def send_trading_alert_cp(market_name, action, open_price=0, high_price=0, low_p
 
 def find_signal_cp(market_name):
     # print('market: ', market_name)
-    candle = Candle.objects.filter(market__market_name=market_name).order_by('-timestamp').first()
+    candle = Candle.objects.filter(market__market_name=market_name, timeframe=selected_tf).order_by('-timestamp').first()
     tick = Ticker.objects.filter(market__market_name=market_name).order_by('-timestamp').first()
     if candle is not None and tick is not None:
-        pct = tick.bid - candle.close / candle.close
-        if pct >= 0.1 or pct <= 0.1:
-            send_trading_alert_cp(market_name, '', candle.open, candle.high, candle.low, candle.close, tick.bid)
+        bid_pct = tick.bid - candle.close / candle.close
+        ask_pct = tick.ask - candle.close / candle.close
+        if bid_pct >= 0.1 or bid_pct <= 0.1 or ask_pct >= 0.1 or ask_pct <= 0.1:
+            send_trading_alert_cp(market_name, '', candle.open, candle.high, candle.low, candle.close, tick.bid, tick.ask)
 
 
 def cp_process_queue():

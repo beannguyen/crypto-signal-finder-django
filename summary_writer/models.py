@@ -40,6 +40,7 @@ class Candle(models.Model):
     volume = models.DecimalField(max_digits=50, decimal_places=8)
     timestamp = models.DateTimeField()
     created_on = models.DateTimeField(auto_now_add=True)
+    timeframe = models.CharField(max_length=100, default='thirtyMin')
 
 
 class Ticker(models.Model):

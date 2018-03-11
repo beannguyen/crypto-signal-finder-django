@@ -16,6 +16,7 @@ from django import db
 from django.db import connection
 
 from best_django.celery import app
+from best_django.settings import CANDLE_TF_1H
 from summary_writer.models import Market, MarketSummary, Candle, Ticker
 from rest.models import UserSubscription, SignalSendLog, Strategy, Profile
 from best_django import settings
@@ -85,56 +86,16 @@ def update_market_summary():
                 market = Market.objects.filter(market_name=summ['MarketName']).first()
                 # print('market: ', summ['MarketName'])
                 summary = MarketSummary.objects.create(market=market,
-                                                        high=summ['High'],
-                                                        low=summ['Low'],
-                                                        volume=summ['Volume'],
-                                                        last=summ['Last'],
-                                                        base_volume=summ['BaseVolume'],
-                                                        updated_on=dateutil.parser.parse(summ['TimeStamp']),
-                                                        bid=summ['Bid'],
-                                                        ask=summ['Ask'],
-                                                        prev_day=summ['PrevDay'])
-
-
-
-@task()
-def get_latest_tick():
-    print('Get latest tick...')
-    markets = Market.objects.all()
-    for market in markets:
-        candle_count = Candle.objects.filter(market__market_name=market.market_name).count()
-        if candle_count == 0:
-            res_candles = bittrex_api_v2.get_candles(market=market.market_name, tick_interval='thirtyMin')
-            # print('request status ', res_candles['success'])
-            if res_candles['success']:
-                for c in res_candles['result']:
-                    candle = Candle()
-                    candle.market = market
-                    candle.high = c['H']
-                    candle.low = c['L']
-                    candle.open = c['O']
-                    candle.close = c['C']
-                    candle.volume = c['V']
-                    candle.base_volume = c['BV']
-                    candle.timestamp = dateutil.parser.parse(c['T'])
-                    candle.save()
-        else:
-            res_latest_candle = bittrex_api_v2.get_latest_candle(market=market.market_name, tick_interval='thirtyMin')
-            # print('request status ', res_latest_candle['success'])
-            if res_latest_candle['success']:
-                latest_candle = res_latest_candle['result'][0]
-                if latest_candle is not None:
-                    candle = Candle()
-                    candle.market = market
-                    candle.high = latest_candle['H']
-                    candle.low = latest_candle['L']
-                    candle.open = latest_candle['O']
-                    candle.close = latest_candle['C']
-                    candle.volume = latest_candle['V']
-                    candle.base_volume = latest_candle['BV']
-                    candle.timestamp = dateutil.parser.parse(latest_candle['T'])
-                    if not Candle.objects.filter(timestamp=candle.timestamp).exists():
-                        candle.save()
+                                                       high=summ['High'],
+                                                       low=summ['Low'],
+                                                       volume=summ['Volume'],
+                                                       last=summ['Last'],
+                                                       base_volume=summ['BaseVolume'],
+                                                       updated_on=dateutil.parser.parse(summ['TimeStamp']),
+                                                       bid=summ['Bid'],
+                                                       ask=summ['Ask'],
+                                                       prev_day=summ['PrevDay'])
+    return None
 
 
 @task()
@@ -170,7 +131,7 @@ def get_ticker():
 
     markets = Market.objects.all()
 
-    for i in range(3):
+    for i in range(6):
         t = threading.Thread(target=process_queue)
         t.daemon = True
         t.start()
