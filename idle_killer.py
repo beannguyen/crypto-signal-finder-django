@@ -2,11 +2,10 @@ import psycopg2
 import traceback
 import time
 
-conn = psycopg2.connect("dbname='bsf_test1' user='killer' host='localhost' password='Th3NeWorld@@@1893'")
+conn = psycopg2.connect("dbname='bsf_test1' user='killer' host='103.68.81.39' password='Th3NeWorld@@@1893'")
 
 
-def count_all_activity():
-    cur = conn.cursor()
+def count_all_activity(cur):
     sql = "select count(*) FROM pg_stat_activity where datname = 'bsf_test1'"
     cur.execute(sql)
     rows = cur.fetchall()
@@ -30,9 +29,10 @@ if __name__ == '__main__':
         # time.sleep(INTERVAL_TIME * 60)
 
         while True:
+            conn = psycopg2.connect("dbname='bsf_test1' user='killer' host='103.68.81.39' password='Th3NeWorld@@@1893'")
             cur = conn.cursor()
             start_time = time.time()
-            c = count_all_activity()
+            c = count_all_activity(cur)
             print('All activity: ', c)
             if c >= SAFE_CONNECTIONS:
                 cur.execute(sql)
