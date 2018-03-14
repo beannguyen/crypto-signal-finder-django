@@ -14,6 +14,7 @@ from django import db
 
 from best_django.celery import app
 from best_django.settings import CANDLE_TF_1H
+from summary_writer.candle_task import _repair_candles
 from summary_writer.models import Market, MarketSummary, Candle, Ticker
 from rest.models import UserSubscription, SignalSendLog, Strategy
 from best_django import settings
@@ -23,8 +24,8 @@ from talib import MA_Type
 bittrex_api = Bittrex(settings.BITTREX_API_KEY, settings.BITTREX_SECRET_KEY)
 bittrex_api_v2 = Bittrex(settings.BITTREX_API_KEY, settings.BITTREX_SECRET_KEY, api_version=API_V2_0)
 
-
 selected_tf = CANDLE_TF_1H
+DEBUG = True
 
 
 def send_trading_alert(market, action):
@@ -61,22 +62,36 @@ def send_trading_alert_rsi(market_name, action, open_price=0, high_price=0, low_
     if '#Price#' in content:
         content = content.replace('#Price#', '{}'.format(price))
     # print('sending with content ', content)
-    for us in UserSubscription.objects.filter(market=Market.objects.filter(market_name=market_name).first()):
-        if SignalSendLog.objects.filter(profile=us.profile, market__market_name=market_name).exists():
-            log = SignalSendLog.objects.filter(profile=us.profile, market=market_name).order_by('-timestamp').first()
-            if action == 'sell' and log.action == 'buy' or action == 'buy' and log.action == 'sell':
-                send_mail(title, us.profile.user.email, content)
-        else:
-            if action == 'buy':
-                send_mail(title, us.profile.user.email, content)
+    if not DEBUG:
+        for us in UserSubscription.objects.filter(market=Market.objects.filter(market_name=market_name).first()):
+            if SignalSendLog.objects.filter(profile=us.profile, market__market_name=market_name).exists():
+                log = SignalSendLog.objects.filter(profile=us.profile, market=market_name).order_by(
+                    '-timestamp').first()
+                if action == 'sell' and log.action == 'buy' or action == 'buy' and log.action == 'sell':
+                    send_mail(title, us.profile.user.email, content)
+            else:
+                if action == 'buy':
+                    send_mail(title, us.profile.user.email, content)
+    else:
+        send_mail(title, 'beanchanel@gmail.com', content)
 
 
 def find_signal(market_name):
     # print('market: ', market_name)
-    candles = Candle.objects.filter(market__market_name=market_name, timeframe=selected_tf).order_by('-timestamp')[:100]
+    candles = reversed(
+        Candle.objects.filter(market__market_name=market_name, timeframe=selected_tf).order_by('-timestamp')[:100])
     ticks = []
+    prev_ts = None
+    err_count = 0
     for c in candles:
-        # print('tick: {} \n'.format(c.timestamp))
+        if prev_ts is None:
+            prev_ts = c.timestamp
+        else:
+            diff = c.timestamp - prev_ts
+            if diff.seconds > (1 * 60 * 60):
+                print('tick: {} - {}'.format(prev_ts, c.timestamp))
+                err_count += 1
+            prev_ts = c.timestamp
         t = {
             'open': c.open,
             'high': c.high,
@@ -99,6 +114,7 @@ def find_signal(market_name):
         real = np.nan_to_num(real)
 
         tick = Ticker.objects.filter(market__market_name=market_name).order_by('-timestamp').first()
+        print(tick)
         if tick is not None:
             price = tick.bid + tick.ask / 2
             try:
@@ -108,7 +124,8 @@ def find_signal(market_name):
                                            high_price=df['high'].iloc[0], low_price=df['low'].iloc[0],
                                            close_price=df['close'].iloc[0], price=price)
                 elif price < lower[len(lower) - 1] and real[len(real) - 1] < 30:
-                    send_trading_alert_rsi(market_name, 'buy', open_price=df['open'].iloc[0], high_price=df['high'].iloc[0],
+                    send_trading_alert_rsi(market_name, 'buy', open_price=df['open'].iloc[0],
+                                           high_price=df['high'].iloc[0],
                                            low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
             except Exception as e:
                 traceback.print_exc()
@@ -125,7 +142,7 @@ def rsi_process_queue():
 def rsi():
     print('System analysing....')
     start_time = time.time()
-    db.connections.close_all()
+    # db.connections.close_all()
 
     markets = Market.objects.all()
 
@@ -141,13 +158,22 @@ def rsi():
     print("Execution time = {0:.5f}".format(time.time() - start_time))
 
 
+def seq_rsi():
+    markets = Market.objects.all()
+    for market in markets:
+        print('market ', market.market_name)
+        find_signal(market.market_name)
+        break
+
+
 """
 Close price strategy
 """
 cp_queue = Queue()
 
 
-def send_trading_alert_cp(market_name, action, open_price=0, high_price=0, low_price=0, close_price=0, bid_price=0, ask_price=0):
+def send_trading_alert_cp(market_name, action, open_price=0, high_price=0, low_price=0, close_price=0, bid_price=0,
+                          ask_price=0):
     title = 'Signal Alert ' + market_name
     strategy = Strategy.objects.filter(name="ClosePrice").first()
     # replace variable in content
@@ -173,13 +199,15 @@ def send_trading_alert_cp(market_name, action, open_price=0, high_price=0, low_p
 
 def find_signal_cp(market_name):
     # print('market: ', market_name)
-    candle = Candle.objects.filter(market__market_name=market_name, timeframe=selected_tf).order_by('-timestamp').first()
+    candle = Candle.objects.filter(market__market_name=market_name, timeframe=selected_tf).order_by(
+        '-timestamp').first()
     tick = Ticker.objects.filter(market__market_name=market_name).order_by('-timestamp').first()
     if candle is not None and tick is not None:
         bid_pct = tick.bid - candle.close / candle.close
         ask_pct = tick.ask - candle.close / candle.close
         if bid_pct >= 0.1 or bid_pct <= 0.1 or ask_pct >= 0.1 or ask_pct <= 0.1:
-            send_trading_alert_cp(market_name, '', candle.open, candle.high, candle.low, candle.close, tick.bid, tick.ask)
+            send_trading_alert_cp(market_name, '', candle.open, candle.high, candle.low, candle.close, tick.bid,
+                                  tick.ask)
 
 
 def cp_process_queue():

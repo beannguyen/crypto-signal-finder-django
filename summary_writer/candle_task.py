@@ -15,47 +15,85 @@ bittrex_api = Bittrex(settings.BITTREX_API_KEY, settings.BITTREX_SECRET_KEY)
 bittrex_api_v2 = Bittrex(settings.BITTREX_API_KEY, settings.BITTREX_SECRET_KEY, api_version=API_V2_0)
 
 
+def _repair_candles(market, interval, max_length=None):
+    res_candles = bittrex_api_v2.get_candles(market=market.market_name, tick_interval=interval)
+    # print('insert new candle set ', res_candles['success'])
+    if res_candles['success']:
+        latest_candles = sorted(res_candles['result'], key=lambda cd: cd['T'], reverse=True)[
+                         :int(max_length)] if max_length is not None else res_candles['result']
+
+        for c in latest_candles:
+            candle = Candle()
+            candle.market = market
+            candle.high = c['H']
+            candle.low = c['L']
+            candle.open = c['O']
+            candle.close = c['C']
+            candle.volume = c['V']
+            candle.base_volume = c['BV']
+            candle.timestamp = dateutil.parser.parse(c['T'])
+            print('ts ', candle.timestamp)
+            candle.timeframe = interval
+            if not Candle.objects.filter(market__market_name=market.market_name,
+                                         timeframe=interval,
+                                         timestamp=candle.timestamp).exists():
+                print('inserting ...', candle.timestamp)
+                candle.save()
+
+
+def _update_latest_candle(market, interval):
+    res_latest_candle = bittrex_api_v2.get_latest_candle(market=market.market_name, tick_interval=CANDLE_TF_1H)
+    print('insert new candle ', res_latest_candle['success'])
+    if res_latest_candle['success']:
+        latest_candle = res_latest_candle['result'][0]
+        if latest_candle is not None:
+            candle = Candle()
+            candle.market = market
+            candle.high = latest_candle['H']
+            candle.low = latest_candle['L']
+            candle.open = latest_candle['O']
+            candle.close = latest_candle['C']
+            candle.volume = latest_candle['V']
+            candle.base_volume = latest_candle['BV']
+            candle.timeframe = CANDLE_TF_1H
+            candle.timestamp = dateutil.parser.parse(latest_candle['T'])
+            if not Candle.objects.filter(market__market_name=market.market_name,
+                                         timeframe=interval,
+                                         timestamp=candle.timestamp).exists():
+                candle.save()
+
+
 def _get_candle(market_name):
     market = Market.objects.filter(market_name=market_name)
     if market.exists():
         market = market.first()
 
-        candle_count = Candle.objects.filter(market__market_name=market.market_name, timeframe=CANDLE_TF_1H).count()
-        # print('candle in db ', candle_count)
-        if candle_count == 0:
-            res_candles = bittrex_api_v2.get_candles(market=market.market_name, tick_interval=CANDLE_TF_1H)
-            # print('insert new candle set ', res_candles['success'])
-            if res_candles['success']:
-                for c in res_candles['result']:
-                    candle = Candle()
-                    candle.market = market
-                    candle.high = c['H']
-                    candle.low = c['L']
-                    candle.open = c['O']
-                    candle.close = c['C']
-                    candle.volume = c['V']
-                    candle.base_volume = c['BV']
-                    candle.timestamp = dateutil.parser.parse(c['T'])
-                    candle.timeframe = CANDLE_TF_1H
-                    candle.save()
+        candles = Candle.objects.filter(market__market_name=market.market_name, timeframe=CANDLE_TF_1H).order_by(
+            '-timestamp')[:100]
+
+        prev_ts = None
+        err_count = 0
+        if candles.count() > 0:
+            # print('candle in db ', candle_count)
+            for c in reversed(candles):
+                if prev_ts is None:
+                    prev_ts = c.timestamp
+                else:
+                    diff = c.timestamp - prev_ts
+                    if diff.seconds > (1 * 60 * 60):
+                        print('tick: {} - {}'.format(prev_ts, c.timestamp))
+                        err_count += 1
+                    prev_ts = c.timestamp
+
+        if candles.count() > 0 and err_count == 0:
+            print('update latest')
+            _update_latest_candle(market=market, interval=CANDLE_TF_1H)
+        elif candles.count() > 0 and err_count > 0:
+            print('repairing..')
+            _repair_candles(market=market, interval=CANDLE_TF_1H, max_length=150)
         else:
-            res_latest_candle = bittrex_api_v2.get_latest_candle(market=market.market_name, tick_interval=CANDLE_TF_1H)
-            print('insert new candle ', res_latest_candle['success'])
-            if res_latest_candle['success']:
-                latest_candle = res_latest_candle['result'][0]
-                if latest_candle is not None:
-                    candle = Candle()
-                    candle.market = market
-                    candle.high = latest_candle['H']
-                    candle.low = latest_candle['L']
-                    candle.open = latest_candle['O']
-                    candle.close = latest_candle['C']
-                    candle.volume = latest_candle['V']
-                    candle.base_volume = latest_candle['BV']
-                    candle.timeframe = CANDLE_TF_1H
-                    candle.timestamp = dateutil.parser.parse(latest_candle['T'])
-                    if not Candle.objects.filter(timestamp=candle.timestamp).exists():
-                        candle.save()
+            print('get candles')
+            _repair_candles(market=market, interval=CANDLE_TF_1H)
 
 
 def process_latest_candle_queue():
@@ -84,6 +122,7 @@ def get_latest_candle():
 
 
 def test():
-    market = Market.objects.first()
+    market = Market.objects.get(pk=53)
     print('get candle ', market.market_name)
     _get_candle(market.market_name)
+    # _get_candle(market)
