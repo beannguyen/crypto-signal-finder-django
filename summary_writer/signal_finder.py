@@ -27,7 +27,7 @@ bittrex_api = Bittrex(settings.BITTREX_API_KEY, settings.BITTREX_SECRET_KEY)
 bittrex_api_v2 = Bittrex(settings.BITTREX_API_KEY, settings.BITTREX_SECRET_KEY, api_version=API_V2_0)
 
 selected_tf = CANDLE_TF_1H
-DEBUG = True
+DEBUG = False
 
 
 def send_trading_alert(market, action):
