@@ -17,6 +17,13 @@ if __name__ == '__main__':
     try:
         INTERVAL_TIME = 30
         SAFE_CONNECTIONS = 300
+        MAX_CONNECTION = 1800
+
+        kill_all_sql = "SELECT pg_terminate_backend(pid) " \
+                       "FROM pg_stat_activity " \
+                       "WHERE datname = 'bsf_test1' " \
+                       "AND usename <> 'killer' " \
+                       "AND pid <> pg_backend_pid()"
 
         sql = "SELECT pg_terminate_backend(pid) " \
               "FROM pg_stat_activity " \
@@ -34,9 +41,12 @@ if __name__ == '__main__':
             start_time = time.time()
             c = count_all_activity(cur)
             print('All activity: ', c)
-            if c >= SAFE_CONNECTIONS:
+            if SAFE_CONNECTIONS <= c < MAX_CONNECTION:
                 cur.execute(sql)
                 print('killed process after {}s'.format(time.time() - start_time))
+            elif c > MAX_CONNECTION:
+                cur.execute(sql)
+                print('killed all process')
             time.sleep(5 * 60)
     except:
         traceback.print_exc()

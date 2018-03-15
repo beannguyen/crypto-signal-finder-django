@@ -48,3 +48,8 @@ class Ticker(models.Model):
     bid = models.DecimalField(max_digits=50, decimal_places=8)
     ask = models.DecimalField(max_digits=50, decimal_places=8)
     timestamp = models.DateTimeField(auto_now_add=True)
+
+
+class ErrorLog(models.Model):
+    error = models.CharField(max_length=5000)
+    created_on = models.DateTimeField(auto_now_add=True)

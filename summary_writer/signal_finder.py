@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from bittrex import Bittrex, API_V2_0
 from bs4 import BeautifulSoup
 from celery import shared_task, task
@@ -15,7 +17,7 @@ from django import db
 from best_django.celery import app
 from best_django.settings import CANDLE_TF_1H
 from summary_writer.candle_task import _repair_candles
-from summary_writer.models import Market, MarketSummary, Candle, Ticker
+from summary_writer.models import Market, MarketSummary, Candle, Ticker, ErrorLog
 from rest.models import UserSubscription, SignalSendLog, Strategy
 from best_django import settings
 from utils import send_mail
@@ -81,6 +83,7 @@ def find_signal(market_name):
     candles = reversed(
         Candle.objects.filter(market__market_name=market_name, timeframe=selected_tf).order_by('-timestamp')[:100])
     ticks = []
+    indexes = []
     prev_ts = None
     err_count = 0
     for c in candles:
@@ -89,9 +92,11 @@ def find_signal(market_name):
         else:
             diff = c.timestamp - prev_ts
             if diff.seconds > (1 * 60 * 60):
-                print('tick: {} - {}'.format(prev_ts, c.timestamp))
+                # print('tick: {} - {}'.format(prev_ts, c.timestamp))
                 err_count += 1
             prev_ts = c.timestamp
+
+        indexes.append(c.timestamp)
         t = {
             'open': c.open,
             'high': c.high,
@@ -103,7 +108,10 @@ def find_signal(market_name):
     # pprint(ticks)
 
     if len(ticks) > 0:
-        df = pd.DataFrame(ticks)
+        df = pd.DataFrame(ticks, index=indexes)
+        ohlc_dict = {'open': 'first', 'high': 'max', 'low': 'min', 'close': 'last'}
+        df = df.resample('1H').apply(ohlc_dict).dropna(how='any')
+        # print(df)
         close = np.array([float(x) for x in df['close'].as_matrix()])
         upper, middle, lower = talib.BBANDS(close, matype=MA_Type.T3)
         real = talib.RSI(close, timeperiod=14)
@@ -114,21 +122,25 @@ def find_signal(market_name):
         real = np.nan_to_num(real)
 
         tick = Ticker.objects.filter(market__market_name=market_name).order_by('-timestamp').first()
-        print(tick)
-        if tick is not None:
-            price = tick.bid + tick.ask / 2
-            try:
-                if price > upper[len(upper) - 1] and real[len(real) - 1] > 70:
-                    # print('sell')
-                    send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0],
-                                           high_price=df['high'].iloc[0], low_price=df['low'].iloc[0],
-                                           close_price=df['close'].iloc[0], price=price)
-                elif price < lower[len(lower) - 1] and real[len(real) - 1] < 30:
-                    send_trading_alert_rsi(market_name, 'buy', open_price=df['open'].iloc[0],
-                                           high_price=df['high'].iloc[0],
-                                           low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
-            except Exception as e:
-                traceback.print_exc()
+        dn = datetime.utcnow()
+        diff = dn - tick.timestamp
+        if diff.seconds > 2 * 60:
+            ErrorLog.objects.create(error="{}: got old tick, cannot calculate signal".format(market_name))
+        else:
+            if tick is not None:
+                price = tick.bid + tick.ask / 2
+                try:
+                    if price > upper[len(upper) - 1] and real[len(real) - 1] > 70:
+                        # print('sell')
+                        send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0],
+                                               high_price=df['high'].iloc[0], low_price=df['low'].iloc[0],
+                                               close_price=df['close'].iloc[0], price=price)
+                    elif price < lower[len(lower) - 1] and real[len(real) - 1] < 30:
+                        send_trading_alert_rsi(market_name, 'buy', open_price=df['open'].iloc[0],
+                                               high_price=df['high'].iloc[0],
+                                               low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
+                except Exception as e:
+                    traceback.print_exc()
 
 
 def rsi_process_queue():

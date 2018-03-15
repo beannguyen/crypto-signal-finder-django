@@ -32,18 +32,18 @@ def _repair_candles(market, interval, max_length=None):
             candle.volume = c['V']
             candle.base_volume = c['BV']
             candle.timestamp = dateutil.parser.parse(c['T'])
-            print('ts ', candle.timestamp)
+            # print('ts ', candle.timestamp)
             candle.timeframe = interval
             if not Candle.objects.filter(market__market_name=market.market_name,
                                          timeframe=interval,
                                          timestamp=candle.timestamp).exists():
-                print('inserting ...', candle.timestamp)
+                # print('inserting ...', candle.timestamp)
                 candle.save()
 
 
 def _update_latest_candle(market, interval):
     res_latest_candle = bittrex_api_v2.get_latest_candle(market=market.market_name, tick_interval=CANDLE_TF_1H)
-    print('insert new candle ', res_latest_candle['success'])
+    # print('insert new candle ', res_latest_candle['success'])
     if res_latest_candle['success']:
         latest_candle = res_latest_candle['result'][0]
         if latest_candle is not None:
@@ -81,18 +81,18 @@ def _get_candle(market_name):
                 else:
                     diff = c.timestamp - prev_ts
                     if diff.seconds > (1 * 60 * 60):
-                        print('tick: {} - {}'.format(prev_ts, c.timestamp))
+                        # print('tick: {} - {}'.format(prev_ts, c.timestamp))
                         err_count += 1
                     prev_ts = c.timestamp
 
         if candles.count() > 0 and err_count == 0:
-            print('update latest')
+            # print('update latest')
             _update_latest_candle(market=market, interval=CANDLE_TF_1H)
         elif candles.count() > 0 and err_count > 0:
-            print('repairing..')
+            # print('repairing..')
             _repair_candles(market=market, interval=CANDLE_TF_1H, max_length=150)
         else:
-            print('get candles')
+            # print('get candles')
             _repair_candles(market=market, interval=CANDLE_TF_1H)
 
 
