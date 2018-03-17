@@ -1,6 +1,7 @@
 import psycopg2
 import traceback
 import time
+import subprocess
 
 conn = psycopg2.connect("dbname='bsf_test1' user='killer' host='103.68.81.39' password='Th3NeWorld@@@1893'")
 
@@ -11,6 +12,11 @@ def count_all_activity(cur):
     rows = cur.fetchall()
     r = rows[0]
     return r[0]
+
+
+def restart_worker():
+    subprocess.call('pkill -9 -f "/home/bean/miniconda2/envs/py35/bin/celery -A best_django worker"', shell=True)
+    subprocess.call('nohup /home/bean/be-signal-finder-django/bin/start_worker.sh > /home/bean/be-signal-finder-django/logs/nohup_worker.out 2>&1&', shell=True)
 
 
 if __name__ == '__main__':
@@ -41,12 +47,14 @@ if __name__ == '__main__':
             start_time = time.time()
             c = count_all_activity(cur)
             print('All activity: ', c)
-            if SAFE_CONNECTIONS <= c < MAX_CONNECTION:
-                cur.execute(sql)
-                print('killed process after {}s'.format(time.time() - start_time))
-            elif c > MAX_CONNECTION:
-                cur.execute(sql)
+            # if SAFE_CONNECTIONS <= c < MAX_CONNECTION:
+            #    cur.execute(sql)
+            #    restart_worker()
+            #    print('killed process after {}s'.format(time.time() - start_time))
+            if c >= MAX_CONNECTION:
+				cur.execute(sql)
+                restart_worker()
                 print('killed all process')
-            time.sleep(5 * 60)
+            time.sleep(1 * 60)
     except:
         traceback.print_exc()

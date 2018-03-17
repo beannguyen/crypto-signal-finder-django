@@ -27,7 +27,7 @@ bittrex_api = Bittrex(settings.BITTREX_API_KEY, settings.BITTREX_SECRET_KEY)
 bittrex_api_v2 = Bittrex(settings.BITTREX_API_KEY, settings.BITTREX_SECRET_KEY, api_version=API_V2_0)
 
 selected_tf = CANDLE_TF_1H
-DEBUG = True
+DEBUG = False
 
 
 def send_trading_alert(market, action):
@@ -64,6 +64,7 @@ def send_trading_alert_rsi(market_name, action, open_price=0, high_price=0, low_
     if '#Price#' in content:
         content = content.replace('#Price#', '{}'.format(price))
     # print('sending with content ', content)
+    send_mail(title, 'beanchanel@gmail.com', content)
     if not DEBUG:
         for us in UserSubscription.objects.filter(market=Market.objects.filter(market_name=market_name).first()):
             if SignalSendLog.objects.filter(profile=us.profile, market__market_name=market_name).exists():
@@ -130,12 +131,12 @@ def find_signal(market_name):
             if tick is not None:
                 price = tick.bid + tick.ask / 2
                 try:
-                    if price > upper[len(upper) - 1] and real[len(real) - 1] > 70:
+                    if price > (upper[len(upper) - 1] + (0.05 * upper[len(upper) - 1])) and real[len(real) - 1] > 70:
                         # print('sell')
                         send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0],
                                                high_price=df['high'].iloc[0], low_price=df['low'].iloc[0],
                                                close_price=df['close'].iloc[0], price=price)
-                    elif price < lower[len(lower) - 1] and real[len(real) - 1] < 30:
+                    elif price < (lower[len(lower) - 1] - (0.05 * lower[len(lower) - 1])) and real[len(real) - 1] < 30:
                         send_trading_alert_rsi(market_name, 'buy', open_price=df['open'].iloc[0],
                                                high_price=df['high'].iloc[0],
                                                low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
@@ -204,7 +205,10 @@ def send_trading_alert_cp(market_name, action, open_price=0, high_price=0, low_p
         content = content.replace('#Bid#', '{}'.format(bid_price))
     if '#Ask#' in content:
         content = content.replace('#Ask#', '{}'.format(ask_price))
+    if '#Price#' in content:
+        content = content.replace('#Price#', '{}'.format((ask_price + bid_price) / 2))
     # print('sending with content ', content)
+    send_mail(title, 'beanchanel@gmail.com', content)
     for us in UserSubscription.objects.filter(market=Market.objects.filter(market_name=market_name).first()):
         send_mail(title, us.profile.user.email, content)
 
