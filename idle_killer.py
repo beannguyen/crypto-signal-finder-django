@@ -16,7 +16,9 @@ def count_all_activity(cur):
 
 def restart_worker():
     subprocess.call('pkill -9 -f "/home/bean/miniconda2/envs/py35/bin/celery -A best_django worker"', shell=True)
-    subprocess.call('nohup /home/bean/be-signal-finder-django/bin/start_worker.sh > /home/bean/be-signal-finder-django/logs/nohup_worker.out 2>&1&', shell=True)
+    subprocess.call(
+        'nohup /home/bean/be-signal-finder-django/bin/start_worker.sh > /home/bean/be-signal-finder-django/logs/nohup_worker.out 2>&1&',
+        shell=True)
 
 
 if __name__ == '__main__':
@@ -52,7 +54,7 @@ if __name__ == '__main__':
             #    restart_worker()
             #    print('killed process after {}s'.format(time.time() - start_time))
             if c >= MAX_CONNECTION:
-				cur.execute(sql)
+                cur.execute(sql)
                 restart_worker()
                 print('killed all process')
             time.sleep(1 * 60)
