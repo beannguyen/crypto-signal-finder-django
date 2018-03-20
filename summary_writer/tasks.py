@@ -16,7 +16,7 @@ from django import db
 from django.db import connection
 
 from best_django.celery import app
-from best_django.settings import CANDLE_TF_1H
+from best_django.settings import CANDLE_TF_1H, MAX_THREAD
 from summary_writer.models import Market, MarketSummary, Candle, Ticker
 from rest.models import UserSubscription, SignalSendLog, Strategy, Profile
 from best_django import settings
@@ -131,7 +131,7 @@ def get_ticker():
 
     markets = Market.objects.all()
 
-    for i in range(6):
+    for i in range(MAX_THREAD * 1.5):
         t = threading.Thread(target=process_queue)
         t.daemon = True
         t.start()

@@ -16,13 +16,6 @@ def count_all_activity(cur):
 
 
 def restart_worker():
-    # subprocess.call(['sudo', 'pkill', '-9', '-f', '/home/bean/miniconda2/envs/py35/bin/celery -A best_django worker'])
-    # subprocess.Popen(['echo', '@nhdeptrai123'])
-    # subprocess.call(['sudo', 'pkill', '-9', '-f', '/home/bean/miniconda2/envs/py35/bin/celery --app=best_django.celery:app worker'])
-    # subprocess.Popen(['echo', '@nhdeptrai123'])
-    # subprocess.call(['echo', '$SUDO_PWD\n'])
-    # subprocess.call(['bin/reset_worker.sh'], shell=True)
-    # subprocess.call(['bin/start_process.sh'], shell=True)
     os.system('sudo /home/bean/be-signal-finder-django/bin/reset_worker.sh')
     os.system('sudo /home/bean/be-signal-finder-django/bin/start_process.sh')
 
@@ -30,7 +23,6 @@ def restart_worker():
 def kill():
     try:
         INTERVAL_TIME = 30
-        SAFE_CONNECTIONS = 300
         MAX_CONNECTION = 1000
 
         kill_all_sql = "SELECT pg_terminate_backend(pid) " \

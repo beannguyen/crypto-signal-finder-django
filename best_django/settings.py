@@ -120,6 +120,9 @@ USE_TZ = False
 # SET CONNECTION AGE TO 0
 CONN_MAX_AGE = 0
 
+# SET MAX THREAD
+MAX_THREAD = 6
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
@@ -174,7 +177,7 @@ CELERY_BEAT_SCHEDULE = {
     },
     'get-ticker': {
         'task': 'summary_writer.tasks.get_ticker',
-        'schedule': crontab(minute='*/1')
+        'schedule': crontab(minute='*/30')
     },
     'find_signal': {
         'task': 'summary_writer.signal_finder.rsi',

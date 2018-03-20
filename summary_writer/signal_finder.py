@@ -1,4 +1,5 @@
 from datetime import datetime
+from pprint import pprint
 
 from bittrex import Bittrex, API_V2_0
 from bs4 import BeautifulSoup
@@ -15,7 +16,7 @@ from queue import Queue
 from django import db
 
 from best_django.celery import app
-from best_django.settings import CANDLE_TF_1H
+from best_django.settings import CANDLE_TF_1H, MAX_THREAD
 from summary_writer.candle_task import _repair_candles
 from summary_writer.models import Market, MarketSummary, Candle, Ticker, ErrorLog
 from rest.models import UserSubscription, SignalSendLog, Strategy
@@ -89,6 +90,7 @@ def find_signal(market_name):
     prev_ts = None
     err_count = 0
     for c in candles:
+        # print(c.timestamp)
         if prev_ts is None:
             prev_ts = c.timestamp
         else:
@@ -104,45 +106,56 @@ def find_signal(market_name):
             'high': c.high,
             'low': c.low,
             'close': c.close,
-            'volume': c.volume
+            'volume': c.volume,
+            'timestamp': c.timestamp
         }
         ticks.append(t)
     # pprint(ticks)
+    # print(datetime.utcnow())
+    diffn = datetime.utcnow() - ticks[len(ticks) - 1]['timestamp']
+    print(diffn)
+    if diffn.seconds <= (1 * 60 * 60):
+        if len(ticks) > 0:
+            df = pd.DataFrame(ticks, index=indexes)
+            ohlc_dict = {'open': 'first', 'high': 'max', 'low': 'min', 'close': 'last'}
+            df = df.resample('1H').apply(ohlc_dict).dropna(how='any')
+            # print(df)
+            close = np.array([float(x) for x in df['close'].as_matrix()])
+            upper, middle, lower = talib.BBANDS(close, matype=MA_Type.T3)
+            real = talib.RSI(close, timeperiod=14)
+            # fill nan
+            upper = np.nan_to_num(upper)
+            middle = np.nan_to_num(middle)
+            lower = np.nan_to_num(lower)
+            real = np.nan_to_num(real)
 
-    if len(ticks) > 0:
-        df = pd.DataFrame(ticks, index=indexes)
-        ohlc_dict = {'open': 'first', 'high': 'max', 'low': 'min', 'close': 'last'}
-        df = df.resample('1H').apply(ohlc_dict).dropna(how='any')
-        # print(df)
-        close = np.array([float(x) for x in df['close'].as_matrix()])
-        upper, middle, lower = talib.BBANDS(close, matype=MA_Type.T3)
-        real = talib.RSI(close, timeperiod=14)
-        # fill nan
-        upper = np.nan_to_num(upper)
-        middle = np.nan_to_num(middle)
-        lower = np.nan_to_num(lower)
-        real = np.nan_to_num(real)
-
-        tick = Ticker.objects.filter(market__market_name=market_name).order_by('-timestamp').first()
-        dn = datetime.utcnow()
-        diff = dn - tick.timestamp
-        if diff.seconds > 0.5 * 60:
-            ErrorLog.objects.create(error="{}: got old tick, cannot calculate signal".format(market_name))
-        else:
-            if tick is not None:
-                price = (tick.bid + tick.ask) / 2
-                try:
-                    # if price > (upper[len(upper) - 1] + (0.05 * upper[len(upper) - 1])) and real[len(real) - 1] > 70:
-                    #     # print('sell')
-                    #     send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0],
-                    #                            high_price=df['high'].iloc[0], low_price=df['low'].iloc[0],
-                    #                            close_price=df['close'].iloc[0], price=price)
-                    if price < (lower[len(lower) - 1] - (0.05 * lower[len(lower) - 1])) and real[len(real) - 1] < 30:
-                        send_trading_alert_rsi(market_name, 'buy', open_price=df['open'].iloc[0],
-                                               high_price=df['high'].iloc[0],
-                                               low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
-                except Exception as e:
-                    traceback.print_exc()
+            tick = Ticker.objects.filter(market__market_name=market_name).order_by('-timestamp').first()
+            dn = datetime.utcnow()
+            diff = dn - tick.timestamp
+            if diff.seconds > 0.5 * 60:
+                ErrorLog.objects.create(error="{}: got old tick, cannot calculate signal".format(market_name))
+            else:
+                if tick is not None:
+                    price = (tick.bid + tick.ask) / 2
+                    try:
+                        # if price > (upper[len(upper) - 1] + (0.05 * upper[len(upper) - 1])) \
+                        # and real[len(real) - 1] > 70:
+                        #     # print('sell')
+                        #     send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0],
+                        #                            high_price=df['high'].iloc[0], low_price=df['low'].iloc[0],
+                        #                            close_price=df['close'].iloc[0], price=price)
+                        if price < (lower[len(lower) - 1] - (0.05 * lower[len(lower) - 1])) \
+                                and real[len(real) - 1] < 30:
+                            print('sending signal...')
+                            send_trading_alert_rsi(market_name, 'buy', open_price=df['open'].iloc[0],
+                                                   high_price=df['high'].iloc[0],
+                                                   low_price=df['low'].iloc[0], close_price=df['close'].iloc[0],
+                                                   price=price)
+                    except Exception as e:
+                        traceback.print_exc()
+    else:
+        print('Latest candle is out of date.')
+        ErrorLog.objects.create(error="{}: got old candle, cannot calculate signal".format(market_name))
 
 
 def rsi_process_queue():
@@ -160,7 +173,7 @@ def rsi():
 
     markets = Market.objects.all()
 
-    for i in range(3):
+    for i in range(MAX_THREAD):
         t = threading.Thread(target=rsi_process_queue)
         t.daemon = True
         t.start()
@@ -173,11 +186,10 @@ def rsi():
 
 
 def seq_rsi():
-    markets = Market.objects.all()
+    markets = Market.objects.all()[:10]
     for market in markets:
         print('market ', market.market_name)
         find_signal(market.market_name)
-        break
 
 
 """
