@@ -170,7 +170,7 @@ CELERY_BEAT_SCHEDULE = {
     },
     'get-latest-candle': {
         'task': 'summary_writer.candle_task.get_latest_candle',
-        'schedule': crontab(minute='*/30')
+        'schedule': crontab(minute='*/1')
     },
     'get-ticker': {
         'task': 'summary_writer.tasks.get_ticker',
@@ -182,7 +182,7 @@ CELERY_BEAT_SCHEDULE = {
     },
     'cp_find_signal': {
         'task': 'summary_writer.signal_finder.close_price_strategy',
-        'schedule': crontab(minute='*/15')
+        'schedule': crontab(minute='*/5')
     },
     'plan_pricing_calculate': {
         'task': 'summary_writer.exchange_rate_cal.plan_pricing_calculate',

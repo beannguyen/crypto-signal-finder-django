@@ -2,6 +2,7 @@ import psycopg2
 import traceback
 import time
 import subprocess
+import os
 
 conn = psycopg2.connect("dbname='bsf_test1' user='killer' host='103.68.81.39' password='Th3NeWorld@@@1893'")
 
@@ -15,17 +16,22 @@ def count_all_activity(cur):
 
 
 def restart_worker():
-    subprocess.call('pkill -9 -f "/home/bean/miniconda2/envs/py35/bin/celery -A best_django worker"', shell=True)
-    subprocess.call(
-        'nohup /home/bean/be-signal-finder-django/bin/start_worker.sh > /home/bean/be-signal-finder-django/logs/nohup_worker.out 2>&1&',
-        shell=True)
+    # subprocess.call(['sudo', 'pkill', '-9', '-f', '/home/bean/miniconda2/envs/py35/bin/celery -A best_django worker'])
+    # subprocess.Popen(['echo', '@nhdeptrai123'])
+    # subprocess.call(['sudo', 'pkill', '-9', '-f', '/home/bean/miniconda2/envs/py35/bin/celery --app=best_django.celery:app worker'])
+    # subprocess.Popen(['echo', '@nhdeptrai123'])
+    # subprocess.call(['echo', '$SUDO_PWD\n'])
+    # subprocess.call(['bin/reset_worker.sh'], shell=True)
+    # subprocess.call(['bin/start_process.sh'], shell=True)
+    os.system('sudo /home/bean/be-signal-finder-django/bin/reset_worker.sh')
+    os.system('sudo /home/bean/be-signal-finder-django/bin/start_process.sh')
 
 
-if __name__ == '__main__':
+def kill():
     try:
         INTERVAL_TIME = 30
         SAFE_CONNECTIONS = 300
-        MAX_CONNECTION = 1800
+        MAX_CONNECTION = 1000
 
         kill_all_sql = "SELECT pg_terminate_backend(pid) " \
                        "FROM pg_stat_activity " \
@@ -46,17 +52,18 @@ if __name__ == '__main__':
         while True:
             conn = psycopg2.connect("dbname='bsf_test1' user='killer' host='103.68.81.39' password='Th3NeWorld@@@1893'")
             cur = conn.cursor()
-            start_time = time.time()
             c = count_all_activity(cur)
             print('All activity: ', c)
-            # if SAFE_CONNECTIONS <= c < MAX_CONNECTION:
-            #    cur.execute(sql)
-            #    restart_worker()
-            #    print('killed process after {}s'.format(time.time() - start_time))
             if c >= MAX_CONNECTION:
                 cur.execute(sql)
+                time.sleep(5)
                 restart_worker()
                 print('killed all process')
             time.sleep(1 * 60)
     except:
         traceback.print_exc()
+
+
+if __name__ == '__main__':
+    kill()
+    # restart_worker()

@@ -19,8 +19,11 @@ def _repair_candles(market, interval, max_length=None):
     res_candles = bittrex_api_v2.get_candles(market=market.market_name, tick_interval=interval)
     # print('insert new candle set ', res_candles['success'])
     if res_candles['success']:
-        latest_candles = sorted(res_candles['result'], key=lambda cd: cd['T'], reverse=True)[
-                         :int(max_length)] if max_length is not None else res_candles['result']
+        if res_candles['result'] is not None:
+            latest_candles = sorted(res_candles['result'], key=lambda cd: cd['T'], reverse=True)[
+                            :int(max_length)] if max_length is not None else res_candles['result']
+        else:
+            latest_candles = []
 
         for c in latest_candles:
             candle = Candle()
@@ -47,20 +50,27 @@ def _update_latest_candle(market, interval):
     if res_latest_candle['success']:
         latest_candle = res_latest_candle['result'][0]
         if latest_candle is not None:
-            candle = Candle()
-            candle.market = market
-            candle.high = latest_candle['H']
-            candle.low = latest_candle['L']
-            candle.open = latest_candle['O']
-            candle.close = latest_candle['C']
-            candle.volume = latest_candle['V']
-            candle.base_volume = latest_candle['BV']
-            candle.timeframe = CANDLE_TF_1H
-            candle.timestamp = dateutil.parser.parse(latest_candle['T'])
+            ts = dateutil.parser.parse(latest_candle['T'])
             if not Candle.objects.filter(market__market_name=market.market_name,
                                          timeframe=interval,
-                                         timestamp=candle.timestamp).exists():
+                                         timestamp=ts).exists():
+                candle = Candle()
+                candle.market = market
+                candle.high = latest_candle['H']
+                candle.low = latest_candle['L']
+                candle.open = latest_candle['O']
+                candle.close = latest_candle['C']
+                candle.volume = latest_candle['V']
+                candle.base_volume = latest_candle['BV']
+                candle.timeframe = CANDLE_TF_1H
+                candle.timestamp = ts
                 candle.save()
+            else:
+                lc = Candle.objects.filter(market__market_name=market.market_name,
+                                         timeframe=interval,
+                                         timestamp=candle.timestamp).first()
+                lc.close = latest_candle['C']
+                lc.save()
 
 
 def _get_candle(market_name):

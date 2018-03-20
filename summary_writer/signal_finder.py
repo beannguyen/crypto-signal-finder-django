@@ -67,14 +67,15 @@ def send_trading_alert_rsi(market_name, action, open_price=0, high_price=0, low_
     send_mail(title, 'beanchanel@gmail.com', content)
     if not DEBUG:
         for us in UserSubscription.objects.filter(market=Market.objects.filter(market_name=market_name).first()):
-            if SignalSendLog.objects.filter(profile=us.profile, market__market_name=market_name).exists():
-                log = SignalSendLog.objects.filter(profile=us.profile, market=market_name).order_by(
-                    '-timestamp').first()
-                if action == 'sell' and log.action == 'buy' or action == 'buy' and log.action == 'sell':
-                    send_mail(title, us.profile.user.email, content)
-            else:
-                if action == 'buy':
-                    send_mail(title, us.profile.user.email, content)
+            # if SignalSendLog.objects.filter(profile=us.profile, market__market_name=market_name).exists():
+            #     log = SignalSendLog.objects.filter(profile=us.profile, market=market_name).order_by(
+            #         '-timestamp').first()
+            #     if action == 'sell' and log.action == 'buy' or action == 'buy' and log.action == 'sell':
+            #         send_mail(title, us.profile.user.email, content)
+            # else:
+            #     if action == 'buy':
+            #         send_mail(title, us.profile.user.email, content)
+            send_mail(title, us.profile.user.email, content)
     else:
         send_mail(title, 'beanchanel@gmail.com', content)
 
@@ -125,18 +126,18 @@ def find_signal(market_name):
         tick = Ticker.objects.filter(market__market_name=market_name).order_by('-timestamp').first()
         dn = datetime.utcnow()
         diff = dn - tick.timestamp
-        if diff.seconds > 2 * 60:
+        if diff.seconds > 0.5 * 60:
             ErrorLog.objects.create(error="{}: got old tick, cannot calculate signal".format(market_name))
         else:
             if tick is not None:
-                price = tick.bid + tick.ask / 2
+                price = (tick.bid + tick.ask) / 2
                 try:
-                    if price > (upper[len(upper) - 1] + (0.05 * upper[len(upper) - 1])) and real[len(real) - 1] > 70:
-                        # print('sell')
-                        send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0],
-                                               high_price=df['high'].iloc[0], low_price=df['low'].iloc[0],
-                                               close_price=df['close'].iloc[0], price=price)
-                    elif price < (lower[len(lower) - 1] - (0.05 * lower[len(lower) - 1])) and real[len(real) - 1] < 30:
+                    # if price > (upper[len(upper) - 1] + (0.05 * upper[len(upper) - 1])) and real[len(real) - 1] > 70:
+                    #     # print('sell')
+                    #     send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0],
+                    #                            high_price=df['high'].iloc[0], low_price=df['low'].iloc[0],
+                    #                            close_price=df['close'].iloc[0], price=price)
+                    if price < (lower[len(lower) - 1] - (0.05 * lower[len(lower) - 1])) and real[len(real) - 1] < 30:
                         send_trading_alert_rsi(market_name, 'buy', open_price=df['open'].iloc[0],
                                                high_price=df['high'].iloc[0],
                                                low_price=df['low'].iloc[0], close_price=df['close'].iloc[0], price=price)
@@ -219,8 +220,8 @@ def find_signal_cp(market_name):
         '-timestamp').first()
     tick = Ticker.objects.filter(market__market_name=market_name).order_by('-timestamp').first()
     if candle is not None and tick is not None:
-        bid_pct = tick.bid - candle.close / candle.close
-        ask_pct = tick.ask - candle.close / candle.close
+        bid_pct = (tick.bid - candle.close) / candle.close
+        ask_pct = (tick.ask - candle.close) / candle.close
         if bid_pct >= 0.1 or bid_pct <= 0.1 or ask_pct >= 0.1 or ask_pct <= 0.1:
             send_trading_alert_cp(market_name, '', candle.open, candle.high, candle.low, candle.close, tick.bid,
                                   tick.ask)
