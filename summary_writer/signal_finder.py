@@ -112,10 +112,11 @@ def find_signal(market_name):
         ticks.append(t)
     # pprint(ticks)
     # print(datetime.utcnow())
-    diffn = datetime.utcnow() - ticks[len(ticks) - 1]['timestamp']
-    # print(diffn)
-    if diffn.seconds <= (1 * 60 * 60):
-        if len(ticks) > 0:
+
+    if len(ticks) > 0:
+        diffn = datetime.utcnow() - ticks[len(ticks) - 1]['timestamp']
+        # print(diffn)
+        if diffn.seconds <= (1 * 60 * 60):
             df = pd.DataFrame(ticks, index=indexes)
             ohlc_dict = {'open': 'first', 'high': 'max', 'low': 'min', 'close': 'last'}
             df = df.resample('1H').apply(ohlc_dict).dropna(how='any')
@@ -153,9 +154,9 @@ def find_signal(market_name):
                                                    price=price)
                     except Exception as e:
                         traceback.print_exc()
-    else:
-        print('Latest candle is out of date.')
-        ErrorLog.objects.create(error="{}: got old candle, cannot calculate signal".format(market_name))
+        else:
+            print('Latest candle is out of date.')
+            ErrorLog.objects.create(error="{}: got old candle, cannot calculate signal".format(market_name))
 
 
 def rsi_process_queue():
