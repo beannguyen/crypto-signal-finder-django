@@ -57,7 +57,7 @@ def _update_latest_candle(market, interval):
             if not Candle.objects.filter(market__market_name=market.market_name,
                                          timeframe=interval,
                                          timestamp=ts).exists():
-                print('Inserting new candle...')
+                # print('Inserting new candle...')
                 candle = Candle()
                 candle.market = market
                 candle.high = latest_candle['H']
@@ -70,7 +70,7 @@ def _update_latest_candle(market, interval):
                 candle.timestamp = ts
                 candle.save()
             else:
-                print('Updating candle\'s close price...')
+                # print('Updating candle\'s close price...')
                 lc = Candle.objects.filter(market__market_name=market.market_name,
                                            timeframe=interval,
                                            timestamp=ts).first()
