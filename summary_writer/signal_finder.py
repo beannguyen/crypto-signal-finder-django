@@ -113,7 +113,7 @@ def find_signal(market_name):
     # pprint(ticks)
     # print(datetime.utcnow())
     diffn = datetime.utcnow() - ticks[len(ticks) - 1]['timestamp']
-    print(diffn)
+    # print(diffn)
     if diffn.seconds <= (1 * 60 * 60):
         if len(ticks) > 0:
             df = pd.DataFrame(ticks, index=indexes)

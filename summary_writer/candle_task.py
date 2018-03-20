@@ -49,7 +49,7 @@ def _repair_candles(market, interval, max_length=None):
 def _update_latest_candle(market, interval):
     res_latest_candle = bittrex_api_v2.get_latest_candle(market=market.market_name, tick_interval=CANDLE_TF_1H)
     # print('insert new candle ', res_latest_candle['success'])
-    pprint(res_latest_candle['result'])
+    # pprint(res_latest_candle['result'])
     if res_latest_candle['success']:
         latest_candle = res_latest_candle['result'][0]
         if latest_candle is not None:
