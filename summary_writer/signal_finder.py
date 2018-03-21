@@ -1,5 +1,4 @@
 from datetime import datetime
-from pwrite_log import pwrite_log
 
 from bittrex import Bittrex, API_V2_0
 from bs4 import BeautifulSoup
