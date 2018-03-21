@@ -18,11 +18,14 @@ bittrex_api_v2 = Bittrex(settings.BITTREX_API_KEY, settings.BITTREX_SECRET_KEY, 
 
 def _repair_candles(market, interval, max_length=None):
     res_candles = bittrex_api_v2.get_candles(market=market.market_name, tick_interval=interval)
-    # write_log('insert new candle set ', res_candles['success'])
+    # write_log(res_candles)
     if res_candles['success']:
+        for r in res_candles['result']:
+            print(r['T'])
         if res_candles['result'] is not None:
             latest_candles = sorted(res_candles['result'], key=lambda cd: cd['T'], reverse=True)[
                              :int(max_length)] if max_length is not None else res_candles['result']
+            # print(latest_candles)
         else:
             write_log('result is none')
             latest_candles = []
@@ -37,7 +40,7 @@ def _repair_candles(market, interval, max_length=None):
             candle.volume = c['V']
             candle.base_volume = c['BV']
             candle.timestamp = dateutil.parser.parse(c['T'])
-            # write_log('ts ', candle.timestamp)
+            write_log('ts %s' % candle.timestamp)
             candle.timeframe = interval
             if not Candle.objects.filter(market__market_name=market.market_name,
                                          timeframe=interval,
@@ -86,28 +89,32 @@ def _get_candle(market_name):
         candles = Candle.objects.filter(market__market_name=market.market_name, timeframe=CANDLE_TF_1H).order_by(
             '-timestamp')[:100]
 
-        prev_ts = None
-        err_count = 0
-        if candles.count() > 0:
-            # write_log('candle in db ', candle_count)
-            for c in reversed(candles):
-                if prev_ts is None:
-                    prev_ts = c.timestamp
-                else:
-                    diff = c.timestamp - prev_ts
-                    if diff.seconds > (1 * 60 * 60):
-                        # write_log('tick: {} - {}'.format(prev_ts, c.timestamp))
-                        err_count += 1
-                    prev_ts = c.timestamp
+        # prev_ts = None
+        # err_count = 0
+        # if candles.count() > 0:
+        #     # write_log('candle in db ', candle_count)
+        #     for c in reversed(candles):
+        #         if prev_ts is None:
+        #             prev_ts = c.timestamp
+        #         else:
+        #             diff = c.timestamp - prev_ts
+        #             if diff.seconds > (1 * 60 * 60):
+        #                 # write_log('tick: {} - {}'.format(prev_ts, c.timestamp))
+        #                 err_count += 1
+        #             prev_ts = c.timestamp
 
-        if candles.count() > 0 and err_count == 0:
-            write_log('update latest')
+        # if candles.count() > 0 and err_count == 0:
+        #     write_log('update latest')
+        #     _update_latest_candle(market=market, interval=CANDLE_TF_1H)
+        # elif candles.count() > 0 and err_count > 0:
+        #     write_log('repairing..')
+        #     _repair_candles(market=market, interval=CANDLE_TF_1H, max_length=150)
+        # else:
+        #     write_log('get candles')
+        #     _repair_candles(market=market, interval=CANDLE_TF_1H)
+        if candles.count() > 0:
             _update_latest_candle(market=market, interval=CANDLE_TF_1H)
-        elif candles.count() > 0 and err_count > 0:
-            write_log('repairing..')
-            _repair_candles(market=market, interval=CANDLE_TF_1H, max_length=150)
         else:
-            write_log('get candles')
             _repair_candles(market=market, interval=CANDLE_TF_1H)
 
 
@@ -141,6 +148,11 @@ def seq_get_latest_candle():
     for market in markets:
         write_log('market %s' % market.market_name)
         _get_candle(market.market_name)
+
+
+def get_market_c():
+    market = Market.objects.filter(market_name='ETH-VIB').first()
+    _get_candle(market.market_name)
 
 
 def test():
