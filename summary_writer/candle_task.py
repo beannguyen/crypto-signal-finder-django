@@ -119,7 +119,7 @@ def process_latest_candle_queue():
 
 
 @task()
-def get_latest_candlet():
+def get_latest_candle():
     write_log('Get latest tick...')
     markets = Market.objects.all()
     # write_log('get ', markets.count())
@@ -136,7 +136,7 @@ def get_latest_candlet():
     latest_candle_queue.join()
 
 
-def seq_get_latest_candlet():
+def seq_get_latest_candle():
     markets = Market.objects.all()
     for market in markets:
         write_log('market %s' % market.market_name)
