@@ -1,5 +1,4 @@
 import threading
-from pprint import pprint
 from queue import Queue
 
 import dateutil.parser
@@ -8,6 +7,7 @@ from celery.task import task
 
 from best_django import settings
 from best_django.settings import CANDLE_TF_1H, MAX_THREAD
+from summary_writer.logger import write_log
 from summary_writer.models import Market, Candle
 
 latest_candle_queue = Queue()
@@ -18,13 +18,13 @@ bittrex_api_v2 = Bittrex(settings.BITTREX_API_KEY, settings.BITTREX_SECRET_KEY, 
 
 def _repair_candles(market, interval, max_length=None):
     res_candles = bittrex_api_v2.get_candles(market=market.market_name, tick_interval=interval)
-    # print('insert new candle set ', res_candles['success'])
+    # write_log('insert new candle set ', res_candles['success'])
     if res_candles['success']:
         if res_candles['result'] is not None:
             latest_candles = sorted(res_candles['result'], key=lambda cd: cd['T'], reverse=True)[
                              :int(max_length)] if max_length is not None else res_candles['result']
         else:
-            print('result is none')
+            write_log('result is none')
             latest_candles = []
 
         for c in latest_candles:
@@ -37,19 +37,19 @@ def _repair_candles(market, interval, max_length=None):
             candle.volume = c['V']
             candle.base_volume = c['BV']
             candle.timestamp = dateutil.parser.parse(c['T'])
-            # print('ts ', candle.timestamp)
+            # write_log('ts ', candle.timestamp)
             candle.timeframe = interval
             if not Candle.objects.filter(market__market_name=market.market_name,
                                          timeframe=interval,
                                          timestamp=candle.timestamp).exists():
-                # print('inserting ...', candle.timestamp)
+                write_log('{}: inserting ...'.format(candle.timestamp))
                 candle.save()
 
 
 def _update_latest_candle(market, interval):
     res_latest_candle = bittrex_api_v2.get_latest_candle(market=market.market_name, tick_interval=CANDLE_TF_1H)
-    # print('insert new candle ', res_latest_candle['success'])
-    # pprint(res_latest_candle['result'])
+    # write_log('insert new candle ', res_latest_candle['success'])
+    # pwrite_log(res_latest_candle['result'])
     if res_latest_candle['success']:
         latest_candle = res_latest_candle['result'][0]
         if latest_candle is not None:
@@ -57,7 +57,7 @@ def _update_latest_candle(market, interval):
             if not Candle.objects.filter(market__market_name=market.market_name,
                                          timeframe=interval,
                                          timestamp=ts).exists():
-                # print('Inserting new candle...')
+                write_log('Inserting new candle...')
                 candle = Candle()
                 candle.market = market
                 candle.high = latest_candle['H']
@@ -70,7 +70,7 @@ def _update_latest_candle(market, interval):
                 candle.timestamp = ts
                 candle.save()
             else:
-                # print('Updating candle\'s close price...')
+                write_log('Updating candle\'s close price...')
                 lc = Candle.objects.filter(market__market_name=market.market_name,
                                            timeframe=interval,
                                            timestamp=ts).first()
@@ -89,25 +89,25 @@ def _get_candle(market_name):
         prev_ts = None
         err_count = 0
         if candles.count() > 0:
-            # print('candle in db ', candle_count)
+            # write_log('candle in db ', candle_count)
             for c in reversed(candles):
                 if prev_ts is None:
                     prev_ts = c.timestamp
                 else:
                     diff = c.timestamp - prev_ts
                     if diff.seconds > (1 * 60 * 60):
-                        # print('tick: {} - {}'.format(prev_ts, c.timestamp))
+                        # write_log('tick: {} - {}'.format(prev_ts, c.timestamp))
                         err_count += 1
                     prev_ts = c.timestamp
 
         if candles.count() > 0 and err_count == 0:
-            # print('update latest')
+            write_log('update latest')
             _update_latest_candle(market=market, interval=CANDLE_TF_1H)
         elif candles.count() > 0 and err_count > 0:
-            # print('repairing..')
+            write_log('repairing..')
             _repair_candles(market=market, interval=CANDLE_TF_1H, max_length=150)
         else:
-            # print('get candles')
+            write_log('get candles')
             _repair_candles(market=market, interval=CANDLE_TF_1H)
 
 
@@ -119,10 +119,10 @@ def process_latest_candle_queue():
 
 
 @task()
-def get_latest_candle():
-    print('Get latest tick...')
+def get_latest_candlet():
+    write_log('Get latest tick...')
     markets = Market.objects.all()
-    # print('get ', markets.count())
+    # write_log('get ', markets.count())
 
     for i in range(MAX_THREAD):
         t = threading.Thread(target=process_latest_candle_queue)
@@ -136,9 +136,16 @@ def get_latest_candle():
     latest_candle_queue.join()
 
 
+def seq_get_latest_candlet():
+    markets = Market.objects.all()
+    for market in markets:
+        write_log('market %s' % market.market_name)
+        _get_candle(market.market_name)
+
+
 def test():
     market = Market.objects.get(pk=88)
-    print('get candle ', market.market_name)
+    write_log('get candle %s' % market.market_name)
     # _update_latest_candle(market=market, interval=CANDLE_TF_1H)
     _repair_candles(market=market, interval=CANDLE_TF_1H, max_length=150)
     # _get_candle(market)

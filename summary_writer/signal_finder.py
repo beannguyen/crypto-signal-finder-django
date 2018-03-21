@@ -1,5 +1,5 @@
 from datetime import datetime
-from pprint import pprint
+from pwrite_log import pwrite_log
 
 from bittrex import Bittrex, API_V2_0
 from bs4 import BeautifulSoup
@@ -18,6 +18,7 @@ from django import db
 from best_django.celery import app
 from best_django.settings import CANDLE_TF_1H, MAX_THREAD
 from summary_writer.candle_task import _repair_candles
+from summary_writer.logger import write_log
 from summary_writer.models import Market, MarketSummary, Candle, Ticker, ErrorLog
 from rest.models import UserSubscription, SignalSendLog, Strategy
 from best_django import settings
@@ -64,7 +65,7 @@ def send_trading_alert_rsi(market_name, action, open_price=0, high_price=0, low_
         content = content.replace('#ClosePrice#', '{}'.format(close_price))
     if '#Price#' in content:
         content = content.replace('#Price#', '{}'.format(price))
-    # print('sending with content ', content)
+    # write_log('sending with content ', content)
     send_mail(title, 'beanchanel@gmail.com', content)
     if not DEBUG:
         for us in UserSubscription.objects.filter(market=Market.objects.filter(market_name=market_name).first()):
@@ -82,7 +83,7 @@ def send_trading_alert_rsi(market_name, action, open_price=0, high_price=0, low_
 
 
 def find_signal(market_name):
-    # print('market: ', market_name)
+    # write_log('market: ', market_name)
     candles = reversed(
         Candle.objects.filter(market__market_name=market_name, timeframe=selected_tf).order_by('-timestamp')[:100])
     ticks = []
@@ -90,13 +91,13 @@ def find_signal(market_name):
     prev_ts = None
     err_count = 0
     for c in candles:
-        # print(c.timestamp)
+        # write_log(c.timestamp)
         if prev_ts is None:
             prev_ts = c.timestamp
         else:
             diff = c.timestamp - prev_ts
             if diff.seconds > (1 * 60 * 60):
-                # print('tick: {} - {}'.format(prev_ts, c.timestamp))
+                # write_log('tick: {} - {}'.format(prev_ts, c.timestamp))
                 err_count += 1
             prev_ts = c.timestamp
 
@@ -110,17 +111,17 @@ def find_signal(market_name):
             'timestamp': c.timestamp
         }
         ticks.append(t)
-    # pprint(ticks)
-    # print(datetime.utcnow())
+    # pwrite_log(ticks)
+    # write_log(datetime.utcnow())
 
     if len(ticks) > 0:
         diffn = datetime.utcnow() - ticks[len(ticks) - 1]['timestamp']
-        # print(diffn)
+        write_log(diffn)
         if diffn.seconds <= (1 * 60 * 60):
             df = pd.DataFrame(ticks, index=indexes)
             ohlc_dict = {'open': 'first', 'high': 'max', 'low': 'min', 'close': 'last'}
             df = df.resample('1H').apply(ohlc_dict).dropna(how='any')
-            # print(df)
+            # write_log(df)
             close = np.array([float(x) for x in df['close'].as_matrix()])
             upper, middle, lower = talib.BBANDS(close, matype=MA_Type.T3)
             real = talib.RSI(close, timeperiod=14)
@@ -131,31 +132,34 @@ def find_signal(market_name):
             real = np.nan_to_num(real)
 
             tick = Ticker.objects.filter(market__market_name=market_name).order_by('-timestamp').first()
-            dn = datetime.utcnow()
-            diff = dn - tick.timestamp
-            if diff.seconds > 0.5 * 60:
-                ErrorLog.objects.create(error="{}: got old tick, cannot calculate signal".format(market_name))
+            if tick is not None:
+                dn = datetime.utcnow()
+                diff = dn - tick.timestamp
+                if diff.seconds > 0.5 * 60:
+                    ErrorLog.objects.create(error="{}: got old tick, cannot calculate signal".format(market_name))
+                else:
+                    if tick is not None:
+                        price = (tick.bid + tick.ask) / 2
+                        try:
+                            # if price > (upper[len(upper) - 1] + (0.05 * upper[len(upper) - 1])) \
+                            # and real[len(real) - 1] > 70:
+                            #     # write_log('sell')
+                            #     send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0],
+                            #                            high_price=df['high'].iloc[0], low_price=df['low'].iloc[0],
+                            #                            close_price=df['close'].iloc[0], price=price)
+                            if price < (lower[len(lower) - 1] - (0.05 * lower[len(lower) - 1])) \
+                                    and real[len(real) - 1] < 30:
+                                write_log('sending signal...')
+                                send_trading_alert_rsi(market_name, 'buy', open_price=df['open'].iloc[0],
+                                                       high_price=df['high'].iloc[0],
+                                                       low_price=df['low'].iloc[0], close_price=df['close'].iloc[0],
+                                                       price=price)
+                        except Exception as e:
+                            traceback.write_log_exc()
             else:
-                if tick is not None:
-                    price = (tick.bid + tick.ask) / 2
-                    try:
-                        # if price > (upper[len(upper) - 1] + (0.05 * upper[len(upper) - 1])) \
-                        # and real[len(real) - 1] > 70:
-                        #     # print('sell')
-                        #     send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0],
-                        #                            high_price=df['high'].iloc[0], low_price=df['low'].iloc[0],
-                        #                            close_price=df['close'].iloc[0], price=price)
-                        if price < (lower[len(lower) - 1] - (0.05 * lower[len(lower) - 1])) \
-                                and real[len(real) - 1] < 30:
-                            print('sending signal...')
-                            send_trading_alert_rsi(market_name, 'buy', open_price=df['open'].iloc[0],
-                                                   high_price=df['high'].iloc[0],
-                                                   low_price=df['low'].iloc[0], close_price=df['close'].iloc[0],
-                                                   price=price)
-                    except Exception as e:
-                        traceback.print_exc()
+                ErrorLog.objects.create(error="{}: tick is None".format(market_name))
         else:
-            print('Latest candle is out of date.')
+            write_log('{} Latest candle is out of date.'.format(market_name))
             ErrorLog.objects.create(error="{}: got old candle, cannot calculate signal".format(market_name))
 
 
@@ -168,7 +172,7 @@ def rsi_process_queue():
 
 @task()
 def rsi():
-    print('System analysing....')
+    write_log('System analysing....')
     start_time = time.time()
     # db.connections.close_all()
 
@@ -183,13 +187,13 @@ def rsi():
         rsi_queue.put(market.market_name)
 
     rsi_queue.join()
-    print("Execution time = {0:.5f}".format(time.time() - start_time))
+    write_log("Execution time = {0:.5f}".format(time.time() - start_time))
 
 
 def seq_rsi():
-    markets = Market.objects.all()[:10]
+    markets = Market.objects.all()
     for market in markets:
-        print('market ', market.market_name)
+        write_log('market ', market.market_name)
         find_signal(market.market_name)
 
 
@@ -221,14 +225,14 @@ def send_trading_alert_cp(market_name, action, open_price=0, high_price=0, low_p
         content = content.replace('#Ask#', '{}'.format(ask_price))
     if '#Price#' in content:
         content = content.replace('#Price#', '{}'.format((ask_price + bid_price) / 2))
-    # print('sending with content ', content)
+    # write_log('sending with content ', content)
     send_mail(title, 'beanchanel@gmail.com', content)
     for us in UserSubscription.objects.filter(market=Market.objects.filter(market_name=market_name).first()):
         send_mail(title, us.profile.user.email, content)
 
 
 def find_signal_cp(market_name):
-    # print('market: ', market_name)
+    # write_log('market: ', market_name)
     candle = Candle.objects.filter(market__market_name=market_name, timeframe=selected_tf).order_by(
         '-timestamp').first()
     tick = Ticker.objects.filter(market__market_name=market_name).order_by('-timestamp').first()
@@ -249,7 +253,7 @@ def cp_process_queue():
 
 @task()
 def close_price_strategy():
-    print('System analysing....')
+    write_log('System analysing....')
     # db.connections.close_all()
     start_time = time.time()
     markets = Market.objects.filter(market_name="USDT-BTC")
@@ -263,4 +267,4 @@ def close_price_strategy():
         cp_queue.put(market.market_name)
 
     cp_queue.join()
-    print("Execution time = {0:.5f}".format(time.time() - start_time))
+    write_log("Execution time = {0:.5f}".format(time.time() - start_time))
