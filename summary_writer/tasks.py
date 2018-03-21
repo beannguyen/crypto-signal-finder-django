@@ -131,7 +131,7 @@ def get_ticker():
 
     markets = Market.objects.all()
 
-    for i in range(MAX_THREAD * 1.5):
+    for i in range(MAX_THREAD * 2):
         t = threading.Thread(target=process_queue)
         t.daemon = True
         t.start()
