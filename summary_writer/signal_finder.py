@@ -159,7 +159,7 @@ def find_signal(market_name):
                 ErrorLog.objects.create(error="{}: tick is None".format(market_name))
         else:
             write_log('{} Latest candle is out of date.'.format(market_name))
-            ErrorLog.objects.create(error="{}: got old candle, cannot calculate signal".format(market_name))
+            ErrorLog.objects.create(error="{}: got old candle, cannot calculate signal -> {} - {} = {}".format(market_name, datetime.utcnow(), ticks[len(ticks) - 1]['timestamp'], diffn))
 
 
 def rsi_process_queue():
@@ -192,7 +192,7 @@ def rsi():
 def seq_rsi():
     markets = Market.objects.all()
     for market in markets:
-        write_log('market ', market.market_name)
+        write_log('market %s' % market.market_name)
         find_signal(market.market_name)
 
 
