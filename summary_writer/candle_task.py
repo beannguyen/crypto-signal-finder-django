@@ -20,8 +20,6 @@ def _repair_candles(market, interval, max_length=None):
     res_candles = bittrex_api_v2.get_candles(market=market.market_name, tick_interval=interval)
     # write_log(res_candles)
     if res_candles['success']:
-        for r in res_candles['result']:
-            print(r['T'])
         if res_candles['result'] is not None:
             latest_candles = sorted(res_candles['result'], key=lambda cd: cd['T'], reverse=True)[
                              :int(max_length)] if max_length is not None else res_candles['result']
