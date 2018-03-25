@@ -92,7 +92,7 @@ class UserSubscription(models.Model):
 
 
 class SignalSendLog(models.Model):
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
     market = models.ForeignKey(Market, on_delete=models.CASCADE)
     action = models.CharField(max_length=50)
     timestamp = models.DateTimeField(auto_now_add=True)

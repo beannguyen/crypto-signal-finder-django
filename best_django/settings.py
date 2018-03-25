@@ -15,6 +15,7 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 from datetime import timedelta
 from best_django.nogitsettings import *
+from kombu import Exchange, Queue
 
 from celery.schedules import crontab
 
@@ -161,6 +162,53 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'UTC'
+CELERYD_CONCURRENCY = 4
+CELERYD_MAX_TASKS_PER_CHILD = 4
+CELERYD_PREFETCH_MULTIPLIER = 1
+# CELERY_DEFAULT_QUEUE = 'default'
+# CELERY_DEFAULT_EXCHANGE_TYPE = 'default'
+# CELERY_DEFAULT_ROUTING_KEY = 'default'
+
+# default_exchange = Exchange('celery', type='direct', consumer_arguments={'x-priority': 0})
+# candle_exchange = Exchange('celery', type='direct', consumer_arguments={'x-priority': 1})
+# signal_exchange = Exchange('celery', type='direct', consumer_arguments={'x-priority': 2})
+
+# CELERY_QUEUES = (
+#     Queue('default', default_exchange, routing_key='default'),
+#     Queue('candle', candle_exchange, routing_key='candle'),
+#     Queue('signal', signal_exchange, routing_key='signal')
+# )
+
+# CELERY_ROUTES = ({
+#     'summary_writer.tasks.update_markets': {
+#         'queue': 'default',
+#         'routing_key': 'default',
+#     },
+#     'summary_writer.tasks.update_market_summary': {
+#         'queue': 'default',
+#         'routing_key': 'default',
+#     },
+#     'summary_writer.exchange_rate_cal.plan_pricing_calculate': {
+#         'queue': 'default',
+#         'routing_key': 'default',
+#     },
+#     'summary_writer.candle_task.get_latest_candle': {
+#         'queue': 'candle',
+#         'routing_key': 'candle',
+#     },
+#     'summary_writer.tasks.get_ticker': {
+#         'queue': 'candle',
+#         'routing_key': 'candle',
+#     },
+#     'summary_writer.signal_finder.rsi': {
+#         'queue': 'signal',
+#         'routing_key': 'signal',
+#     },
+#     'summary_writer.signal_finder.close_price_strategy': {
+#         'queue': 'signal',
+#         'routing_key': 'signal',
+#     }
+# }, )
 
 CELERY_BEAT_SCHEDULE = {
     'update-markets': {
@@ -177,7 +225,7 @@ CELERY_BEAT_SCHEDULE = {
     },
     'get-ticker': {
         'task': 'summary_writer.tasks.get_ticker',
-        'schedule': crontab(minute='*/30')
+        'schedule': crontab(minute='*/1')
     },
     'find_signal': {
         'task': 'summary_writer.signal_finder.rsi',
@@ -185,7 +233,7 @@ CELERY_BEAT_SCHEDULE = {
     },
     'cp_find_signal': {
         'task': 'summary_writer.signal_finder.close_price_strategy',
-        'schedule': crontab(hour='*/1')
+        'schedule': crontab(minute='*/60')
     },
     'plan_pricing_calculate': {
         'task': 'summary_writer.exchange_rate_cal.plan_pricing_calculate',

@@ -17,6 +17,7 @@ from django import db
 from best_django.celery import app
 from best_django.settings import CANDLE_TF_1H, MAX_THREAD
 from summary_writer.candle_task import _repair_candles
+from summary_writer.tasks import get_tick
 from summary_writer.logger import write_log
 from summary_writer.models import Market, MarketSummary, Candle, Ticker, ErrorLog
 from rest.models import UserSubscription, SignalSendLog, Strategy
@@ -136,25 +137,25 @@ def find_signal(market_name):
                 diff = dn - tick.timestamp
                 if diff.seconds > 0.5 * 60:
                     ErrorLog.objects.create(error="{}: got old tick, cannot calculate signal".format(market_name))
-                else:
-                    if tick is not None:
-                        price = (tick.bid + tick.ask) / 2
-                        try:
-                            # if price > (upper[len(upper) - 1] + (0.05 * upper[len(upper) - 1])) \
-                            # and real[len(real) - 1] > 70:
-                            #     # write_log('sell')
-                            #     send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0],
-                            #                            high_price=df['high'].iloc[0], low_price=df['low'].iloc[0],
-                            #                            close_price=df['close'].iloc[0], price=price)
-                            if price < (lower[len(lower) - 1] - (0.05 * lower[len(lower) - 1])) \
-                                    and real[len(real) - 1] < 30:
-                                write_log('sending signal...')
-                                send_trading_alert_rsi(market_name, 'buy', open_price=df['open'].iloc[0],
-                                                       high_price=df['high'].iloc[0],
-                                                       low_price=df['low'].iloc[0], close_price=df['close'].iloc[0],
-                                                       price=price)
-                        except Exception as e:
-                            traceback.write_log_exc()
+                    tick = get_tick(market_name)
+                if tick is not None:
+                    price = (tick.bid + tick.ask) / 2
+                    try:
+                        # if price > (upper[len(upper) - 1] + (0.05 * upper[len(upper) - 1])) \
+                        # and real[len(real) - 1] > 70:
+                        #     # write_log('sell')
+                        #     send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0],
+                        #                            high_price=df['high'].iloc[0], low_price=df['low'].iloc[0],
+                        #                            close_price=df['close'].iloc[0], price=price)
+                        if price < (lower[len(lower) - 1] - (0.05 * lower[len(lower) - 1])) \
+                                and real[len(real) - 1] < 30:
+                            write_log('sending signal...')
+                            send_trading_alert_rsi(market_name, 'buy', open_price=df['open'].iloc[0],
+                                                    high_price=df['high'].iloc[0],
+                                                    low_price=df['low'].iloc[0], close_price=df['close'].iloc[0],
+                                                    price=price)
+                    except Exception as e:
+                        traceback.write_log_exc()
             else:
                 ErrorLog.objects.create(error="{}: tick is None".format(market_name))
         else:

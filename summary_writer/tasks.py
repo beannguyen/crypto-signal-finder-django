@@ -108,13 +108,15 @@ queue = Queue()
 
 def get_tick(market_name):
     res = bittrex_api.get_ticker(market_name)
+    tick = None
     if res['success']:
         latest_tick = res['result']
         if latest_tick is not None:
             # print(latest_tick)
-            Ticker.objects.create(market=Market.objects.get(market_name=market_name),
+            tick = Ticker.objects.create(market=Market.objects.get(market_name=market_name),
                                   bid=latest_tick['Bid'] if latest_tick['Bid'] is not None else 0,
                                   ask=latest_tick['Ask'] if latest_tick['Ask'] is not None else 0)
+    return tick
 
 
 def process_queue():

@@ -4,6 +4,7 @@ import os
 
 from best_django import settings
 from celery import Celery
+from kombu import Exchange, Queue
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'best_django.settings')
 app = Celery('best_django',
@@ -26,6 +27,17 @@ app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 
 app.conf.enable_utc = False
 app.conf.timezone = 'Asia/Ho_Chi_Minh'
+
+# default_exchange = Exchange('celery', type='direct', consumer_arguments={'x-priority': 0})
+# candle_exchange = Exchange('celery', type='direct', consumer_arguments={'x-priority': 1})
+# signal_exchange = Exchange('celery', type='direct', consumer_arguments={'x-priority': 2})
+
+# app.conf.task_default_queue = 'default'
+# app.conf.task_queues = (
+#     Queue('default', default_exchange, routing_key='default'),
+#     Queue('candle', candle_exchange, routing_key='candle'),
+#     Queue('signal', signal_exchange, routing_key='signal')
+# )
 
 
 @app.task(bind=True)
