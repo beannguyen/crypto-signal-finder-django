@@ -85,12 +85,16 @@ def send_trading_alert_rsi(market_name, action, open_price=0, high_price=0, low_
 def check_signal_log(market_name):
     log = SignalSendLog.objects.filter(market__market_name=market_name).order_by(
         '-timestamp').first()
-    d = datetime.utcnow()
-    diff = d - log.timestamp
-    if 1 * 60 * 60 <= diff.seconds:
+    if log is not None:
+        d = datetime.utcnow()
+        diff = d - log.timestamp
+        if 1 * 60 * 60 <= diff.seconds:
+            SignalSendLog.objects.create(market=Market.objects.filter(market_name=market_name).first(), action='log',
+                                         timestamp=datetime.utcnow())
+            return True
+    else:
         SignalSendLog.objects.create(market=Market.objects.filter(market_name=market_name).first(), action='log',
                                      timestamp=datetime.utcnow())
-        return True
     return False
 
 
