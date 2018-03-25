@@ -17,7 +17,7 @@ def count_all_activity(cur):
 
 def restart_worker():
     os.system('sudo /home/bean/be-signal-finder-django/bin/reset_worker.sh')
-    os.system('sudo /home/bean/be-signal-finder-django/bin/start_process.sh')
+    os.system('sudo /home/bean/be-signal-finder-django/bin/start_worker.sh')
 
 
 def kill():
