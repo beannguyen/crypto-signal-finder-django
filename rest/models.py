@@ -86,13 +86,13 @@ class Payment(models.Model):
 
 
 class UserSubscription(models.Model):
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, default=1)
     market = models.ForeignKey(Market, on_delete=models.CASCADE)
     subscribed_on = models.DateTimeField(auto_now_add=True)
 
 
 class SignalSendLog(models.Model):
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
+    # profile = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
     market = models.ForeignKey(Market, on_delete=models.CASCADE)
     action = models.CharField(max_length=50)
     timestamp = models.DateTimeField(auto_now_add=True)
