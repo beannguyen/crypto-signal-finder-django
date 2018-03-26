@@ -1,7 +1,6 @@
 from datetime import datetime
 
 from bittrex import Bittrex, API_V2_0
-from bs4 import BeautifulSoup
 from celery import shared_task, task
 import dateutil.parser
 import requests
@@ -15,7 +14,7 @@ from queue import Queue
 from django import db
 
 from best_django.celery import app
-from best_django.settings import CANDLE_TF_1H, MAX_THREAD
+from best_django.settings import CANDLE_TF_1H, MAX_THREAD, STT_ACCOUNT_ACTIVATED
 from summary_writer.candle_task import _repair_candles, _update_latest_candle
 from summary_writer.tasks import get_tick
 from summary_writer.logger import write_log
@@ -77,7 +76,8 @@ def send_trading_alert_rsi(market_name, action, open_price=0, high_price=0, low_
             # else:
             #     if action == 'buy':
             #         send_mail(title, us.profile.user.email, content)
-            send_mail(title, us.profile.user.email, content)
+            if us.profile.status == STT_ACCOUNT_ACTIVATED:
+                send_mail(title, us.profile.user.email, content)
     else:
         send_mail(title, 'beanchanel@gmail.com', content)
 
@@ -252,7 +252,8 @@ def send_trading_alert_cp(market_name, action, open_price=0, high_price=0, low_p
     # write_log('sending with content ', content)
     send_mail(title, 'beanchanel@gmail.com', content)
     for us in UserSubscription.objects.filter(market=Market.objects.filter(market_name=market_name).first()):
-        send_mail(title, us.profile.user.email, content)
+        if us.profile.status == STT_ACCOUNT_ACTIVATED:
+            send_mail(title, us.profile.user.email, content)
 
 
 def find_signal_cp(market_name):
@@ -262,17 +263,12 @@ def find_signal_cp(market_name):
     tick = Ticker.objects.filter(market__market_name=market_name).order_by('-timestamp').first()
     if candle is not None and tick is not None:
         bid_pct = (tick.bid - candle.close) / candle.close
+        write_log('bid {}'.format(bid_pct))
         ask_pct = (tick.ask - candle.close) / candle.close
+        write_log('ask {}'.format(ask_pct))
         if bid_pct >= 0.1 or bid_pct <= 0.1 or ask_pct >= 0.1 or ask_pct <= 0.1:
             send_trading_alert_cp(market_name, '', candle.open, candle.high, candle.low, candle.close, tick.bid,
                                   tick.ask)
-
-
-def cp_process_queue():
-    while True:
-        market_name = cp_queue.get()
-        find_signal_cp(market_name)
-        cp_queue.task_done()
 
 
 @task()
@@ -280,15 +276,6 @@ def close_price_strategy():
     write_log('System analysing....')
     # db.connections.close_all()
     start_time = time.time()
-    markets = Market.objects.filter(market_name="USDT-BTC")
-
-    for i in range(3):
-        t = threading.Thread(target=cp_process_queue)
-        t.daemon = True
-        t.start()
-
-    for market in markets:
-        cp_queue.put(market.market_name)
-
-    cp_queue.join()
+    market = Market.objects.filter(market_name="USDT-BTC").first()
+    find_signal_cp(market.market_name)
     write_log("Execution time = {0:.5f}".format(time.time() - start_time))
