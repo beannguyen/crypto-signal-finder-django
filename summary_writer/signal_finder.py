@@ -85,22 +85,21 @@ def send_trading_alert_rsi(market_name, action, open_price=0, high_price=0, low_
 def check_signal_log(market_name):
     log = SignalSendLog.objects.filter(market__market_name=market_name).order_by(
         '-timestamp').first()
+    # write_log('sending log %s' % log)
     if log is not None:
         d = datetime.utcnow()
         diff = d - log.timestamp
         if 1 * 60 * 60 <= diff.seconds:
-            SignalSendLog.objects.create(market=Market.objects.filter(market_name=market_name).first(), action='log',
-                                         timestamp=datetime.utcnow())
             return True
+        else:
+            return False
     else:
-        SignalSendLog.objects.create(market=Market.objects.filter(market_name=market_name).first(), action='log',
-                                     timestamp=datetime.utcnow())
-    return False
+        return True
 
 
 def find_signal(market_name):
     if check_signal_log(market_name):
-        # write_log('market: ', market_name)
+        write_log('market: %s' % market_name)
         candles = reversed(
             Candle.objects.filter(market__market_name=market_name, timeframe=selected_tf).order_by('-timestamp')[:100])
         ticks = []
@@ -133,7 +132,7 @@ def find_signal(market_name):
 
         if len(ticks) > 0:
             diffn = datetime.utcnow() - ticks[len(ticks) - 1]['timestamp']
-            write_log(diffn)
+            # write_log(diffn)
             if diffn.seconds <= (1 * 60 * 60):
                 df = pd.DataFrame(ticks, index=indexes)
                 ohlc_dict = {'open': 'first', 'high': 'max', 'low': 'min', 'close': 'last'}
@@ -153,6 +152,7 @@ def find_signal(market_name):
                     dn = datetime.utcnow()
                     diff = dn - tick.timestamp
                     if diff.seconds > 0.5 * 60:
+                        write_log('old tick')
                         ErrorLog.objects.create(error="{}: got old tick, cannot calculate signal".format(market_name))
                         tick = get_tick(market_name)
                     if tick is not None:
@@ -167,6 +167,9 @@ def find_signal(market_name):
                             if price < (lower[len(lower) - 1] - (0.05 * lower[len(lower) - 1])) \
                                     and real[len(real) - 1] < 30:
                                 write_log('sending signal...')
+                                SignalSendLog.objects.create(
+                                    market=Market.objects.filter(market_name=market_name).first(), action='log',
+                                    timestamp=datetime.utcnow())
                                 send_trading_alert_rsi(market_name, 'buy', open_price=df['open'].iloc[0],
                                                        high_price=df['high'].iloc[0],
                                                        low_price=df['low'].iloc[0], close_price=df['close'].iloc[0],
