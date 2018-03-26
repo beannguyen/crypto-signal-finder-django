@@ -16,7 +16,7 @@ from django import db
 
 from best_django.celery import app
 from best_django.settings import CANDLE_TF_1H, MAX_THREAD
-from summary_writer.candle_task import _repair_candles
+from summary_writer.candle_task import _repair_candles, _update_latest_candle
 from summary_writer.tasks import get_tick
 from summary_writer.logger import write_log
 from summary_writer.models import Market, MarketSummary, Candle, Ticker, ErrorLog
@@ -97,43 +97,46 @@ def check_signal_log(market_name):
         return True
 
 
+def _get_ticks(market_name):
+    """
+    get latest 100 candles
+    :param market_name:
+    :return:
+    """
+    candles = reversed(
+        Candle.objects.filter(market__market_name=market_name, timeframe=selected_tf).order_by('-timestamp')[:100])
+    ticks = []
+    indexes = []
+    prev_ts = None
+    err_count = 0
+    for c in candles:
+        indexes.append(c.timestamp)
+        t = {
+            'open': c.open,
+            'high': c.high,
+            'low': c.low,
+            'close': c.close,
+            'volume': c.volume,
+            'timestamp': c.timestamp
+        }
+        ticks.append(t)
+    return ticks, indexes
+
+
 def find_signal(market_name):
     if check_signal_log(market_name):
         write_log('market: %s' % market_name)
-        candles = reversed(
-            Candle.objects.filter(market__market_name=market_name, timeframe=selected_tf).order_by('-timestamp')[:100])
-        ticks = []
-        indexes = []
-        prev_ts = None
-        err_count = 0
-        for c in candles:
-            # write_log(c.timestamp)
-            if prev_ts is None:
-                prev_ts = c.timestamp
-            else:
-                diff = c.timestamp - prev_ts
-                if diff.seconds > (1 * 60 * 60):
-                    # write_log('tick: {} - {}'.format(prev_ts, c.timestamp))
-                    err_count += 1
-                prev_ts = c.timestamp
-
-            indexes.append(c.timestamp)
-            t = {
-                'open': c.open,
-                'high': c.high,
-                'low': c.low,
-                'close': c.close,
-                'volume': c.volume,
-                'timestamp': c.timestamp
-            }
-            ticks.append(t)
+        ticks, indexes = _get_ticks(market_name)
         # pwrite_log(ticks)
         # write_log(datetime.utcnow())
 
         if len(ticks) > 0:
+            write_log('latest candle timestamp {}'.format(ticks[len(ticks) - 1]['timestamp']))
             diffn = datetime.utcnow() - ticks[len(ticks) - 1]['timestamp']
             # write_log(diffn)
-            if diffn.seconds <= (1 * 60 * 60):
+            if diffn.seconds >= (1 * 60 * 60):
+                write_log('{} Latest candle is out of date.'.format(market_name))
+            else:
                 df = pd.DataFrame(ticks, index=indexes)
                 ohlc_dict = {'open': 'first', 'high': 'max', 'low': 'min', 'close': 'last'}
                 df = df.resample('1H').apply(ohlc_dict).dropna(how='any')
@@ -147,6 +150,7 @@ def find_signal(market_name):
                 lower = np.nan_to_num(lower)
                 real = np.nan_to_num(real)
 
+                # get latest bid/ask
                 tick = Ticker.objects.filter(market__market_name=market_name).order_by('-timestamp').first()
                 if tick is not None:
                     dn = datetime.utcnow()
@@ -178,13 +182,6 @@ def find_signal(market_name):
                             traceback.print_exc()
                 else:
                     ErrorLog.objects.create(error="{}: tick is None".format(market_name))
-            else:
-                write_log('{} Latest candle is out of date.'.format(market_name))
-                ErrorLog.objects.create(
-                    error="{}: got old candle, cannot calculate signal -> {} - {} = {}".format(market_name,
-                                                                                               datetime.utcnow(),
-                                                                                               ticks[len(ticks) - 1][
-                                                                                                   'timestamp'], diffn))
 
 
 def rsi_process_queue():
