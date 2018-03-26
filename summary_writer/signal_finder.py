@@ -168,7 +168,10 @@ def find_signal(market_name):
                             #     send_trading_alert_rsi(market_name, 'sell', open_price=df['open'].iloc[0],
                             #                            high_price=df['high'].iloc[0], low_price=df['low'].iloc[0],
                             #                            close_price=df['close'].iloc[0], price=price)
-                            if price < (lower[len(lower) - 1] - (0.05 * lower[len(lower) - 1])) \
+                            # - (0.05 * lower[len(lower) - 1])
+                            write_log('lower bb {}'.format(lower[len(lower) - 1]))
+                            write_log('rsi {}'.format(real[len(real) - 1]))
+                            if price < (lower[len(lower) - 1]) \
                                     and real[len(real) - 1] < 30:
                                 write_log('sending signal...')
                                 SignalSendLog.objects.create(
@@ -212,7 +215,7 @@ def rsi():
 
 
 def seq_rsi():
-    markets = Market.objects.all()
+    markets = Market.objects.filter(market_name__contains='USDT')
     for market in markets:
         write_log('market %s' % market.market_name)
         find_signal(market.market_name)
