@@ -20,7 +20,7 @@ from summary_writer.candle_task import _repair_candles
 from summary_writer.tasks import get_tick
 from summary_writer.logger import write_log
 from summary_writer.models import Market, MarketSummary, Candle, Ticker, ErrorLog
-from rest.models import UserSubscription, SignalSendLog, Strategy
+from rest.models import UserSubscription, SignalSendLog, Strategy, Profile
 from best_django import settings
 from utils import send_mail
 from talib import MA_Type

@@ -86,7 +86,7 @@ class Payment(models.Model):
 
 
 class UserSubscription(models.Model):
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    # profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     market = models.ForeignKey(Market, on_delete=models.CASCADE)
     subscribed_on = models.DateTimeField(auto_now_add=True)
 
