@@ -10,7 +10,7 @@ class Postgres:
     def __init__(self):
         try:
             self.conn = psycopg2.connect(
-                "dbname='bsf_test1' user='bsfuser' host='localhost' password='Th3NeWorld@@@1893'")
+                "dbname='bsf_test1' user='bsfuser' host='103.68.81.39' password='Th3NeWorld@@@1893'")
         except:
             print("Unable to connect to the database")
 
@@ -23,11 +23,13 @@ class Postgres:
         count = 0
         if row is not None:
             count = row[0]
+            print('count ', count)
         return count
 
     def insert_article(self, article):
         try:
             cur = self.conn.cursor()
+            print('post url ', article['url'])
             if self.is_article_exist(article['url']) == 0:
                 sql = "INSERT INTO rest_newsitem(title, url, img, short_desc, category_title, date, category_url) VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}');".format(
                     article['title'],
@@ -96,6 +98,7 @@ class SpidyQuotesSpider(scrapy.Spider):
             }
             self.db.insert_category(item['category'])
             item['date'] = article.xpath('header/div/time/text()').extract_first().strip()
+            self.log('post on {}'.format(item['date']))
             self.db.insert_article(item)
             # break
 

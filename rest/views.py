@@ -1671,7 +1671,7 @@ def activate_user(request, format=None):
 def get_news(request, format=None):
     res = {}
     try:
-        newslist = NewsItem.objects.all()[:50]
+        newslist = NewsItem.objects.all().order_by('-date')[:50]
         nlist = []
         for news in newslist:
             nlist.append({
