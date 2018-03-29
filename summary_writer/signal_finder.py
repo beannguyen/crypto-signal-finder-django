@@ -12,6 +12,8 @@ import talib
 import threading
 import time
 from queue import Queue
+
+from decimal import Decimal
 from django import db
 
 from best_django.celery import app
@@ -258,12 +260,18 @@ def send_trading_alert_cp(market_name, action, open_price=0, high_price=0, low_p
 def find_signal_cp(market_name):
     # write_log('market: ', market_name)
     candle = Candle.objects.filter(market__market_name=market_name, timeframe=selected_tf).order_by(
-        '-timestamp').first()
+        '-timestamp')[1]
     tick = Ticker.objects.filter(market__market_name=market_name).order_by('-timestamp').first()
+    # print('tick {}'.format(tick))
+    # print('candle {}'.format(candle.timestamp))
     if candle is not None and tick is not None:
-        bid_pct = (tick.bid - candle.close) / candle.close
-        ask_pct = (tick.ask - candle.close) / candle.close
-        if bid_pct >= 0.1 or bid_pct <= 0.1 or ask_pct >= 0.1 or ask_pct <= 0.1:
+        price = (tick.bid + tick.ask) / 2
+        pct_close = (candle.close * Decimal(0.1))
+        sub_adj = candle.close - pct_close
+        add_adj = candle.close + pct_close
+        write_log('bid {}\t{}\t{}'.format(price, sub_adj, add_adj))
+        if price > add_adj or price < sub_adj:
+            # write_log('send')
             send_trading_alert_cp(market_name, '', candle.open, candle.high, candle.low, candle.close, tick.bid,
                                   tick.ask)
 
@@ -280,15 +288,6 @@ def close_price_strategy():
     write_log('System analysing....')
     # db.connections.close_all()
     start_time = time.time()
-    markets = Market.objects.filter(market_name="USDT-BTC")
-
-    for i in range(3):
-        t = threading.Thread(target=cp_process_queue)
-        t.daemon = True
-        t.start()
-
-    for market in markets:
-        cp_queue.put(market.market_name)
-
-    cp_queue.join()
+    market = Market.objects.filter(market_name="USDT-BTC").first()
+    find_signal_cp(market.market_name)
     write_log("Execution time = {0:.5f}".format(time.time() - start_time))
