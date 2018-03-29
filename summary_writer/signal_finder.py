@@ -17,7 +17,7 @@ from decimal import Decimal
 from django import db
 
 from best_django.celery import app
-from best_django.settings import CANDLE_TF_1H, MAX_THREAD
+from best_django.settings import CANDLE_TF_1H, MAX_THREAD, STT_ACCOUNT_ACTIVATED
 from summary_writer.candle_task import _repair_candles, _update_latest_candle
 from summary_writer.tasks import get_tick
 from summary_writer.logger import write_log
@@ -79,7 +79,8 @@ def send_trading_alert_rsi(market_name, action, open_price=0, high_price=0, low_
             # else:
             #     if action == 'buy':
             #         send_mail(title, us.profile.user.email, content)
-            send_mail(title, us.profile.user.email, content)
+            if us.profile.status == STT_ACCOUNT_ACTIVATED:
+                send_mail(title, us.profile.user.email, content)
     else:
         send_mail(title, 'beanchanel@gmail.com', content)
 
@@ -254,7 +255,8 @@ def send_trading_alert_cp(market_name, action, open_price=0, high_price=0, low_p
     # write_log('sending with content ', content)
     send_mail(title, 'beanchanel@gmail.com', content)
     for us in UserSubscription.objects.filter(market=Market.objects.filter(market_name=market_name).first()):
-        send_mail(title, us.profile.user.email, content)
+        if us.profile.status == STT_ACCOUNT_ACTIVATED:
+            send_mail(title, us.profile.user.email, content)
 
 
 def find_signal_cp(market_name):
@@ -274,13 +276,6 @@ def find_signal_cp(market_name):
             # write_log('send')
             send_trading_alert_cp(market_name, '', candle.open, candle.high, candle.low, candle.close, tick.bid,
                                   tick.ask)
-
-
-def cp_process_queue():
-    while True:
-        market_name = cp_queue.get()
-        find_signal_cp(market_name)
-        cp_queue.task_done()
 
 
 @task()

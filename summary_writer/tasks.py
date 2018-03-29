@@ -114,8 +114,8 @@ def get_tick(market_name):
         if latest_tick is not None:
             # print(latest_tick)
             tick = Ticker.objects.create(market=Market.objects.get(market_name=market_name),
-                                  bid=latest_tick['Bid'] if latest_tick['Bid'] is not None else 0,
-                                  ask=latest_tick['Ask'] if latest_tick['Ask'] is not None else 0)
+                                         bid=latest_tick['Bid'] if latest_tick['Bid'] is not None else 0,
+                                         ask=latest_tick['Ask'] if latest_tick['Ask'] is not None else 0)
     return tick
 
 
