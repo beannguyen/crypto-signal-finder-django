@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import scrapy
 from scrapy import Request, FormRequest
 import traceback
@@ -98,7 +100,8 @@ class SpidyQuotesSpider(scrapy.Spider):
                 'url': article.xpath('header/div/span/a/@href').extract_first().strip()
             }
             self.db.insert_category(item['category'])
-            item['date'] = article.xpath('header/div/time/text()').extract_first().strip()
+            item['date'] = datetime.strptime(article.xpath('header/div/time/text()').extract_first().strip(),
+                                             '%B %d, %Y %H:%M')
             self.log('post on {}'.format(item['date']))
             self.db.insert_article(item)
             # break
