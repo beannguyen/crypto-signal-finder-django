@@ -17,10 +17,11 @@ from django.db import connection
 
 from best_django.celery import app
 from best_django.settings import CANDLE_TF_1H, MAX_THREAD
+from summary_writer.logger import write_log
 from summary_writer.models import Market, MarketSummary, Candle, Ticker
 from rest.models import UserSubscription, SignalSendLog, Strategy, Profile
 from best_django import settings
-from utils import send_mail
+from utils import send_mail, generate_reset_pwd_link
 from talib import MA_Type
 
 bittrex_api = Bittrex(settings.BITTREX_API_KEY, settings.BITTREX_SECRET_KEY)
@@ -149,23 +150,24 @@ def get_ticker():
 @task()
 def check_overdue_action():
     start_time = time.time()
-
     markets = Market.objects.all()
-
     accounts = Profile.objects.all()
-    for acc in accounts:
-        today = datetime.now().date()
-        duration_date = acc.plan.duration * 30
 
-        if today - acc.activated_date.date() > duration_date:
-            if acc.status != settings.STT_ACCOUNT_OVERDUE:
-                acc.status = settings.STT_ACCOUNT_OVERDUE
-                acc.save()
-                # send_mail(subject='Membership Alert!',
-                #       to=u.email,
-                #       html_content='<p>Hi {}</p> '
-                #                    'our subscription has expired: '
-                #                    '{}'.format(u.username,
-                #                                generate_reset_pwd_link(
-                #                                    u.username,
-                #                                    vc.verify_code)))
+    for acc in accounts:
+        today = datetime.utcnow()
+        if acc.plan is not None:
+            duration_date = acc.plan.duration * 30
+            if acc.activated_date is not None:
+                print('activated date ', acc.activated_date)
+                diff = today - acc.activated_date
+                print('diff ', diff)
+                if diff.days > duration_date:
+                    if acc.status != settings.STT_ACCOUNT_OVERDUE:
+                        acc.status = settings.STT_ACCOUNT_OVERDUE
+                        write_log("found overdue user {}".format(acc.user.email))
+                        # acc.save()
+                        send_mail(subject='Account Renewal Announcement!',
+                                  to=acc.user.email,
+                                  html_content='<p>Hi {}</p> '
+                                               'Your account has already been expired, \
+                                               please visit dashboard for account renewal.'.format(acc.user.username))

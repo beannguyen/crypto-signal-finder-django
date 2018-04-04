@@ -218,7 +218,7 @@ def rsi():
 
 
 def seq_rsi():
-    markets = Market.objects.filter(market_name__contains='USDT')
+    markets = Market.objects.filter(market_name='USDT-BTC')
     for market in markets:
         write_log('market %s' % market.market_name)
         find_signal(market.market_name)

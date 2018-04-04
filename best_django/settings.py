@@ -228,7 +228,7 @@ CELERY_BEAT_SCHEDULE = {
     },
     'find_signal': {
         'task': 'summary_writer.signal_finder.rsi',
-        'schedule': crontab(minute='*/5')
+        'schedule': crontab(minute='*/2')
     },
     'cp_find_signal': {
         'task': 'summary_writer.signal_finder.close_price_strategy',
@@ -238,10 +238,10 @@ CELERY_BEAT_SCHEDULE = {
         'task': 'summary_writer.exchange_rate_cal.plan_pricing_calculate',
         'schedule': crontab(minute='*/15')
     },
-    # 'kill_idle_session': {
-    #     'task': 'summary_writer.tasks.kill_all_idle_session',
-    #     'schedule': crontab(minute='*/15')
-    # }
+    'check-user-overdue': {
+        'task': 'summary_writer.tasks.check_overdue_action',
+        'schedule': crontab(hour='*/3')
+    }
 }
 
 REST_FRAMEWORK = {
