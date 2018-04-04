@@ -165,7 +165,7 @@ def check_overdue_action():
                     if acc.status != settings.STT_ACCOUNT_OVERDUE:
                         acc.status = settings.STT_ACCOUNT_OVERDUE
                         write_log("found overdue user {}".format(acc.user.email))
-                        # acc.save()
+                        acc.save()
                         send_mail(subject='Account Renewal Announcement!',
                                   to=acc.user.email,
                                   html_content='<p>Hi {}</p> '
