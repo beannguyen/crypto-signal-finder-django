@@ -91,7 +91,8 @@ class SpidyQuotesSpider(scrapy.Spider):
             item = PostItem()
             item['title'] = article.xpath('header/h4/a/text()').extract_first().strip()
             item['url'] = article.xpath('header/h4/a/@href').extract_first().strip()
-            item['img'] = article.xpath('div/a/img/@src').extract_first().strip()
+            item['img'] = article.xpath('div/a/img/@src').extract_first().strip() if article.xpath(
+                'div/a/img/@src').extract_first() is not None else None
             item['category'] = {
                 'title': article.xpath('header/div/span/a/@title').extract_first().strip(),
                 'url': article.xpath('header/div/span/a/@href').extract_first().strip()
