@@ -18,7 +18,8 @@ CORS_ORIGIN_WHITELIST = (
 
 ALLOWED_HOSTS = [
     '103.68.81.39',
-    'localhost:4200'
+    'localhost:4200',
+    'localhost:8000'
 ]
 
 EMAIL_HOST_USER = 'vmod.game@gmail.com'

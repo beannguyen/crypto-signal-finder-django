@@ -168,7 +168,8 @@ def getmarketsummaries(request):
         pages = MarketSummary.objects.all().order_by('market__market_name')
         m_res = []
         for m in pages:
-            p_change = 100 * (Decimal(m.last) - Decimal(m.prev_day)) / Decimal(m.prev_day) if Decimal(m.prev_day) != 0 else 0
+            p_change = 100 * (Decimal(m.last) - Decimal(m.prev_day)) / Decimal(m.prev_day) if Decimal(
+                m.prev_day) != 0 else 0
             # print('p_change: ', p_change)
             m_res.append({
                 'market_name': m.market.market_name,
@@ -182,7 +183,7 @@ def getmarketsummaries(request):
                 'predict_30m': 0,
                 'market_currency_long': m.market.market_currency_long,
                 'is_subscribed': UserSubscription.objects.filter(profile=Profile.objects.get(user=request.user),
-                                                                market=m.market).count() > 0
+                                                                 market=m.market).count() > 0
             })
 
         return Response({
@@ -345,7 +346,7 @@ def register(request, format=None):
         else:
             ref_id = req['ref']
 
-        refer = Profile.objects.filter(ref=ref_id).first()            
+        refer = Profile.objects.filter(ref=ref_id).first()
 
         # create user
         user = User.objects.create_user(username=req['username'],
@@ -364,7 +365,8 @@ def register(request, format=None):
         profile.save()
 
         try:
-            v = AccountVerificationCode.objects.create(user=profile, verify_code=generate_ref(16), expire_on=datetime.now() + timedelta(days=1))
+            v = AccountVerificationCode.objects.create(user=profile, verify_code=generate_ref(16),
+                                                       expire_on=datetime.now() + timedelta(days=1))
             send_mail(subject='Account Activation',
                       to=user.email,
                       html_content='<p>Hi {}</p> '
@@ -436,7 +438,9 @@ def forgot_password(request, format=None):
             # delete all previous tokens
             AccountVerificationCode.objects.filter(user=profile, type=ACCOUNT_VERIFICATION_FORGOTPWD).delete()
 
-            vc = AccountVerificationCode.objects.create(user=profile, verify_code=generate_ref(16), expire_on=datetime.now() + timedelta(days=1), type=ACCOUNT_VERIFICATION_FORGOTPWD)
+            vc = AccountVerificationCode.objects.create(user=profile, verify_code=generate_ref(16),
+                                                        expire_on=datetime.now() + timedelta(days=1),
+                                                        type=ACCOUNT_VERIFICATION_FORGOTPWD)
             send_mail(subject='Reset Your Password',
                       to=u.email,
                       html_content='<p>Hi {}</p> '
@@ -664,9 +668,10 @@ class CreateUserView(APIView):
                 res['result'] = HTTP_ERR
                 res['msg'] = 'plan_not_found'
                 return Response(res)
-            
+
             if is_leader_user(request.user):
-                pkg = SalePackageAssignment.objects.filter(profile=Profile.objects.get(user=request.user), plan=plan).first()
+                pkg = SalePackageAssignment.objects.filter(profile=Profile.objects.get(user=request.user),
+                                                           plan=plan).first()
                 if pkg is not None:
                     # print('pkg', pkg)
                     refer = Profile.objects.get(user=request.user)
@@ -703,7 +708,7 @@ class CreateUserView(APIView):
                         if not Profile.objects.filter(ref=ref).exists():
                             profile.ref = ref
                             break
-            
+
             # insert ref
             profile.refer = Profile.objects.get(user=request.user)
 
@@ -737,26 +742,32 @@ def get_pricing_plans(request, format=None):
         req = json.loads(request.body.decode('utf-8'))
         list = []
         plans = MemberShipPlan.objects.all()
-        
+
         base_currency = WalletCurrency.objects.filter(is_base=True).first()
+        vnd_wallet = WalletCurrency.objects.filter(symbol='VND').first()
 
         for p in plans:
             if req['type'] != 'all':
                 user_profile = Profile.objects.get(user=request.user)
                 if is_leader_user(user_profile.refer.user):
-                    pkg = SalePackageAssignment.objects.filter(profile__user_id=user_profile.refer.user.pk, plan=p).first()
+                    pkg = SalePackageAssignment.objects.filter(profile__user_id=user_profile.refer.user.pk,
+                                                               plan=p).first()
                     # get current user's profile
                     sold_pkg = Profile.objects.filter(refer=user_profile.refer, plan=p).count()
                     if pkg.package_count <= sold_pkg:
                         continue
-            
+
             pricing = MemberShipPlanPricing.objects.filter(plan=p, wallet_currency=base_currency).first()
+            vnd_pricing = MemberShipPlanPricing.objects.filter(plan=p, wallet_currency=vnd_wallet).first()
             plan = {
                 'id': p.pk,
                 'name': p.name,
                 'duration': p.duration,
                 'market_subscription_limit': p.market_subscription_limit,
-                'price': Decimal(pricing.price) if pricing is not None else 0
+                'prices': {
+                    'usd': Decimal(pricing.price) if pricing is not None else 0,
+                    'vnd': int(vnd_pricing.price) if vnd_pricing is not None else 0
+                }
             }
             list.append(plan)
 
@@ -816,7 +827,7 @@ def get_my_pricing_plans(request, format=None):
         # req = json.loads(request.body.decode('utf-8'))
         list = []
         plans = MemberShipPlan.objects.all()
-        
+
         for p in plans:
             if is_leader_user(request.user):
                 pkg = SalePackageAssignment.objects.filter(profile__user_id=request.user.pk, plan=p).first()
@@ -922,7 +933,7 @@ def create_plan(request, format=None):
             return Response(status=550)
 
         req = json.loads(request.body.decode('utf-8'))
-        MemberShipPlan.objects.create(name=req['name'], duration=req['duration'])
+        plan = MemberShipPlan.objects.create(name=req['name'], duration=req['duration'])
 
         base_pricing = req['pricing']
         base_currency = WalletCurrency.objects.filter(is_base=True).first()
@@ -977,7 +988,8 @@ def update_plan(request, format=None):
 
             for currency in WalletCurrency.objects.filter(is_base=False):
                 # calculating new price
-                market = Market.objects.filter(base_currency=base_currency.symbol, market_currency=currency.symbol).first()
+                market = Market.objects.filter(base_currency=base_currency.symbol,
+                                               market_currency=currency.symbol).first()
                 tick = Ticker.objects.filter(market=market).order_by('-timestamp').first()
                 price = (tick.bid + tick.ask) / 2
                 plan_price = Decimal(base_pricing) / price
@@ -1102,8 +1114,9 @@ def confirm_payment(request, format=None):
 
             try:
                 send_mail(subject='Account Activation',
-                        to=bill.profile.user.email,
-                        html_content='<p>Hi {}</p><br /> Your account is now activated. Visit and enjoy our platform.'.format(bill.profile.user.username))
+                          to=bill.profile.user.email,
+                          html_content='<p>Hi {}</p><br /> Your account is now activated. Visit and enjoy our platform.'.format(
+                              bill.profile.user.username))
             except:
                 traceback.print_exc()
 
@@ -1134,8 +1147,8 @@ def prepare_payment(request, format=None):
             bill.save()
         else:
             bill = Payment.objects.create(profile=profile,
-                               hash=generate_ref(4),
-                               status=STT_PAYMENT_PREPARING)
+                                          hash=generate_ref(4),
+                                          status=STT_PAYMENT_PREPARING)
         res = {
             'result': HTTP_OK,
             'hash': bill.hash
@@ -1172,11 +1185,12 @@ def submit_payment(request, format=None):
             bill.save()
             try:
                 send_mail(subject='New Subscription',
-                        to=profile.refer.user.email,
-                        html_content='<p>Hi {}</p><br /> New account register. Go to Dashboard to review.'.format(profile.refer.user.username))
+                          to=profile.refer.user.email,
+                          html_content='<p>Hi {}</p><br /> New account register. Go to Dashboard to review.'.format(
+                              profile.refer.user.username))
             except:
                 traceback.print_exc()
-            
+
             # update profile info
             profile.plan = MemberShipPlan.objects.get(pk=req['plan'])
             profile.status = STT_ACCOUNT_PENDING
@@ -1184,7 +1198,7 @@ def submit_payment(request, format=None):
             res['result'] = HTTP_OK
         else:
             res['result'] = HTTP_ERR
-            res['msg'] = 'exception'    
+            res['msg'] = 'exception'
     except Exception as e:
         traceback.print_exc()
         res['result'] = HTTP_ERR
@@ -1241,7 +1255,7 @@ def get_user_list(request, format=None):
             })
 
         res['result'] = HTTP_OK
-        
+
     except Exception as e:
         traceback.print_exc()
         res['result'] = HTTP_ERR
@@ -1256,7 +1270,7 @@ def search_user_by_invoice(request, format=None):
     res = {}
     try:
         req = json.loads(request.body.decode('utf-8'))
-        profile=Profile.objects.get(user=request.user)
+        profile = Profile.objects.get(user=request.user)
 
         users = []
         inv = Payment.objects.filter(hash=req['hash'])
@@ -1413,18 +1427,20 @@ def assign_sale_package(request, format=None):
             return Response(res)
         else:
             user = user.first()
-        
+
         profile = Profile.objects.get(user=user)
-        
+
         if not is_leader_user(user):
             res['result'] = HTTP_ERR
             res['msg'] = 'user_not_leader'
             return Response(res)
 
         for p in req['packages']:
-            pkg = SalePackageAssignment.objects.filter(profile__user_id=profile.user.pk, plan=MemberShipPlan.objects.get(pk=p['plan_id'])).first()
+            pkg = SalePackageAssignment.objects.filter(profile__user_id=profile.user.pk,
+                                                       plan=MemberShipPlan.objects.get(pk=p['plan_id'])).first()
             if pkg is None:
-                SalePackageAssignment.objects.create(profile=profile, plan=MemberShipPlan.objects.get(pk=p['plan_id']), package_count=p['count'])
+                SalePackageAssignment.objects.create(profile=profile, plan=MemberShipPlan.objects.get(pk=p['plan_id']),
+                                                     package_count=p['count'])
             else:
                 pkg.package_count = p['count']
                 pkg.save()
@@ -1474,9 +1490,9 @@ def get_sale_package(request, format=None):
             return Response(res)
         else:
             user = user.first()
-        
+
         profile = Profile.objects.get(user=user)
-        
+
         if not is_leader_user(user):
             res['result'] = HTTP_ERR
             res['msg'] = 'user_not_leader'
@@ -1636,7 +1652,7 @@ def activate_user(request, format=None):
             res['result'] = HTTP_ERR
             res['msg'] = 'refer_user_invalid'
             return Response(res)
-        
+
         if user_profile.plan is None:
             res['result'] = HTTP_ERR
             res['msg'] = 'invalid_plan'
@@ -1850,7 +1866,8 @@ def get_user_profile(request, format=None):
                 'market_subscribe': UserSubscription.objects.filter(profile=profile).count(),
                 'wallets': [],
                 'activated_date': profile.activated_date,
-                'expire_date': profile.activated_date + timedelta(days=plan_duration_days) if profile.activated_date is not None else None
+                'expire_date': profile.activated_date + timedelta(
+                    days=plan_duration_days) if profile.activated_date is not None else None
             }
 
             for wc in WalletCurrency.objects.filter(is_base=False, is_disabled=False):
@@ -1960,7 +1977,7 @@ def get_bank_account(request, format=None):
 @permission_classes((IsAuthenticated,))
 def update_bank_account(request, format=None):
     if not has_permission(request.user, 'change_bankaccount', label='rest'):
-            return Response(status=550)
+        return Response(status=550)
 
     res = {}
     try:
