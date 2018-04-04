@@ -25,6 +25,7 @@ from best_django.settings import BITTREX_SECRET_KEY, BITTREX_API_KEY, HTTP_ERR, 
     ACCOUNT_VERIFICATION_FORGOTPWD, UNLIMITED, STT_PAYMENT_PREPARING
 from rest.models import MemberShipPlan, Profile, WalletCurrency, MemberShipPlanPricing, AccountVerificationCode, Wallet, \
     Payment, SalePackageAssignment, UserSubscription, NewsItem, Strategy, NewsCategory, BankAccount
+from summary_writer.exchange_rate_cal import get_ofx_quote
 from summary_writer.models import Market, MarketSummary, Candle, Ticker
 from utils import generate_ref, send_mail, generate_email_verification_link, get_user_status_name, \
     generate_reset_pwd_link
@@ -987,19 +988,30 @@ def update_plan(request, format=None):
                 MemberShipPlanPricing.objects.create(plan=plan, wallet_currency=base_currency, price=base_pricing)
 
             for currency in WalletCurrency.objects.filter(is_base=False):
-                # calculating new price
-                market = Market.objects.filter(base_currency=base_currency.symbol,
-                                               market_currency=currency.symbol).first()
-                tick = Ticker.objects.filter(market=market).order_by('-timestamp').first()
-                price = (tick.bid + tick.ask) / 2
-                plan_price = Decimal(base_pricing) / price
-                # update plan pricing
-                p = MemberShipPlanPricing.objects.filter(plan=plan, wallet_currency=currency).first()
-                if p is not None:
-                    p.price = plan_price
-                    p.save()
+                if currency.symbol != 'VND':
+                    # calculating new price
+                    market = Market.objects.filter(base_currency=base_currency.symbol,
+                                                   market_currency=currency.symbol).first()
+                    tick = Ticker.objects.filter(market=market).order_by('-timestamp').first()
+                    price = (tick.bid + tick.ask) / 2
+                    plan_price = Decimal(base_pricing) / price
+                    # update plan pricing
+                    p = MemberShipPlanPricing.objects.filter(plan=plan, wallet_currency=currency).first()
+                    if p is not None:
+                        p.price = plan_price
+                        p.save()
+                    else:
+                        MemberShipPlanPricing.objects.create(plan=plan, wallet_currency=currency, price=plan_price)
                 else:
-                    MemberShipPlanPricing.objects.create(plan=plan, wallet_currency=currency, price=plan_price)
+                    p = MemberShipPlanPricing.objects.filter(plan=plan, wallet_currency=currency).first()
+                    price = get_ofx_quote()
+                    plan_price = Decimal(pricing_obj.price) * price
+                    print('price in vnd ', plan_price)
+                    if p is not None:
+                        p.price = plan_price
+                        p.save()
+                    else:
+                        MemberShipPlanPricing.objects.create(plan=plan, wallet_currency=currency, price=plan_price)
 
         res['result'] = HTTP_OK
         res['msg'] = 'success'
