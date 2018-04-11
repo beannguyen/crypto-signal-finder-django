@@ -4,7 +4,8 @@ import time
 import subprocess
 import os
 
-conn = psycopg2.connect("dbname='bsf_test1' user='killer' host='103.68.81.39' password='Th3NeWorld@@@1893'")
+
+# conn = psycopg2.connect("dbname='bsf_test1' user='killer' host='103.68.81.39' password='Th3NeWorld@@@1893'")
 
 
 def count_all_activity(cur):
@@ -42,12 +43,14 @@ def kill():
         # time.sleep(INTERVAL_TIME * 60)
 
         while True:
-            conn = psycopg2.connect("dbname='bsf_test1' user='killer' host='103.68.81.39' password='Th3NeWorld@@@1893'")
+            # conn = psycopg2.connect("dbname='bsf_test1' \
+            # user='killer' host='103.68.81.39' password='Th3NeWorld@@@1893'")
+            conn = psycopg2.connect("dbname='bsf_test1' user='killer' host='localhost' password='Th3NeWorld@@@1893'")
             cur = conn.cursor()
             c = count_all_activity(cur)
             print('All activity: ', c)
             if c >= MAX_CONNECTION:
-                cur.execute(sql)
+                cur.execute(kill_all_sql)
                 time.sleep(5)
                 restart_worker()
                 print('killed all process')

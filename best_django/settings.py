@@ -228,7 +228,7 @@ CELERY_BEAT_SCHEDULE = {
     },
     'find_signal': {
         'task': 'summary_writer.signal_finder.rsi',
-        'schedule': crontab(minute='*/2')
+        'schedule': crontab(minute='*/5')
     },
     'cp_find_signal': {
         'task': 'summary_writer.signal_finder.close_price_strategy',
