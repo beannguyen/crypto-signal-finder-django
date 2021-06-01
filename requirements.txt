@@ -21,5 +21,5 @@ selenium==3.8.0
 six==1.11.0
 splinter==0.7.7
 TA-Lib==0.4.14
-urllib3==1.22
+urllib3==1.26.5
 vine==1.1.4
